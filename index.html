@@ -8,6 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
 :root{
   --navy-deep:#070A1C;
@@ -555,6 +556,57 @@ function setLang(lang){
 }
 
 setLang(getCurrentLang());
+
+/* ============================================================
+   SUPABASE — done reyèl (now_playing, programs, news)
+============================================================ */
+const SUPABASE_URL = 'https://dznqpltxfhpuorxxwypb.supabase.co';
+const SUPABASE_ANON_KEY = 'sb_publishable_GPyfox6GpwC1HK-fwchdEw_XdkKOhQ1';
+const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+async function loadNowPlaying(){
+  const { data, error } = await sb.from('now_playing').select('*').eq('id', 1).maybeSingle();
+  if(error || !data) return;
+  const showEl = document.querySelector('.now-info .show');
+  const hostEl = document.querySelector('.now-info .host');
+  const countEl = document.getElementById('listenerCount');
+  if(showEl) showEl.textContent = data.show_title || '';
+  if(hostEl) hostEl.innerHTML = `<span data-i18n="console_with">avec</span> ${data.host_name || ''}`;
+  if(countEl) countEl.innerHTML = `${Number(data.listeners_count || 0).toLocaleString('fr-FR')} <span data-i18n="console_listening">à l'écoute</span>`;
+}
+
+async function loadPrograms(){
+  const { data, error } = await sb.from('programs').select('*').eq('active', true).order('display_order');
+  const wrap = document.querySelector('.programs-scroll');
+  if(error || !data || !data.length || !wrap) return;
+  wrap.innerHTML = data.map(p => `
+    <div class="prog-card">
+      <span class="time">${(p.start_time || '').slice(0,5)}</span>
+      <h3>${p.title}</h3>
+      <p>${p.description || ''}</p>
+    </div>
+  `).join('');
+}
+
+async function loadNews(){
+  const { data, error } = await sb.from('news').select('*').eq('active', true).order('published_at', { ascending:false }).limit(3);
+  const wrap = document.querySelector('.news-grid');
+  if(error || !data || !data.length || !wrap) return;
+  const classes = ['n1','n2','n3'];
+  wrap.innerHTML = data.map((n,i) => `
+    <div class="news-card ${classes[i] || 'n3'}">
+      <div>
+        <span class="cat">${(n.category || '').toUpperCase()}</span>
+        <h3>${n.title}</h3>
+        <span class="date">${new Date(n.published_at).toLocaleDateString('fr-FR', {day:'numeric', month:'long', year:'numeric'})}</span>
+      </div>
+    </div>
+  `).join('');
+}
+
+Promise.all([loadNowPlaying(), loadPrograms(), loadNews()]).then(()=>{
+  setLang(getCurrentLang()); // re-tradui tikèt ki fèk enjekte yo (ex: "avec", "à l'écoute")
+});
 </script>
 
 </body>
