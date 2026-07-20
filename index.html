@@ -63,6 +63,7 @@ img{max-width:100%; display:block;}
 .nav{position:sticky; top:0; z-index:60; background:rgba(7,10,28,.82); backdrop-filter:blur(10px); border-bottom:1px solid var(--line);}
 .nav-inner{display:flex; align-items:center; justify-content:space-between; padding:16px 0;}
 .brand{display:flex; align-items:center; gap:10px;}
+.brand-logo{height:42px; width:auto; display:block;}
 .brand .mark{display:flex; align-items:center; gap:8px; font-family:var(--font-display); font-weight:700; font-size:18px; letter-spacing:.02em;}
 .brand .mark .r{color:var(--blue-soft);}
 .brand .mark .t{color:#fff;}
@@ -619,5 +620,6 @@ Promise.all([loadNowPlaying(), loadPrograms(), loadNews()]).then(()=>{
 
 </body>
 </html>
+
 
 
