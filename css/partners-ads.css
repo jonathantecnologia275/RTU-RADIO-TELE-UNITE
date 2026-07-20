@@ -23,3 +23,19 @@
 .ad-card .tag{font-family:var(--font-mono); font-size:10px; letter-spacing:.08em; color:var(--gold); text-transform:uppercase; margin-bottom:8px; display:block;}
 .ad-card h3{font-size:15.5px; color:#fff; line-height:1.35; margin-bottom:10px;}
 .ad-card .cta{font-size:12.5px; font-weight:700; color:var(--blue-soft);}
+
+.newsletter-bar{background:linear-gradient(140deg, var(--navy-panel), var(--navy-deep)); border:1px solid var(--line); border-radius:20px; padding:34px 40px; display:flex; justify-content:space-between; align-items:center; gap:30px; flex-wrap:wrap; margin-bottom:44px;}
+.newsletter-bar .nl-text h3{font-size:19px; color:#fff; margin-bottom:6px;}
+.newsletter-bar .nl-text p{font-size:13px; color:rgba(255,255,255,.55); max-width:360px;}
+.nl-form{display:flex; gap:10px; flex-wrap:wrap;}
+.nl-form input{background:rgba(255,255,255,.07); border:1px solid var(--line); border-radius:10px; padding:13px 16px; font-size:13.5px; color:#fff; min-width:230px; outline:none; transition:border-color .15s;}
+.nl-form input::placeholder{color:rgba(255,255,255,.4);}
+.nl-form input:focus{border-color:var(--blue);}
+.nl-form button{background:var(--gold); color:var(--ink); border:none; font-weight:700; font-size:13.5px; padding:13px 22px; border-radius:10px; white-space:nowrap; transition:background .15s;}
+.nl-form button:hover{background:var(--gold-hover);}
+.nl-form button:disabled{opacity:.6; cursor:not-allowed;}
+.nl-msg{font-size:12.5px; margin-top:8px; width:100%; display:none;}
+.nl-msg.show{display:block;}
+.nl-msg.success{color:#7FE0A8;}
+.nl-msg.error{color:#F4879F;}
+@media (max-width:700px){ .newsletter-bar{padding:26px 24px;} .nl-form{width:100%;} .nl-form input{flex:1;} }
