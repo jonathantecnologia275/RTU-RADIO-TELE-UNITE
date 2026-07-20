@@ -165,6 +165,14 @@ section.pad{padding:76px 0;}
 .section-dark .section-head .desc{color:rgba(255,255,255,.55);}
 
 /* Programs */
+.live-strip{display:flex; gap:16px; margin-bottom:28px; flex-wrap:wrap;}
+.live-strip > div{flex:1; min-width:220px; display:flex; align-items:center; gap:14px; background:#fff; border:1px solid #E7E3D8; border-radius:14px; padding:18px 20px;}
+.live-now{border-left:3px solid var(--live) !important;}
+.live-next{border-left:3px solid var(--blue) !important;}
+.live-tiny-dot{width:9px; height:9px; border-radius:50%; background:var(--live); flex-shrink:0; animation:pulse 1.6s ease-in-out infinite;}
+.live-tiny-label{display:block; font-family:var(--font-mono); font-size:10px; letter-spacing:.1em; text-transform:uppercase; color:var(--ink-soft); margin-bottom:4px;}
+.live-strip h3{font-size:15px; margin-bottom:2px;}
+.live-tiny-time{font-size:11.5px; color:#6B7085; font-family:var(--font-mono);}
 .programs-scroll{display:grid; grid-template-columns:repeat(4,1fr); gap:16px;}
 .prog-card{background:#fff; border:1px solid #E7E3D8; border-radius:14px; padding:20px; transition:transform .15s var(--ease), box-shadow .15s;}
 .prog-card:hover{transform:translateY(-3px); box-shadow:0 16px 34px -18px rgba(11,15,46,.2);}
@@ -304,6 +312,24 @@ footer{background:var(--navy); border-top:1px solid var(--line); padding:56px 0 
       </div>
       <p class="desc" data-i18n="programs_desc">Un mélange d'information, de musique et de culture, du matin jusqu'à la nuit.</p>
     </div>
+    <div class="live-strip" id="liveStrip">
+      <div class="live-now">
+        <span class="live-tiny-dot"></span>
+        <div>
+          <span class="live-tiny-label" data-i18n="live_now_label">EN CE MOMENT</span>
+          <h3 id="liveNowTitle">-</h3>
+          <span class="live-tiny-time" id="liveNowTime"></span>
+        </div>
+      </div>
+      <div class="live-next">
+        <span style="color:var(--blue); font-weight:700; font-size:16px;">-></span>
+        <div>
+          <span class="live-tiny-label" data-i18n="live_next_label">A SUIVRE</span>
+          <h3 id="liveNextTitle">-</h3>
+          <span class="live-tiny-time" id="liveNextTime"></span>
+        </div>
+      </div>
+    </div>
     <div class="programs-scroll">
       <div class="prog-card">
         <span class="time">06:00</span>
@@ -425,6 +451,7 @@ const translations = {
     cta_listen:"Écouter en direct", cta_watch:"Regarder RTU TV",
     console_label:"RTU · LECTEUR EN DIRECT", console_listening:"à l'écoute", console_with:"avec",
     tag_radio:"RADIO 24/7", tag_tv:"TÉLÉ EN DIRECT", tag_world:"DIFFUSION MONDIALE",
+    live_now_label:"EN CE MOMENT", live_next_label:"À SUIVRE",
     feat1_title:"Diffusion 24h/24", feat1_desc:"Jamais de silence sur les ondes",
     feat2_title:"Radio + Télé", feat2_desc:"Deux écrans, une seule voix",
     feat3_title:"Diffusion mondiale", feat3_desc:"Accessible partout dans le monde",
@@ -450,6 +477,7 @@ const translations = {
     cta_listen:"Koute an dirèk", cta_watch:"Gade RTU TV",
     console_label:"RTU · LEKTÈ AN DIRÈK", console_listening:"ap koute", console_with:"avèk",
     tag_radio:"RADIO 24/7", tag_tv:"TELE AN DIRÈK", tag_world:"DIFIZYON MONDYAL",
+    live_now_label:"KOUNYE A AP JWE", live_next_label:"APRE SA",
     feat1_title:"Difizyon 24t/24", feat1_desc:"Pa gen silans sou ond yo",
     feat2_title:"Radio + Tele", feat2_desc:"De ekran, yon sèl vwa",
     feat3_title:"Difizyon mondyal", feat3_desc:"Aksesib toupatou nan mond lan",
@@ -475,6 +503,7 @@ const translations = {
     cta_listen:"Listen Live", cta_watch:"Watch RTU TV",
     console_label:"RTU · LIVE PLAYER", console_listening:"listening", console_with:"with",
     tag_radio:"RADIO 24/7", tag_tv:"LIVE TV", tag_world:"GLOBAL BROADCAST",
+    live_now_label:"ON AIR NOW", live_next_label:"UP NEXT",
     feat1_title:"24/7 Broadcast", feat1_desc:"Never a silent airwave",
     feat2_title:"Radio + TV", feat2_desc:"Two screens, one voice",
     feat3_title:"Global reach", feat3_desc:"Accessible anywhere in the world",
@@ -500,6 +529,7 @@ const translations = {
     cta_listen:"Escuchar en vivo", cta_watch:"Ver RTU TV",
     console_label:"RTU · REPRODUCTOR EN VIVO", console_listening:"escuchando", console_with:"con",
     tag_radio:"RADIO 24/7", tag_tv:"TV EN VIVO", tag_world:"TRANSMISIÓN MUNDIAL",
+    live_now_label:"AHORA EN VIVO", live_next_label:"A CONTINUACIÓN",
     feat1_title:"Transmisión 24/7", feat1_desc:"Nunca hay silencio en el aire",
     feat2_title:"Radio + TV", feat2_desc:"Dos pantallas, una sola voz",
     feat3_title:"Alcance mundial", feat3_desc:"Accesible en cualquier parte del mundo",
@@ -525,6 +555,7 @@ const translations = {
     cta_listen:"Ouvir ao vivo", cta_watch:"Assistir RTU TV",
     console_label:"RTU · PLAYER AO VIVO", console_listening:"ouvindo", console_with:"com",
     tag_radio:"RÁDIO 24/7", tag_tv:"TV AO VIVO", tag_world:"TRANSMISSÃO MUNDIAL",
+    live_now_label:"NO AR AGORA", live_next_label:"A SEGUIR",
     feat1_title:"Transmissão 24/7", feat1_desc:"Nunca há silêncio no ar",
     feat2_title:"Rádio + TV", feat2_desc:"Duas telas, uma só voz",
     feat3_title:"Alcance mundial", feat3_desc:"Acessível em qualquer parte do mundo",
@@ -610,7 +641,54 @@ async function loadNews(){
   `).join('');
 }
 
-Promise.all([loadNowPlaying(), loadPrograms(), loadNews()]).then(()=>{
+function timeToMinutes(t){
+  if(!t) return null;
+  const parts = t.split(':');
+  return parseInt(parts[0],10)*60 + parseInt(parts[1],10);
+}
+
+function computeLiveSchedule(programs){
+  const now = new Date();
+  const nowMin = now.getHours()*60 + now.getMinutes();
+  const sorted = [...programs].sort((a,b)=> timeToMinutes(a.start_time) - timeToMinutes(b.start_time));
+  let current = null;
+  sorted.forEach(p=>{
+    const start = timeToMinutes(p.start_time);
+    let end = timeToMinutes(p.end_time);
+    if(end === null) end = start + 60;
+    if(end <= start){
+      if(nowMin >= start || nowMin < end) current = p;
+    } else {
+      if(nowMin >= start && nowMin < end) current = p;
+    }
+  });
+  if(!current && sorted.length){
+    current = sorted.filter(p => timeToMinutes(p.start_time) <= nowMin).pop() || sorted[sorted.length-1];
+  }
+  const next = sorted.find(p => timeToMinutes(p.start_time) > nowMin) || sorted[0];
+  return { current, next };
+}
+
+async function loadLiveSchedule(){
+  const { data, error } = await sb.from('programs').select('*').eq('active', true);
+  if(error || !data || !data.length) return;
+  const { current, next } = computeLiveSchedule(data);
+  const nowTitleEl = document.getElementById('liveNowTitle');
+  const nowTimeEl = document.getElementById('liveNowTime');
+  const nextTitleEl = document.getElementById('liveNextTitle');
+  const nextTimeEl = document.getElementById('liveNextTime');
+  if(current && nowTitleEl){
+    nowTitleEl.textContent = current.title;
+    nowTimeEl.textContent = (current.start_time||'').slice(0,5) + ' - ' + (current.end_time||'').slice(0,5);
+  }
+  if(next && nextTitleEl){
+    nextTitleEl.textContent = next.title;
+    nextTimeEl.textContent = (next.start_time||'').slice(0,5);
+  }
+}
+setInterval(loadLiveSchedule, 60000);
+
+Promise.all([loadNowPlaying(), loadPrograms(), loadNews(), loadLiveSchedule()]).then(()=>{
   setLang(getCurrentLang()); // re-tradui tikèt ki fèk enjekte yo (ex: "avec", "à l'écoute")
 });
 </script>
@@ -618,6 +696,7 @@ Promise.all([loadNowPlaying(), loadPrograms(), loadNews()]).then(()=>{
 <script src="js/partners-ads.js"></script>
 </body>
 </html>
+
 
 
 
