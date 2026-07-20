@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Programmes — Radio Télé Unité (RTU)</title>
-<meta name="description" content="La grille complète des programmes de Radio Télé Unité (RTU) — émissions, horaires et animateurs." />
+<title>Équipe — Radio Télé Unité (RTU)</title>
+<meta name="description" content="Les animateurs, journalistes et techniciens de Radio Télé Unité (RTU)." />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
@@ -15,7 +15,7 @@
   --blue:#3E7BFA; --blue-soft:#7FA4FF;
   --gold:#E8B84B; --gold-hover:#D6A53A;
   --ivory:#F6F4EE; --ink:#0B0F2E; --ink-soft:#8890AC;
-  --line:rgba(255,255,255,.09); --live:#EE5B4F;
+  --line:rgba(255,255,255,.09);
   --font-display:"Space Grotesk", sans-serif;
   --font-body:"Inter", sans-serif;
   --font-mono:"JetBrains Mono", monospace;
@@ -44,8 +44,8 @@ p{margin:0;}
 .brand{display:flex; align-items:center; gap:10px;}
 .brand .mark{display:flex; align-items:center; gap:8px; font-family:var(--font-display); font-weight:700; font-size:18px;}
 .brand .mark .r{color:var(--blue-soft);} .brand .mark .t{color:#fff;} .brand .mark .u{color:var(--gold);}
-.nav-links{display:flex; align-items:center; gap:22px;}
-.nav-links a{font-size:12.5px; font-weight:600; color:rgba(255,255,255,.7); transition:color .15s; white-space:nowrap;}
+.nav-links{display:flex; align-items:center; gap:24px;}
+.nav-links a{font-size:13px; font-weight:600; color:rgba(255,255,255,.7); transition:color .15s; white-space:nowrap;}
 .nav-links a:hover, .nav-links a.active{color:#fff;}
 .nav-right{display:flex; align-items:center; gap:16px;}
 .lang-select{
@@ -64,29 +64,24 @@ p{margin:0;}
 .page-hero p{color:rgba(255,255,255,.62); font-size:15px; max-width:520px;}
 
 .pad{padding:64px 0 90px;}
-.timeline{display:flex; flex-direction:column; gap:14px;}
-.prog-row{
-  display:grid; grid-template-columns:110px 1fr auto; align-items:center; gap:22px;
-  background:#fff; border:1px solid #E7E3D8; border-radius:16px; padding:20px 24px;
-  transition:transform .15s var(--ease), box-shadow .15s;
-}
-.prog-row:hover{transform:translateY(-2px); box-shadow:0 14px 30px -16px rgba(11,15,46,.18);}
-.prog-row .time{font-family:var(--font-mono); font-weight:700; font-size:15px; color:var(--blue);}
-.prog-row .time small{display:block; font-family:var(--font-body); font-weight:600; font-size:10px; color:var(--ink-soft); text-transform:uppercase; letter-spacing:.06em; margin-top:2px;}
-.prog-row .info h3{font-size:16.5px; margin-bottom:4px;}
-.prog-row .info p{font-size:13px; color:#6B7085; line-height:1.5;}
-.prog-row .info .host{font-size:12px; color:var(--gold-hover); font-weight:700; margin-top:6px; display:block;}
-.cat-tag{font-family:var(--font-mono); font-size:10.5px; font-weight:700; letter-spacing:.04em; padding:6px 13px; border-radius:14px; background:rgba(62,123,250,.09); color:var(--blue); text-transform:uppercase; white-space:nowrap;}
-@media (max-width:700px){
-  .prog-row{grid-template-columns:1fr; gap:10px;}
-  .cat-tag{justify-self:flex-start;}
-}
+.role-block{margin-bottom:52px;}
+.role-block:last-child{margin-bottom:0;}
+.role-head{font-family:var(--font-mono); font-size:11.5px; letter-spacing:.12em; text-transform:uppercase; color:var(--gold-hover); margin-bottom:22px; padding-bottom:12px; border-bottom:1px solid #E7E3D8;}
+.team-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:20px;}
+@media (max-width:900px){ .team-grid{grid-template-columns:1fr 1fr;} }
+@media (max-width:560px){ .team-grid{grid-template-columns:1fr;} }
+.team-card{background:#fff; border:1px solid #E7E3D8; border-radius:16px; padding:24px; transition:transform .15s var(--ease), box-shadow .15s;}
+.team-card:hover{transform:translateY(-3px); box-shadow:0 16px 34px -18px rgba(11,15,46,.18);}
+.avatar{width:56px; height:56px; border-radius:50%; background:linear-gradient(155deg, var(--blue-soft), var(--blue)); color:#fff; display:flex; align-items:center; justify-content:center; font-family:var(--font-display); font-weight:700; font-size:19px; margin-bottom:16px;}
+.team-card h3{font-size:16px; margin-bottom:4px;}
+.team-card .show{font-size:12px; color:var(--gold-hover); font-weight:700; margin-bottom:10px;}
+.team-card p{font-size:12.5px; color:#6B7085; line-height:1.55;}
 .empty-note{padding:60px 20px; text-align:center; color:var(--ink-soft); font-size:14px;}
 
 footer{background:var(--navy); border-top:1px solid var(--line); padding:44px 0 24px; color:#fff;}
 .foot-bottom{display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;}
 .foot-bottom p{font-size:12px; color:rgba(255,255,255,.45); margin:0;}
-.foot-links{display:flex; gap:18px;}
+.foot-links{display:flex; gap:18px; flex-wrap:wrap;}
 .foot-links a{font-size:13px; color:rgba(255,255,255,.7);}
 .foot-links a:hover{color:#fff;}
 </style>
@@ -101,9 +96,8 @@ footer{background:var(--navy); border-top:1px solid var(--line); padding:44px 0 
     </a>
     <div class="nav-links">
       <a href="apropos.html" data-i18n="nav_about">À propos</a>
-      <a href="index.html#direct" data-i18n="nav_direct">Écouter en direct</a>
-      <a href="programmes.html" class="active" data-i18n="nav_programs">Programmes</a>
-      <a href="equipe.html" data-i18n="nav_team">Équipe</a>
+      <a href="programmes.html" data-i18n="nav_programs">Programmes</a>
+      <a href="equipe.html" class="active" data-i18n="nav_team">Équipe</a>
       <a href="galerie.html" data-i18n="nav_gallery">Galerie</a>
       <a href="actualites.html" data-i18n="nav_news">Actualités</a>
       <a href="contact.html" data-i18n="nav_contact">Contact</a>
@@ -119,17 +113,15 @@ footer{background:var(--navy); border-top:1px solid var(--line); padding:44px 0 
 
 <header class="page-hero">
   <div class="wrap">
-    <div class="eyebrow" data-i18n="ph_eyebrow">GRILLE COMPLÈTE</div>
-    <h1 data-i18n="ph_title">Les programmes de RTU</h1>
-    <p data-i18n="ph_desc">Retrouvez tous nos rendez-vous quotidiens — information, culture et musique.</p>
+    <div class="eyebrow" data-i18n="ph_eyebrow">DERRIÈRE LE MICRO</div>
+    <h1 data-i18n="ph_title">Notre équipe</h1>
+    <p data-i18n="ph_desc">Les voix et les visages qui font vivre RTU chaque jour.</p>
   </div>
 </header>
 
 <section class="pad">
-  <div class="wrap">
-    <div class="timeline" id="timelineWrap">
-      <p class="empty-note" data-i18n="loading">Chargement des programmes…</p>
-    </div>
+  <div class="wrap" id="teamWrap">
+    <p class="empty-note" data-i18n="loading">Chargement de l'équipe…</p>
   </div>
 </section>
 
@@ -140,9 +132,7 @@ footer{background:var(--navy); border-top:1px solid var(--line); padding:44px 0 
       <div class="foot-links">
         <a href="index.html">Accueil</a>
         <a href="apropos.html" data-i18n="nav_about">À propos</a>
-        <a href="equipe.html" data-i18n="nav_team">Équipe</a>
         <a href="galerie.html" data-i18n="nav_gallery">Galerie</a>
-        <a href="actualites.html" data-i18n="nav_news">Actualités</a>
         <a href="contact.html" data-i18n="nav_contact">Contact</a>
       </div>
     </div>
@@ -151,25 +141,30 @@ footer{background:var(--navy); border-top:1px solid var(--line); padding:44px 0 
 
 <script>
 const translations = {
-  fr:{ nav_direct:"Écouter en direct", nav_programs:"Programmes", nav_news:"Actualités", nav_about:"À propos", nav_team:"Équipe", nav_gallery:"Galerie", nav_contact:"Contact", nav_cta:"Écouter",
-    ph_eyebrow:"GRILLE COMPLÈTE", ph_title:"Les programmes de RTU", ph_desc:"Retrouvez tous nos rendez-vous quotidiens — information, culture et musique.",
-    loading:"Chargement des programmes…", daily_tag:"Chaque jour", no_programs:"Aucun programme disponible pour le moment.",
+  fr:{ nav_about:"À propos", nav_programs:"Programmes", nav_team:"Équipe", nav_gallery:"Galerie", nav_news:"Actualités", nav_contact:"Contact", nav_cta:"Écouter",
+    ph_eyebrow:"DERRIÈRE LE MICRO", ph_title:"Notre équipe", ph_desc:"Les voix et les visages qui font vivre RTU chaque jour.",
+    loading:"Chargement de l'équipe…", no_team:"Aucun membre à afficher pour le moment.",
+    role_animateur:"Animateurs", role_journaliste:"Journalistes", role_technicien:"Techniciens", role_admin:"Direction", role_other:"Équipe",
     footer_rights:"© 2026 Radio Télé Unité (RTU). Tous droits réservés." },
-  ht:{ nav_direct:"Koute an dirèk", nav_programs:"Pwogram", nav_news:"Aktyalite", nav_about:"Konsènan", nav_team:"Ekip", nav_gallery:"Galri", nav_contact:"Kontak", nav_cta:"Koute",
-    ph_eyebrow:"GRIY KONPLÈ", ph_title:"Pwogram RTU yo", ph_desc:"Jwenn tout randevou chak jou nou yo — enfòmasyon, kilti ak mizik.",
-    loading:"Chajman pwogram yo…", daily_tag:"Chak jou", no_programs:"Pa gen okenn pwogram disponib kounye a.",
+  ht:{ nav_about:"Konsènan", nav_programs:"Pwogram", nav_team:"Ekip", nav_gallery:"Galri", nav_news:"Aktyalite", nav_contact:"Kontak", nav_cta:"Koute",
+    ph_eyebrow:"DÈYÈ MIKWO A", ph_title:"Ekip nou an", ph_desc:"Vwa ak figi ki fè RTU vivan chak jou.",
+    loading:"Chajman ekip la…", no_team:"Pa gen okenn manm pou montre kounye a.",
+    role_animateur:"Animatè", role_journaliste:"Jounalis", role_technicien:"Teknisyen", role_admin:"Direksyon", role_other:"Ekip",
     footer_rights:"© 2026 Radio Télé Unité (RTU). Tout dwa rezève." },
-  en:{ nav_direct:"Listen Live", nav_programs:"Programs", nav_news:"News", nav_about:"About", nav_team:"Team", nav_gallery:"Gallery", nav_contact:"Contact", nav_cta:"Listen",
-    ph_eyebrow:"FULL SCHEDULE", ph_title:"RTU Programs", ph_desc:"Find all our daily shows — news, culture and music.",
-    loading:"Loading programs…", daily_tag:"Every day", no_programs:"No programs available right now.",
+  en:{ nav_about:"About", nav_programs:"Programs", nav_team:"Team", nav_gallery:"Gallery", nav_news:"News", nav_contact:"Contact", nav_cta:"Listen",
+    ph_eyebrow:"BEHIND THE MIC", ph_title:"Our team", ph_desc:"The voices and faces that bring RTU to life every day.",
+    loading:"Loading team…", no_team:"No team members to display right now.",
+    role_animateur:"Hosts", role_journaliste:"Journalists", role_technicien:"Technicians", role_admin:"Management", role_other:"Team",
     footer_rights:"© 2026 Radio Télé Unité (RTU). All rights reserved." },
-  es:{ nav_direct:"Escuchar en vivo", nav_programs:"Programas", nav_news:"Noticias", nav_about:"Nosotros", nav_team:"Equipo", nav_gallery:"Galería", nav_contact:"Contacto", nav_cta:"Escuchar",
-    ph_eyebrow:"PARRILLA COMPLETA", ph_title:"Los programas de RTU", ph_desc:"Encuentra todas nuestras citas diarias — noticias, cultura y música.",
-    loading:"Cargando programas…", daily_tag:"Todos los días", no_programs:"No hay programas disponibles por ahora.",
+  es:{ nav_about:"Nosotros", nav_programs:"Programas", nav_team:"Equipo", nav_gallery:"Galería", nav_news:"Noticias", nav_contact:"Contacto", nav_cta:"Escuchar",
+    ph_eyebrow:"DETRÁS DEL MICRÓFONO", ph_title:"Nuestro equipo", ph_desc:"Las voces y los rostros que dan vida a RTU cada día.",
+    loading:"Cargando equipo…", no_team:"No hay miembros para mostrar por ahora.",
+    role_animateur:"Presentadores", role_journaliste:"Periodistas", role_technicien:"Técnicos", role_admin:"Dirección", role_other:"Equipo",
     footer_rights:"© 2026 Radio Télé Unité (RTU). Todos los derechos reservados." },
-  pt:{ nav_direct:"Ouvir ao vivo", nav_programs:"Programas", nav_news:"Notícias", nav_about:"Sobre", nav_team:"Equipe", nav_gallery:"Galeria", nav_contact:"Contato", nav_cta:"Ouvir",
-    ph_eyebrow:"GRADE COMPLETA", ph_title:"Os programas da RTU", ph_desc:"Encontre todos os nossos encontros diários — notícias, cultura e música.",
-    loading:"Carregando programas…", daily_tag:"Todos os dias", no_programs:"Nenhum programa disponível no momento.",
+  pt:{ nav_about:"Sobre", nav_programs:"Programas", nav_team:"Equipe", nav_gallery:"Galeria", nav_news:"Notícias", nav_contact:"Contato", nav_cta:"Ouvir",
+    ph_eyebrow:"POR TRÁS DO MICROFONE", ph_title:"Nossa equipe", ph_desc:"As vozes e rostos que dão vida à RTU todos os dias.",
+    loading:"Carregando equipe…", no_team:"Nenhum membro para exibir no momento.",
+    role_animateur:"Apresentadores", role_journaliste:"Jornalistas", role_technicien:"Técnicos", role_admin:"Direção", role_other:"Equipe",
     footer_rights:"© 2026 Radio Télé Unité (RTU). Todos os direitos reservados." }
 };
 function getCurrentLang(){ return localStorage.getItem('rtu_lang') || 'fr'; }
@@ -188,27 +183,45 @@ const SUPABASE_URL = 'https://dznqpltxfhpuorxxwypb.supabase.co';
 const SUPABASE_ANON_KEY = 'sb_publishable_GPyfox6GpwC1HK-fwchdEw_XdkKOhQ1';
 const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-async function loadAllPrograms(){
-  const wrap = document.getElementById('timelineWrap');
-  const { data, error } = await sb.from('programs').select('*').eq('active', true).order('start_time');
+function initials(name){
+  return (name || '').split(' ').filter(Boolean).slice(0,2).map(w => w[0].toUpperCase()).join('');
+}
+
+const ROLE_ORDER = ['animateur','journaliste','technicien','admin'];
+
+async function loadTeam(){
+  const wrap = document.getElementById('teamWrap');
   const dict = translations[getCurrentLang()] || translations.fr;
+  const { data, error } = await sb.from('team_members').select('*').eq('active', true).order('display_order');
   if(error || !data || !data.length){
-    wrap.innerHTML = `<p class="empty-note">${dict.no_programs}</p>`;
+    wrap.innerHTML = `<p class="empty-note">${dict.no_team}</p>`;
     return;
   }
-  wrap.innerHTML = data.map(p => `
-    <div class="prog-row">
-      <div class="time">${(p.start_time || '').slice(0,5)}<small>${dict.daily_tag}</small></div>
-      <div class="info">
-        <h3>${p.title}</h3>
-        <p>${p.description || ''}</p>
-        ${p.host_name ? `<span class="host">— ${p.host_name}</span>` : ''}
+  const groups = {};
+  data.forEach(m => {
+    const role = m.role || 'other';
+    if(!groups[role]) groups[role] = [];
+    groups[role].push(m);
+  });
+  const orderedKeys = [...ROLE_ORDER.filter(r => groups[r]), ...Object.keys(groups).filter(r => !ROLE_ORDER.includes(r))];
+
+  wrap.innerHTML = orderedKeys.map(role => `
+    <div class="role-block">
+      <div class="role-head">${dict['role_' + role] || dict.role_other}</div>
+      <div class="team-grid">
+        ${groups[role].map(m => `
+          <div class="team-card">
+            <div class="avatar">${initials(m.full_name)}</div>
+            <h3>${m.full_name}</h3>
+            ${m.show_name ? `<div class="show">${m.show_name}</div>` : ''}
+            <p>${m.bio || ''}</p>
+          </div>
+        `).join('')}
       </div>
-      <span class="cat-tag">${p.category || ''}</span>
     </div>
   `).join('');
 }
-loadAllPrograms();
+loadTeam();
 </script>
 
 </body>

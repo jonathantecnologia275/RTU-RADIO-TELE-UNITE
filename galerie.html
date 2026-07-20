@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Actualités — Radio Télé Unité (RTU)</title>
-<meta name="description" content="Toutes les actualités de Radio Télé Unité (RTU) — société, culture, communauté." />
+<title>Galerie — Radio Télé Unité (RTU)</title>
+<meta name="description" content="Photos et vidéos de Radio Télé Unité (RTU) — studio, coulisses, événements." />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
@@ -15,7 +15,7 @@
   --blue:#3E7BFA; --blue-soft:#7FA4FF;
   --gold:#E8B84B; --gold-hover:#D6A53A;
   --ivory:#F6F4EE; --ink:#0B0F2E; --ink-soft:#8890AC;
-  --line:rgba(255,255,255,.09); --live:#EE5B4F;
+  --line:rgba(255,255,255,.09);
   --font-display:"Space Grotesk", sans-serif;
   --font-body:"Inter", sans-serif;
   --font-mono:"JetBrains Mono", monospace;
@@ -44,8 +44,8 @@ p{margin:0;}
 .brand{display:flex; align-items:center; gap:10px;}
 .brand .mark{display:flex; align-items:center; gap:8px; font-family:var(--font-display); font-weight:700; font-size:18px;}
 .brand .mark .r{color:var(--blue-soft);} .brand .mark .t{color:#fff;} .brand .mark .u{color:var(--gold);}
-.nav-links{display:flex; align-items:center; gap:22px;}
-.nav-links a{font-size:12.5px; font-weight:600; color:rgba(255,255,255,.7); transition:color .15s; white-space:nowrap;}
+.nav-links{display:flex; align-items:center; gap:24px;}
+.nav-links a{font-size:13px; font-weight:600; color:rgba(255,255,255,.7); transition:color .15s; white-space:nowrap;}
 .nav-links a:hover, .nav-links a.active{color:#fff;}
 .nav-right{display:flex; align-items:center; gap:16px;}
 .lang-select{
@@ -58,33 +58,40 @@ p{margin:0;}
 .nav-cta{display:flex; align-items:center; gap:8px; background:var(--gold); color:var(--ink); font-weight:700; font-size:12.5px; padding:9px 16px; border-radius:20px; border:none;}
 @media (max-width:1000px){ .nav-links{display:none;} }
 
-.page-hero{padding:60px 0 44px; background:radial-gradient(circle at 20% 20%, rgba(62,123,250,.18), transparent 55%), var(--navy-deep);}
+.page-hero{padding:60px 0 32px; background:radial-gradient(circle at 20% 20%, rgba(62,123,250,.18), transparent 55%), var(--navy-deep);}
 .page-hero .eyebrow{font-family:var(--font-mono); font-size:12px; letter-spacing:.14em; color:var(--blue-soft); text-transform:uppercase; margin-bottom:12px;}
 .page-hero h1{font-size:clamp(28px,3.6vw,42px); margin-bottom:12px;}
 .page-hero p{color:rgba(255,255,255,.6); font-size:15px; max-width:520px;}
 
-.pad{padding:20px 0 90px;}
-.news-list{display:grid; grid-template-columns:repeat(3,1fr); gap:20px;}
-@media (max-width:980px){ .news-list{grid-template-columns:1fr 1fr;} }
-@media (max-width:640px){ .news-list{grid-template-columns:1fr;} }
-.news-card{
-  display:block; border-radius:16px; overflow:hidden; min-height:210px; position:relative; padding:20px;
-  display:flex; align-items:flex-end; isolation:isolate; transition:transform .15s var(--ease);
+.filter-row{display:flex; gap:10px; padding:24px 0 8px;}
+.filter-btn{
+  font-family:var(--font-mono); font-size:12px; font-weight:600; letter-spacing:.04em; text-transform:uppercase;
+  padding:9px 18px; border-radius:20px; border:1px solid var(--line); background:rgba(255,255,255,.05); color:rgba(255,255,255,.7);
+  transition:all .15s;
 }
-.news-card:hover{transform:translateY(-3px);}
-.news-card::before{content:""; position:absolute; inset:0; z-index:-1; background:linear-gradient(155deg,#1F2A66,#0C1030);}
-.news-card:nth-child(3n+2)::before{background:linear-gradient(155deg,#2A3A7A,#101540);}
-.news-card:nth-child(3n)::before{background:linear-gradient(155deg,#3E7BFA,#132056);}
-.news-card::after{content:""; position:absolute; inset:0; z-index:-1; background:linear-gradient(0deg, rgba(0,0,0,.6), transparent 55%);}
-.news-card .cat{font-family:var(--font-mono); font-size:10px; letter-spacing:.08em; text-transform:uppercase; color:var(--gold); background:rgba(0,0,0,.35); padding:4px 9px; border-radius:6px; display:inline-block; margin-bottom:10px;}
-.news-card h3{font-size:16px; line-height:1.3; margin-bottom:6px;}
-.news-card .date{font-size:11.5px; color:rgba(255,255,255,.55); font-family:var(--font-mono);}
+.filter-btn:hover{background:rgba(255,255,255,.1); color:#fff;}
+.filter-btn.active{background:var(--gold); color:var(--ink); border-color:var(--gold);}
+
+.pad{padding:16px 0 90px;}
+.gallery-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:16px;}
+@media (max-width:900px){ .gallery-grid{grid-template-columns:1fr 1fr;} }
+@media (max-width:560px){ .gallery-grid{grid-template-columns:1fr;} }
+.gallery-item{
+  position:relative; border-radius:14px; overflow:hidden; aspect-ratio:4/3; background:var(--navy-panel);
+  display:flex; align-items:center; justify-content:center; transition:transform .15s var(--ease);
+}
+.gallery-item:hover{transform:translateY(-3px);}
+.gallery-item img{width:100%; height:100%; object-fit:cover;}
+.gallery-item .play-overlay{position:absolute; inset:0; background:rgba(0,0,0,.25); display:flex; align-items:center; justify-content:center;}
+.gallery-item .play-overlay svg{width:22px; height:22px; fill:#fff;}
+.gallery-item .cap{position:absolute; bottom:0; left:0; right:0; padding:14px; background:linear-gradient(0deg, rgba(0,0,0,.7), transparent); font-size:12.5px; font-weight:600;}
+.placeholder-icon{width:36px; height:36px; stroke:rgba(255,255,255,.25); fill:none; stroke-width:1.5;}
 .empty-note{padding:60px 20px; text-align:center; color:rgba(255,255,255,.5); font-size:14px;}
 
 footer{background:var(--navy); border-top:1px solid var(--line); padding:44px 0 24px;}
 .foot-bottom{display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;}
 .foot-bottom p{font-size:12px; color:rgba(255,255,255,.45); margin:0;}
-.foot-links{display:flex; gap:18px;}
+.foot-links{display:flex; gap:18px; flex-wrap:wrap;}
 .foot-links a{font-size:13px; color:rgba(255,255,255,.7);}
 .foot-links a:hover{color:#fff;}
 </style>
@@ -99,11 +106,10 @@ footer{background:var(--navy); border-top:1px solid var(--line); padding:44px 0 
     </a>
     <div class="nav-links">
       <a href="apropos.html" data-i18n="nav_about">À propos</a>
-      <a href="index.html#direct" data-i18n="nav_direct">Écouter en direct</a>
       <a href="programmes.html" data-i18n="nav_programs">Programmes</a>
       <a href="equipe.html" data-i18n="nav_team">Équipe</a>
-      <a href="galerie.html" data-i18n="nav_gallery">Galerie</a>
-      <a href="actualites.html" class="active" data-i18n="nav_news">Actualités</a>
+      <a href="galerie.html" class="active" data-i18n="nav_gallery">Galerie</a>
+      <a href="actualites.html" data-i18n="nav_news">Actualités</a>
       <a href="contact.html" data-i18n="nav_contact">Contact</a>
     </div>
     <div class="nav-right">
@@ -117,16 +123,24 @@ footer{background:var(--navy); border-top:1px solid var(--line); padding:44px 0 
 
 <header class="page-hero">
   <div class="wrap">
-    <div class="eyebrow" data-i18n="ph_eyebrow">À LA UNE</div>
-    <h1 data-i18n="ph_title">Actualités RTU</h1>
-    <p data-i18n="ph_desc">Toutes les nouvelles couvertes par nos journalistes, en un seul endroit.</p>
+    <div class="eyebrow" data-i18n="ph_eyebrow">EN IMAGES</div>
+    <h1 data-i18n="ph_title">Galerie RTU</h1>
+    <p data-i18n="ph_desc">Studio, coulisses et moments forts, en photos et en vidéos.</p>
   </div>
 </header>
 
+<section class="wrap">
+  <div class="filter-row">
+    <button class="filter-btn active" data-filter="all" data-i18n="filter_all">Tous</button>
+    <button class="filter-btn" data-filter="photo" data-i18n="filter_photo">Photos</button>
+    <button class="filter-btn" data-filter="video" data-i18n="filter_video">Vidéos</button>
+  </div>
+</section>
+
 <section class="pad">
   <div class="wrap">
-    <div class="news-list" id="newsListWrap">
-      <p class="empty-note" data-i18n="loading">Chargement des actualités…</p>
+    <div class="gallery-grid" id="galleryWrap">
+      <p class="empty-note" data-i18n="loading">Chargement de la galerie…</p>
     </div>
   </div>
 </section>
@@ -138,9 +152,7 @@ footer{background:var(--navy); border-top:1px solid var(--line); padding:44px 0 
       <div class="foot-links">
         <a href="index.html">Accueil</a>
         <a href="apropos.html" data-i18n="nav_about">À propos</a>
-        <a href="programmes.html" data-i18n="nav_programs">Programmes</a>
         <a href="equipe.html" data-i18n="nav_team">Équipe</a>
-        <a href="galerie.html" data-i18n="nav_gallery">Galerie</a>
         <a href="contact.html" data-i18n="nav_contact">Contact</a>
       </div>
     </div>
@@ -149,25 +161,30 @@ footer{background:var(--navy); border-top:1px solid var(--line); padding:44px 0 
 
 <script>
 const translations = {
-  fr:{ nav_direct:"Écouter en direct", nav_programs:"Programmes", nav_news:"Actualités", nav_about:"À propos", nav_team:"Équipe", nav_gallery:"Galerie", nav_contact:"Contact", nav_cta:"Écouter",
-    ph_eyebrow:"À LA UNE", ph_title:"Actualités RTU", ph_desc:"Toutes les nouvelles couvertes par nos journalistes, en un seul endroit.",
-    loading:"Chargement des actualités…", no_news:"Aucune actualité disponible pour le moment.", read_more:"Lire l'article",
+  fr:{ nav_about:"À propos", nav_programs:"Programmes", nav_team:"Équipe", nav_gallery:"Galerie", nav_news:"Actualités", nav_contact:"Contact", nav_cta:"Écouter",
+    ph_eyebrow:"EN IMAGES", ph_title:"Galerie RTU", ph_desc:"Studio, coulisses et moments forts, en photos et en vidéos.",
+    filter_all:"Tous", filter_photo:"Photos", filter_video:"Vidéos",
+    loading:"Chargement de la galerie…", no_items:"La galerie est vide pour le moment. Revenez bientôt !",
     footer_rights:"© 2026 Radio Télé Unité (RTU). Tous droits réservés." },
-  ht:{ nav_direct:"Koute an dirèk", nav_programs:"Pwogram", nav_news:"Aktyalite", nav_about:"Konsènan", nav_team:"Ekip", nav_gallery:"Galri", nav_contact:"Kontak", nav_cta:"Koute",
-    ph_eyebrow:"NAN INE A", ph_title:"Aktyalite RTU", ph_desc:"Tout nouvèl jounalis nou yo kouvri, nan yon sèl kote.",
-    loading:"Chajman aktyalite yo…", no_news:"Pa gen okenn aktyalite disponib kounye a.", read_more:"Li atik la",
+  ht:{ nav_about:"Konsènan", nav_programs:"Pwogram", nav_team:"Ekip", nav_gallery:"Galri", nav_news:"Aktyalite", nav_contact:"Kontak", nav_cta:"Koute",
+    ph_eyebrow:"AN IMAJ", ph_title:"Galri RTU", ph_desc:"Studyo, koulis ak gwo moman, an foto ak videyo.",
+    filter_all:"Tout", filter_photo:"Foto", filter_video:"Videyo",
+    loading:"Chajman galri a…", no_items:"Galri a vid kounye a. Retounen talè!",
     footer_rights:"© 2026 Radio Télé Unité (RTU). Tout dwa rezève." },
-  en:{ nav_direct:"Listen Live", nav_programs:"Programs", nav_news:"News", nav_about:"About", nav_team:"Team", nav_gallery:"Gallery", nav_contact:"Contact", nav_cta:"Listen",
-    ph_eyebrow:"HEADLINES", ph_title:"RTU News", ph_desc:"All the stories covered by our journalists, in one place.",
-    loading:"Loading news…", no_news:"No news available right now.", read_more:"Read article",
+  en:{ nav_about:"About", nav_programs:"Programs", nav_team:"Team", nav_gallery:"Gallery", nav_news:"News", nav_contact:"Contact", nav_cta:"Listen",
+    ph_eyebrow:"IN PICTURES", ph_title:"RTU Gallery", ph_desc:"Studio, behind the scenes, and highlights, in photos and videos.",
+    filter_all:"All", filter_photo:"Photos", filter_video:"Videos",
+    loading:"Loading gallery…", no_items:"The gallery is empty for now. Check back soon!",
     footer_rights:"© 2026 Radio Télé Unité (RTU). All rights reserved." },
-  es:{ nav_direct:"Escuchar en vivo", nav_programs:"Programas", nav_news:"Noticias", nav_about:"Nosotros", nav_team:"Equipo", nav_gallery:"Galería", nav_contact:"Contacto", nav_cta:"Escuchar",
-    ph_eyebrow:"DESTACADAS", ph_title:"Noticias RTU", ph_desc:"Todas las noticias cubiertas por nuestros periodistas, en un solo lugar.",
-    loading:"Cargando noticias…", no_news:"No hay noticias disponibles por ahora.", read_more:"Leer artículo",
+  es:{ nav_about:"Nosotros", nav_programs:"Programas", nav_team:"Equipo", nav_gallery:"Galería", nav_news:"Noticias", nav_contact:"Contacto", nav_cta:"Escuchar",
+    ph_eyebrow:"EN IMÁGENES", ph_title:"Galería RTU", ph_desc:"Estudio, detrás de cámaras y momentos destacados, en fotos y videos.",
+    filter_all:"Todos", filter_photo:"Fotos", filter_video:"Videos",
+    loading:"Cargando galería…", no_items:"La galería está vacía por ahora. ¡Vuelve pronto!",
     footer_rights:"© 2026 Radio Télé Unité (RTU). Todos los derechos reservados." },
-  pt:{ nav_direct:"Ouvir ao vivo", nav_programs:"Programas", nav_news:"Notícias", nav_about:"Sobre", nav_team:"Equipe", nav_gallery:"Galeria", nav_contact:"Contato", nav_cta:"Ouvir",
-    ph_eyebrow:"DESTAQUES", ph_title:"Notícias RTU", ph_desc:"Todas as notícias cobertas pelos nossos jornalistas, em um só lugar.",
-    loading:"Carregando notícias…", no_news:"Nenhuma notícia disponível no momento.", read_more:"Ler artigo",
+  pt:{ nav_about:"Sobre", nav_programs:"Programas", nav_team:"Equipe", nav_gallery:"Galeria", nav_news:"Notícias", nav_contact:"Contato", nav_cta:"Ouvir",
+    ph_eyebrow:"EM IMAGENS", ph_title:"Galeria RTU", ph_desc:"Estúdio, bastidores e melhores momentos, em fotos e vídeos.",
+    filter_all:"Todos", filter_photo:"Fotos", filter_video:"Vídeos",
+    loading:"Carregando galeria…", no_items:"A galeria está vazia no momento. Volte em breve!",
     footer_rights:"© 2026 Radio Télé Unité (RTU). Todos os direitos reservados." }
 };
 function getCurrentLang(){ return localStorage.getItem('rtu_lang') || 'fr'; }
@@ -186,27 +203,50 @@ const SUPABASE_URL = 'https://dznqpltxfhpuorxxwypb.supabase.co';
 const SUPABASE_ANON_KEY = 'sb_publishable_GPyfox6GpwC1HK-fwchdEw_XdkKOhQ1';
 const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-async function loadAllNews(){
-  const wrap = document.getElementById('newsListWrap');
+let allItems = [];
+
+function renderGallery(filter){
+  const wrap = document.getElementById('galleryWrap');
   const dict = translations[getCurrentLang()] || translations.fr;
-  const { data, error } = await sb.from('news').select('*').eq('active', true).order('published_at', { ascending:false });
-  if(error || !data || !data.length){
-    wrap.innerHTML = `<p class="empty-note">${dict.no_news}</p>`;
+  const items = filter === 'all' ? allItems : allItems.filter(i => i.media_type === filter);
+  if(!items.length){
+    wrap.innerHTML = `<p class="empty-note">${dict.no_items}</p>`;
     return;
   }
-  const localeMap = { fr:'fr-FR', ht:'fr-FR', en:'en-US', es:'es-ES', pt:'pt-PT' };
-  const locale = localeMap[getCurrentLang()] || 'fr-FR';
-  wrap.innerHTML = data.map(n => `
-    <a class="news-card" href="news-detail.html?id=${n.id}">
-      <div>
-        <span class="cat">${(n.category || '').toUpperCase()}</span>
-        <h3>${n.title}</h3>
-        <span class="date">${new Date(n.published_at).toLocaleDateString(locale, {day:'numeric', month:'long', year:'numeric'})}</span>
-      </div>
-    </a>
-  `).join('');
+  wrap.innerHTML = items.map(item => {
+    if(item.media_type === 'video'){
+      return `
+        <a class="gallery-item" href="${item.media_url}" target="_blank" rel="noopener">
+          ${item.thumbnail_url ? `<img src="${item.thumbnail_url}" alt="${item.title || ''}" />` : `<svg class="placeholder-icon" viewBox="0 0 24 24"><rect x="2" y="6" width="20" height="13" rx="2"/><path d="M8 7l1.5-3h5L16 7"/></svg>`}
+          <div class="play-overlay"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+          ${item.title ? `<div class="cap">${item.title}</div>` : ''}
+        </a>
+      `;
+    }
+    return `
+      <a class="gallery-item" href="${item.media_url}" target="_blank" rel="noopener">
+        <img src="${item.media_url}" alt="${item.title || ''}" />
+        ${item.title ? `<div class="cap">${item.title}</div>` : ''}
+      </a>
+    `;
+  }).join('');
 }
-loadAllNews();
+
+async function loadGallery(){
+  const { data, error } = await sb.from('gallery_items').select('*').eq('active', true).order('display_order');
+  allItems = (!error && data) ? data : [];
+  renderGallery('all');
+}
+
+document.querySelectorAll('.filter-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    renderGallery(btn.getAttribute('data-filter'));
+  });
+});
+
+loadGallery();
 </script>
 
 </body>

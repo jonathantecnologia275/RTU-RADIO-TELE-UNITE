@@ -1,0 +1,349 @@
+﻿<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>À propos — Radio Télé Unité (RTU)</title>
+<meta name="description" content="L'histoire, la mission et les valeurs de Radio Télé Unité (RTU)." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy-deep:#070A1C; --navy:#0D1230; --navy-panel:#121840;
+  --blue:#3E7BFA; --blue-soft:#7FA4FF;
+  --gold:#E8B84B; --gold-hover:#D6A53A;
+  --ivory:#F6F4EE; --ink:#0B0F2E; --ink-soft:#8890AC;
+  --line:rgba(255,255,255,.09);
+  --font-display:"Space Grotesk", sans-serif;
+  --font-body:"Inter", sans-serif;
+  --font-mono:"JetBrains Mono", monospace;
+  --ease:cubic-bezier(.2,.8,.2,1);
+}
+*,*::before,*::after{box-sizing:border-box;}
+body{margin:0; font-family:var(--font-body); background:var(--ivory); color:var(--ink); -webkit-font-smoothing:antialiased;}
+a{color:inherit; text-decoration:none;}
+button{font-family:inherit; cursor:pointer;}
+h1,h2,h3{margin:0; font-family:var(--font-display); font-weight:700;}
+p{margin:0;}
+.wrap{max-width:1180px; margin:0 auto; padding:0 28px;}
+@media (max-width:640px){ .wrap{padding:0 18px;} }
+
+.eq{display:inline-flex; align-items:flex-end; gap:3px; height:16px;}
+.eq span{width:3px; background:var(--gold); border-radius:2px; animation:eqbounce 1.1s ease-in-out infinite;}
+.eq span:nth-child(1){height:40%; animation-delay:-0.9s;}
+.eq span:nth-child(2){height:100%; animation-delay:-0.4s;}
+.eq span:nth-child(3){height:65%; animation-delay:-1.1s;}
+.eq span:nth-child(4){height:85%; animation-delay:-0.2s;}
+.eq span:nth-child(5){height:50%; animation-delay:-0.6s;}
+@keyframes eqbounce{0%,100%{transform:scaleY(0.35);} 50%{transform:scaleY(1);}}
+
+.nav{position:sticky; top:0; z-index:60; background:rgba(7,10,28,.92); backdrop-filter:blur(10px); border-bottom:1px solid var(--line);}
+.nav-inner{display:flex; align-items:center; justify-content:space-between; padding:16px 0;}
+.brand{display:flex; align-items:center; gap:10px;}
+.brand .mark{display:flex; align-items:center; gap:8px; font-family:var(--font-display); font-weight:700; font-size:18px;}
+.brand .mark .r{color:var(--blue-soft);} .brand .mark .t{color:#fff;} .brand .mark .u{color:var(--gold);}
+.nav-links{display:flex; align-items:center; gap:24px;}
+.nav-links a{font-size:13px; font-weight:600; color:rgba(255,255,255,.7); transition:color .15s; white-space:nowrap;}
+.nav-links a:hover, .nav-links a.active{color:#fff;}
+.nav-right{display:flex; align-items:center; gap:16px;}
+.lang-select{
+  appearance:none; background:rgba(255,255,255,.06); border:1px solid var(--line); color:#fff;
+  font-size:12px; font-weight:600; font-family:var(--font-mono); padding:7px 26px 7px 12px; border-radius:20px;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='9' height='6'><path d='M0 0l4.5 5.5L9 0z' fill='%238890AC'/></svg>");
+  background-repeat:no-repeat; background-position:right 11px center;
+}
+.lang-select option{color:#111; background:#fff;}
+.nav-cta{display:flex; align-items:center; gap:8px; background:var(--gold); color:var(--ink); font-weight:700; font-size:12.5px; padding:9px 16px; border-radius:20px; border:none;}
+@media (max-width:1000px){ .nav-links{display:none;} }
+
+.page-hero{background:linear-gradient(155deg, var(--navy-panel), var(--navy-deep)); color:#fff; padding:60px 0 54px;}
+.page-hero .eyebrow{font-family:var(--font-mono); font-size:12px; letter-spacing:.14em; color:var(--blue-soft); text-transform:uppercase; margin-bottom:12px;}
+.page-hero h1{font-size:clamp(28px,3.6vw,42px); margin-bottom:12px;}
+.page-hero p{color:rgba(255,255,255,.62); font-size:15px; max-width:560px;}
+
+.pad{padding:64px 0;}
+.story-grid{display:grid; grid-template-columns:1fr 1fr; gap:56px; align-items:center;}
+@media (max-width:860px){ .story-grid{grid-template-columns:1fr;} }
+.story-grid .eyebrow{font-family:var(--font-mono); font-size:11.5px; letter-spacing:.12em; text-transform:uppercase; color:var(--gold-hover); margin-bottom:10px;}
+.story-grid h2{font-size:26px; margin-bottom:16px;}
+.story-grid p{font-size:14.5px; line-height:1.75; color:#4A4F66; margin-bottom:14px;}
+.story-visual{background:linear-gradient(155deg, var(--navy-panel), var(--navy-deep)); border-radius:20px; padding:36px; color:#fff; min-height:280px; display:flex; flex-direction:column; justify-content:space-between;}
+.story-visual .badge{font-family:var(--font-mono); font-size:10.5px; letter-spacing:.08em; color:var(--gold); text-transform:uppercase;}
+.story-visual .quote{font-family:var(--font-display); font-size:22px; line-height:1.4; margin:20px 0;}
+.story-visual .sig{font-size:12px; color:rgba(255,255,255,.55);}
+
+.mv-grid{display:grid; grid-template-columns:1fr 1fr; gap:24px;}
+@media (max-width:760px){ .mv-grid{grid-template-columns:1fr;} }
+.mv-card{background:#fff; border:1px solid #E7E3D8; border-radius:16px; padding:30px;}
+.mv-card .ic{width:42px; height:42px; border-radius:11px; background:rgba(62,123,250,.1); display:flex; align-items:center; justify-content:center; margin-bottom:16px;}
+.mv-card .ic svg{width:20px; height:20px; stroke:var(--blue); fill:none; stroke-width:1.8;}
+.mv-card h3{font-size:17px; margin-bottom:10px;}
+.mv-card p{font-size:13.5px; color:#6B7085; line-height:1.65;}
+
+.section-head{text-align:center; max-width:520px; margin:0 auto 40px;}
+.section-head .eyebrow{font-family:var(--font-mono); font-size:11.5px; letter-spacing:.12em; text-transform:uppercase; color:var(--gold-hover); margin-bottom:10px;}
+.section-head h2{font-size:26px;}
+
+.values-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:18px;}
+@media (max-width:900px){ .values-grid{grid-template-columns:1fr 1fr;} }
+@media (max-width:520px){ .values-grid{grid-template-columns:1fr;} }
+.value-card{background:var(--navy); color:#fff; border-radius:16px; padding:24px; text-align:center;}
+.value-card .ic{width:40px; height:40px; border-radius:50%; background:rgba(232,184,75,.14); display:flex; align-items:center; justify-content:center; margin:0 auto 14px;}
+.value-card .ic svg{width:19px; height:19px; stroke:var(--gold); fill:none; stroke-width:1.8;}
+.value-card h3{font-size:14.5px; margin-bottom:8px;}
+.value-card p{font-size:12px; color:rgba(255,255,255,.55); line-height:1.5;}
+
+.stats-strip{background:var(--ivory); border-top:1px solid #E7E3D8; padding:48px 0;}
+.stats-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:20px; text-align:center;}
+@media (max-width:700px){ .stats-grid{grid-template-columns:1fr 1fr;} }
+.stat-item .n{font-family:var(--font-display); font-size:30px; font-weight:700; color:var(--navy);}
+.stat-item .l{font-size:12px; color:var(--ink-soft); margin-top:4px;}
+
+.cta-band{background:linear-gradient(140deg, var(--navy-panel), var(--navy-deep)); border-radius:24px; padding:48px; text-align:center; color:#fff;}
+.cta-band h2{font-size:24px; margin-bottom:12px;}
+.cta-band p{color:rgba(255,255,255,.6); font-size:14px; margin-bottom:24px;}
+.btn{display:inline-flex; align-items:center; gap:9px; font-weight:700; font-size:14px; padding:14px 26px; border-radius:10px; border:none; background:var(--gold); color:var(--ink); transition:background .15s;}
+.btn:hover{background:var(--gold-hover);}
+
+footer{background:var(--navy); border-top:1px solid var(--line); padding:44px 0 24px; color:#fff;}
+.foot-bottom{display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;}
+.foot-bottom p{font-size:12px; color:rgba(255,255,255,.45); margin:0;}
+.foot-links{display:flex; gap:18px; flex-wrap:wrap;}
+.foot-links a{font-size:13px; color:rgba(255,255,255,.7);}
+.foot-links a:hover{color:#fff;}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="wrap nav-inner">
+    <a href="index.html" class="brand">
+      <span class="mark"><span class="r">R</span><span class="t">T</span><span class="u">U</span></span>
+      <span class="eq" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span></span>
+    </a>
+    <div class="nav-links">
+      <a href="apropos.html" class="active" data-i18n="nav_about">À propos</a>
+      <a href="programmes.html" data-i18n="nav_programs">Programmes</a>
+      <a href="equipe.html" data-i18n="nav_team">Équipe</a>
+      <a href="galerie.html" data-i18n="nav_gallery">Galerie</a>
+      <a href="actualites.html" data-i18n="nav_news">Actualités</a>
+      <a href="contact.html" data-i18n="nav_contact">Contact</a>
+    </div>
+    <div class="nav-right">
+      <select class="lang-select" id="langSelect" onchange="setLang(this.value)">
+        <option value="fr">FR</option><option value="ht">HT</option><option value="en">EN</option><option value="es">ES</option><option value="pt">PT</option>
+      </select>
+      <a href="index.html#direct" class="nav-cta"><span aria-hidden="true">▶</span><span data-i18n="nav_cta">Écouter</span></a>
+    </div>
+  </div>
+</nav>
+
+<header class="page-hero">
+  <div class="wrap">
+    <div class="eyebrow" data-i18n="ph_eyebrow">NOTRE HISTOIRE</div>
+    <h1 data-i18n="ph_title">À propos de RTU</h1>
+    <p data-i18n="ph_desc">Une radio et une télé au service de l'information, de l'unité et de l'avenir.</p>
+  </div>
+</header>
+
+<section class="pad">
+  <div class="wrap story-grid">
+    <div>
+      <div class="eyebrow" data-i18n="story_eyebrow">DEPUIS LE DÉBUT</div>
+      <h2 data-i18n="story_title">Une radio qui rassemble</h2>
+      <p data-i18n="story_p1">Radio Télé Unité (RTU) est née de la volonté d'informer, d'éduquer et de rapprocher les communautés à travers une programmation riche et accessible à tous.</p>
+      <p data-i18n="story_p2">Aujourd'hui, RTU va au-delà de la diffusion traditionnelle en devenant une plateforme numérique internationale, capable de rejoindre ses auditeurs partout dans le monde — en particulier la diaspora haïtienne.</p>
+      <p data-i18n="story_p3">Radio et télévision réunies sous une seule bannière, RTU ambitionne de devenir une référence de l'information francophone et créolophone.</p>
+    </div>
+    <div class="story-visual">
+      <span class="badge">RTU · L'INFORMATION • L'UNITÉ • L'AVENIR</span>
+      <div class="quote" data-i18n="story_quote">"La voix qui unit, l'écran qui informe."</div>
+      <div class="sig">— Radio Télé Unité</div>
+    </div>
+  </div>
+</section>
+
+<section class="pad" style="padding-top:0;">
+  <div class="wrap mv-grid">
+    <div class="mv-card">
+      <div class="ic"><svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20z"/><path d="M12 6v6l4 2"/></svg></div>
+      <h3 data-i18n="mission_title">Notre mission</h3>
+      <p data-i18n="mission_desc">Offrir une information fiable, des programmes de qualité et un espace d'expression libre, en s'appuyant sur les nouvelles technologies pour rapprocher les communautés.</p>
+    </div>
+    <div class="mv-card">
+      <div class="ic"><svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></div>
+      <h3 data-i18n="vision_title">Notre vision</h3>
+      <p data-i18n="vision_desc">Devenir une référence mondiale de la radio numérique, connectant auditeurs, animateurs et partenaires à travers une plateforme moderne et interactive.</p>
+    </div>
+  </div>
+</section>
+
+<section class="pad" style="padding-top:0;">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow" data-i18n="values_eyebrow">CE QUI NOUS GUIDE</div>
+      <h2 data-i18n="values_title">Nos valeurs</h2>
+    </div>
+    <div class="values-grid">
+      <div class="value-card">
+        <div class="ic"><svg viewBox="0 0 24 24"><path d="M4 4h16v14H8l-4 4z"/></svg></div>
+        <h3 data-i18n="val1_title">Information</h3>
+        <p data-i18n="val1_desc">Une actualité crédible et vérifiée, au service du public.</p>
+      </div>
+      <div class="value-card">
+        <div class="ic"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+        <h3 data-i18n="val2_title">Unité</h3>
+        <p data-i18n="val2_desc">Un espace de dialogue qui rapproche les communautés.</p>
+      </div>
+      <div class="value-card">
+        <div class="ic"><svg viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg></div>
+        <h3 data-i18n="val3_title">Innovation</h3>
+        <p data-i18n="val3_desc">Une plateforme moderne, toujours à la pointe de la technologie.</p>
+      </div>
+      <div class="value-card">
+        <div class="ic"><svg viewBox="0 0 24 24"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21l7.8-7.8 1-1a5.5 5.5 0 0 0 0-7.8z"/></svg></div>
+        <h3 data-i18n="val4_title">Proximité</h3>
+        <p data-i18n="val4_desc">À l'écoute de nos auditeurs, où qu'ils se trouvent.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="stats-strip">
+  <div class="wrap stats-grid">
+    <div class="stat-item"><div class="n">24/7</div><div class="l" data-i18n="stat1">Diffusion continue</div></div>
+    <div class="stat-item"><div class="n">5</div><div class="l" data-i18n="stat2">Langues disponibles</div></div>
+    <div class="stat-item"><div class="n">2</div><div class="l" data-i18n="stat3">Radio et Télé</div></div>
+    <div class="stat-item"><div class="n">100%</div><div class="l" data-i18n="stat4">Diffusion mondiale</div></div>
+  </div>
+</section>
+
+<section class="pad">
+  <div class="wrap">
+    <div class="cta-band">
+      <h2 data-i18n="cta_title">Rejoignez la communauté RTU</h2>
+      <p data-i18n="cta_desc">Écoutez en direct, suivez nos programmes et restez connecté à l'actualité.</p>
+      <a href="index.html#direct" class="btn"><span aria-hidden="true">▶</span><span data-i18n="cta_listen">Écouter en direct</span></a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-bottom">
+      <p data-i18n="footer_rights">© 2026 Radio Télé Unité (RTU). Tous droits réservés.</p>
+      <div class="foot-links">
+        <a href="index.html">Accueil</a>
+        <a href="equipe.html" data-i18n="nav_team">Équipe</a>
+        <a href="galerie.html" data-i18n="nav_gallery">Galerie</a>
+        <a href="contact.html" data-i18n="nav_contact">Contact</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+const translations = {
+  fr:{ nav_about:"À propos", nav_programs:"Programmes", nav_team:"Équipe", nav_gallery:"Galerie", nav_news:"Actualités", nav_contact:"Contact", nav_cta:"Écouter",
+    ph_eyebrow:"NOTRE HISTOIRE", ph_title:"À propos de RTU", ph_desc:"Une radio et une télé au service de l'information, de l'unité et de l'avenir.",
+    story_eyebrow:"DEPUIS LE DÉBUT", story_title:"Une radio qui rassemble",
+    story_p1:"Radio Télé Unité (RTU) est née de la volonté d'informer, d'éduquer et de rapprocher les communautés à travers une programmation riche et accessible à tous.",
+    story_p2:"Aujourd'hui, RTU va au-delà de la diffusion traditionnelle en devenant une plateforme numérique internationale, capable de rejoindre ses auditeurs partout dans le monde — en particulier la diaspora haïtienne.",
+    story_p3:"Radio et télévision réunies sous une seule bannière, RTU ambitionne de devenir une référence de l'information francophone et créolophone.",
+    story_quote:"\"La voix qui unit, l'écran qui informe.\"",
+    mission_title:"Notre mission", mission_desc:"Offrir une information fiable, des programmes de qualité et un espace d'expression libre, en s'appuyant sur les nouvelles technologies pour rapprocher les communautés.",
+    vision_title:"Notre vision", vision_desc:"Devenir une référence mondiale de la radio numérique, connectant auditeurs, animateurs et partenaires à travers une plateforme moderne et interactive.",
+    values_eyebrow:"CE QUI NOUS GUIDE", values_title:"Nos valeurs",
+    val1_title:"Information", val1_desc:"Une actualité crédible et vérifiée, au service du public.",
+    val2_title:"Unité", val2_desc:"Un espace de dialogue qui rapproche les communautés.",
+    val3_title:"Innovation", val3_desc:"Une plateforme moderne, toujours à la pointe de la technologie.",
+    val4_title:"Proximité", val4_desc:"À l'écoute de nos auditeurs, où qu'ils se trouvent.",
+    stat1:"Diffusion continue", stat2:"Langues disponibles", stat3:"Radio et Télé", stat4:"Diffusion mondiale",
+    cta_title:"Rejoignez la communauté RTU", cta_desc:"Écoutez en direct, suivez nos programmes et restez connecté à l'actualité.", cta_listen:"Écouter en direct",
+    footer_rights:"© 2026 Radio Télé Unité (RTU). Tous droits réservés." },
+  ht:{ nav_about:"Konsènan", nav_programs:"Pwogram", nav_team:"Ekip", nav_gallery:"Galri", nav_news:"Aktyalite", nav_contact:"Kontak", nav_cta:"Koute",
+    ph_eyebrow:"ISTWA NOU", ph_title:"Konsènan RTU", ph_desc:"Yon radyo ak yon tele ki nan sèvis enfòmasyon, inite ak avni.",
+    story_eyebrow:"DEPI KÒMANSMAN", story_title:"Yon radyo ki rasanble",
+    story_p1:"Radio Télé Unité (RTU) fèt ak volonte pou enfòme, edike ak rapwoche kominote yo atravè yon pwogramasyon rich ki aksesib pou tout moun.",
+    story_p2:"Jodi a, RTU ale pi lwen pase difizyon tradisyonèl la lè li vin yon platfòm nimerik entènasyonal, ki kapab rive jwenn oditè li yo toupatou nan mond lan — patikilyèman dyaspora ayisyen an.",
+    story_p3:"Radyo ak televizyon reyini anba yon sèl baniè, RTU vle vin yon referans nan enfòmasyon fransèfòn ak kreyòlfòn.",
+    story_quote:"\"Vwa ki inifye, ekran ki enfòme.\"",
+    mission_title:"Misyon nou", mission_desc:"Bay yon enfòmasyon fyab, pwogram kalite ak yon espas ekspresyon lib, ap apiye sou nouvo teknoloji pou rapwoche kominote yo.",
+    vision_title:"Vizyon nou", vision_desc:"Vin yon referans mondyal nan radyo nimerik, ki konekte oditè, animatè ak patnè atravè yon platfòm modèn ak entèraktif.",
+    values_eyebrow:"SA KI GID NOU", values_title:"Valè nou yo",
+    val1_title:"Enfòmasyon", val1_desc:"Yon aktyalite kredib e verifye, nan sèvis piblik la.",
+    val2_title:"Inite", val2_desc:"Yon espas dyalòg ki rapwoche kominote yo.",
+    val3_title:"Inovasyon", val3_desc:"Yon platfòm modèn, toujou nan pwent teknoloji.",
+    val4_title:"Pwoksimite", val4_desc:"Alekout oditè nou yo, kèlkeswa kote yo ye.",
+    stat1:"Difizyon kontinyèl", stat2:"Lang disponib", stat3:"Radyo ak Tele", stat4:"Difizyon mondyal",
+    cta_title:"Rejwenn kominote RTU a", cta_desc:"Koute an dirèk, swiv pwogram nou yo epi rete konekte ak aktyalite.", cta_listen:"Koute an dirèk",
+    footer_rights:"© 2026 Radio Télé Unité (RTU). Tout dwa rezève." },
+  en:{ nav_about:"About", nav_programs:"Programs", nav_team:"Team", nav_gallery:"Gallery", nav_news:"News", nav_contact:"Contact", nav_cta:"Listen",
+    ph_eyebrow:"OUR STORY", ph_title:"About RTU", ph_desc:"A radio and TV station in service of information, unity, and the future.",
+    story_eyebrow:"SINCE THE BEGINNING", story_title:"A radio that brings people together",
+    story_p1:"Radio Télé Unité (RTU) was born from a desire to inform, educate, and bring communities closer through rich, accessible programming.",
+    story_p2:"Today, RTU goes beyond traditional broadcasting to become an international digital platform, able to reach listeners anywhere in the world — especially the Haitian diaspora.",
+    story_p3:"Radio and television united under one banner, RTU aims to become a reference for French- and Creole-language news.",
+    story_quote:"\"The voice that unites, the screen that informs.\"",
+    mission_title:"Our mission", mission_desc:"Provide reliable information, quality programs, and a free space for expression, using new technologies to bring communities closer.",
+    vision_title:"Our vision", vision_desc:"Become a global reference in digital radio, connecting listeners, hosts, and partners through a modern, interactive platform.",
+    values_eyebrow:"WHAT GUIDES US", values_title:"Our values",
+    val1_title:"Information", val1_desc:"Credible, verified news in service of the public.",
+    val2_title:"Unity", val2_desc:"A space for dialogue that brings communities together.",
+    val3_title:"Innovation", val3_desc:"A modern platform, always at the forefront of technology.",
+    val4_title:"Closeness", val4_desc:"Listening to our audience, wherever they are.",
+    stat1:"Continuous broadcast", stat2:"Available languages", stat3:"Radio and TV", stat4:"Global broadcast",
+    cta_title:"Join the RTU community", cta_desc:"Listen live, follow our programs, and stay connected to the news.", cta_listen:"Listen Live",
+    footer_rights:"© 2026 Radio Télé Unité (RTU). All rights reserved." },
+  es:{ nav_about:"Nosotros", nav_programs:"Programas", nav_team:"Equipo", nav_gallery:"Galería", nav_news:"Noticias", nav_contact:"Contacto", nav_cta:"Escuchar",
+    ph_eyebrow:"NUESTRA HISTORIA", ph_title:"Sobre RTU", ph_desc:"Una radio y televisión al servicio de la información, la unidad y el futuro.",
+    story_eyebrow:"DESDE EL PRINCIPIO", story_title:"Una radio que une",
+    story_p1:"Radio Télé Unité (RTU) nació del deseo de informar, educar y acercar a las comunidades a través de una programación rica y accesible para todos.",
+    story_p2:"Hoy, RTU va más allá de la transmisión tradicional al convertirse en una plataforma digital internacional, capaz de llegar a sus oyentes en cualquier parte del mundo — especialmente la diáspora haitiana.",
+    story_p3:"Radio y televisión reunidas bajo una sola bandera, RTU aspira a convertirse en una referencia de la información francófona y criolla.",
+    story_quote:"\"La voz que une, la pantalla que informa.\"",
+    mission_title:"Nuestra misión", mission_desc:"Ofrecer información confiable, programas de calidad y un espacio de libre expresión, apoyándonos en las nuevas tecnologías para acercar a las comunidades.",
+    vision_title:"Nuestra visión", vision_desc:"Convertirnos en una referencia mundial de la radio digital, conectando oyentes, presentadores y socios a través de una plataforma moderna e interactiva.",
+    values_eyebrow:"LO QUE NOS GUÍA", values_title:"Nuestros valores",
+    val1_title:"Información", val1_desc:"Noticias creíbles y verificadas, al servicio del público.",
+    val2_title:"Unidad", val2_desc:"Un espacio de diálogo que acerca a las comunidades.",
+    val3_title:"Innovación", val3_desc:"Una plataforma moderna, siempre a la vanguardia tecnológica.",
+    val4_title:"Cercanía", val4_desc:"Atentos a nuestra audiencia, estén donde estén.",
+    stat1:"Transmisión continua", stat2:"Idiomas disponibles", stat3:"Radio y TV", stat4:"Transmisión mundial",
+    cta_title:"Únete a la comunidad RTU", cta_desc:"Escucha en vivo, sigue nuestros programas y mantente conectado a la actualidad.", cta_listen:"Escuchar en vivo",
+    footer_rights:"© 2026 Radio Télé Unité (RTU). Todos los derechos reservados." },
+  pt:{ nav_about:"Sobre", nav_programs:"Programas", nav_team:"Equipe", nav_gallery:"Galeria", nav_news:"Notícias", nav_contact:"Contato", nav_cta:"Ouvir",
+    ph_eyebrow:"NOSSA HISTÓRIA", ph_title:"Sobre a RTU", ph_desc:"Uma rádio e TV a serviço da informação, da unidade e do futuro.",
+    story_eyebrow:"DESDE O INÍCIO", story_title:"Uma rádio que une",
+    story_p1:"Radio Télé Unité (RTU) nasceu da vontade de informar, educar e aproximar as comunidades por meio de uma programação rica e acessível a todos.",
+    story_p2:"Hoje, a RTU vai além da transmissão tradicional ao se tornar uma plataforma digital internacional, capaz de alcançar seus ouvintes em qualquer parte do mundo — especialmente a diáspora haitiana.",
+    story_p3:"Rádio e televisão reunidas sob uma só bandeira, a RTU almeja se tornar uma referência da informação francófona e crioula.",
+    story_quote:"\"A voz que une, a tela que informa.\"",
+    mission_title:"Nossa missão", mission_desc:"Oferecer informação confiável, programas de qualidade e um espaço de livre expressão, apoiando-se em novas tecnologias para aproximar as comunidades.",
+    vision_title:"Nossa visão", vision_desc:"Tornar-se uma referência mundial em rádio digital, conectando ouvintes, apresentadores e parceiros por meio de uma plataforma moderna e interativa.",
+    values_eyebrow:"O QUE NOS GUIA", values_title:"Nossos valores",
+    val1_title:"Informação", val1_desc:"Notícias confiáveis e verificadas, a serviço do público.",
+    val2_title:"Unidade", val2_desc:"Um espaço de diálogo que aproxima as comunidades.",
+    val3_title:"Inovação", val3_desc:"Uma plataforma moderna, sempre na vanguarda da tecnologia.",
+    val4_title:"Proximidade", val4_desc:"Atentos ao nosso público, onde quer que estejam.",
+    stat1:"Transmissão contínua", stat2:"Idiomas disponíveis", stat3:"Rádio e TV", stat4:"Transmissão mundial",
+    cta_title:"Junte-se à comunidade RTU", cta_desc:"Ouça ao vivo, siga nossos programas e mantenha-se conectado às notícias.", cta_listen:"Ouvir ao vivo",
+    footer_rights:"© 2026 Radio Télé Unité (RTU). Todos os direitos reservados." }
+};
+function getCurrentLang(){ return localStorage.getItem('rtu_lang') || 'fr'; }
+function setLang(lang){
+  localStorage.setItem('rtu_lang', lang);
+  document.getElementById('langSelect').value = lang;
+  const dict = translations[lang] || translations.fr;
+  document.querySelectorAll('[data-i18n]').forEach(el=>{
+    const key = el.getAttribute('data-i18n');
+    if(dict[key] !== undefined) el.textContent = dict[key];
+  });
+}
+setLang(getCurrentLang());
+</script>
+
+</body>
+</html>
+

@@ -45,8 +45,8 @@ p{margin:0;}
 .brand{display:flex; align-items:center; gap:10px;}
 .brand .mark{display:flex; align-items:center; gap:8px; font-family:var(--font-display); font-weight:700; font-size:18px;}
 .brand .mark .r{color:var(--blue-soft);} .brand .mark .t{color:#fff;} .brand .mark .u{color:var(--gold);}
-.nav-links{display:flex; align-items:center; gap:30px;}
-.nav-links a{font-size:13.5px; font-weight:600; color:rgba(255,255,255,.7); transition:color .15s;}
+.nav-links{display:flex; align-items:center; gap:22px;}
+.nav-links a{font-size:12.5px; font-weight:600; color:rgba(255,255,255,.7); transition:color .15s; white-space:nowrap;}
 .nav-links a:hover, .nav-links a.active{color:#fff;}
 .nav-right{display:flex; align-items:center; gap:16px;}
 .lang-select{
@@ -57,7 +57,7 @@ p{margin:0;}
 }
 .lang-select option{color:#111; background:#fff;}
 .nav-cta{display:flex; align-items:center; gap:8px; background:var(--gold); color:var(--ink); font-weight:700; font-size:12.5px; padding:9px 16px; border-radius:20px; border:none;}
-@media (max-width:900px){ .nav-links{display:none;} }
+@media (max-width:1000px){ .nav-links{display:none;} }
 
 .page-hero{background:linear-gradient(155deg, var(--navy-panel), var(--navy-deep)); color:#fff; padding:60px 0 54px;}
 .page-hero .eyebrow{font-family:var(--font-mono); font-size:12px; letter-spacing:.14em; color:var(--blue-soft); text-transform:uppercase; margin-bottom:12px;}
@@ -111,8 +111,11 @@ footer{background:var(--navy); border-top:1px solid var(--line); padding:44px 0 
       <span class="eq" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span></span>
     </a>
     <div class="nav-links">
+      <a href="apropos.html" data-i18n="nav_about">À propos</a>
       <a href="index.html#direct" data-i18n="nav_direct">Écouter en direct</a>
       <a href="programmes.html" data-i18n="nav_programs">Programmes</a>
+      <a href="equipe.html" data-i18n="nav_team">Équipe</a>
+      <a href="galerie.html" data-i18n="nav_gallery">Galerie</a>
       <a href="actualites.html" data-i18n="nav_news">Actualités</a>
       <a href="contact.html" class="active" data-i18n="nav_contact">Contact</a>
     </div>
@@ -177,7 +180,10 @@ footer{background:var(--navy); border-top:1px solid var(--line); padding:44px 0 
       <p data-i18n="footer_rights">© 2026 Radio Télé Unité (RTU). Tous droits réservés.</p>
       <div class="foot-links">
         <a href="index.html">Accueil</a>
+        <a href="apropos.html" data-i18n="nav_about">À propos</a>
         <a href="programmes.html" data-i18n="nav_programs">Programmes</a>
+        <a href="equipe.html" data-i18n="nav_team">Équipe</a>
+        <a href="galerie.html" data-i18n="nav_gallery">Galerie</a>
         <a href="actualites.html" data-i18n="nav_news">Actualités</a>
       </div>
     </div>
@@ -186,31 +192,31 @@ footer{background:var(--navy); border-top:1px solid var(--line); padding:44px 0 
 
 <script>
 const translations = {
-  fr:{ nav_direct:"Écouter en direct", nav_programs:"Programmes", nav_news:"Actualités", nav_contact:"Contact", nav_cta:"Écouter",
+  fr:{ nav_direct:"Écouter en direct", nav_programs:"Programmes", nav_news:"Actualités", nav_about:"À propos", nav_team:"Équipe", nav_gallery:"Galerie", nav_contact:"Contact", nav_cta:"Écouter",
     ph_eyebrow:"RESTONS EN CONTACT", ph_title:"Contactez RTU", ph_desc:"Une question, un partenariat, une demande de publicité ? Écrivez-nous.",
     info_email:"EMAIL", info_phone:"TÉLÉPHONE", info_address:"ADRESSE", info_reach:"DIFFUSION", info_reach_val:"Mondiale, 24h/24",
     f_name:"Nom complet", f_email:"Email", f_phone:"Téléphone (optionnel)", f_message:"Message", f_submit:"Envoyer le message",
     msg_success:"Merci ! Votre message a bien été envoyé.", msg_error:"Une erreur est survenue. Réessayez.",
     footer_rights:"© 2026 Radio Télé Unité (RTU). Tous droits réservés." },
-  ht:{ nav_direct:"Koute an dirèk", nav_programs:"Pwogram", nav_news:"Aktyalite", nav_contact:"Kontak", nav_cta:"Koute",
+  ht:{ nav_direct:"Koute an dirèk", nav_programs:"Pwogram", nav_news:"Aktyalite", nav_about:"Konsènan", nav_team:"Ekip", nav_gallery:"Galri", nav_contact:"Kontak", nav_cta:"Koute",
     ph_eyebrow:"AN KONTAK", ph_title:"Kontakte RTU", ph_desc:"Yon kesyon, yon patenarya, yon demand piblisite? Ekri nou.",
     info_email:"IMÈL", info_phone:"TELEFÒN", info_address:"ADRÈS", info_reach:"DIFIZYON", info_reach_val:"Mondyal, 24t/24",
     f_name:"Non konplè", f_email:"Imèl", f_phone:"Telefòn (opsyonèl)", f_message:"Mesaj", f_submit:"Voye mesaj la",
     msg_success:"Mèsi! Mesaj ou a byen voye.", msg_error:"Gen yon erè ki rive. Eseye ankò.",
     footer_rights:"© 2026 Radio Télé Unité (RTU). Tout dwa rezève." },
-  en:{ nav_direct:"Listen Live", nav_programs:"Programs", nav_news:"News", nav_contact:"Contact", nav_cta:"Listen",
+  en:{ nav_direct:"Listen Live", nav_programs:"Programs", nav_news:"News", nav_about:"About", nav_team:"Team", nav_gallery:"Gallery", nav_contact:"Contact", nav_cta:"Listen",
     ph_eyebrow:"GET IN TOUCH", ph_title:"Contact RTU", ph_desc:"A question, a partnership, an ad inquiry? Write to us.",
     info_email:"EMAIL", info_phone:"PHONE", info_address:"ADDRESS", info_reach:"REACH", info_reach_val:"Global, 24/7",
     f_name:"Full name", f_email:"Email", f_phone:"Phone (optional)", f_message:"Message", f_submit:"Send message",
     msg_success:"Thanks! Your message has been sent.", msg_error:"Something went wrong. Please try again.",
     footer_rights:"© 2026 Radio Télé Unité (RTU). All rights reserved." },
-  es:{ nav_direct:"Escuchar en vivo", nav_programs:"Programas", nav_news:"Noticias", nav_contact:"Contacto", nav_cta:"Escuchar",
+  es:{ nav_direct:"Escuchar en vivo", nav_programs:"Programas", nav_news:"Noticias", nav_about:"Nosotros", nav_team:"Equipo", nav_gallery:"Galería", nav_contact:"Contacto", nav_cta:"Escuchar",
     ph_eyebrow:"CONTÁCTANOS", ph_title:"Contacta a RTU", ph_desc:"¿Una pregunta, una alianza, publicidad? Escríbenos.",
     info_email:"CORREO", info_phone:"TELÉFONO", info_address:"DIRECCIÓN", info_reach:"ALCANCE", info_reach_val:"Mundial, 24/7",
     f_name:"Nombre completo", f_email:"Correo", f_phone:"Teléfono (opcional)", f_message:"Mensaje", f_submit:"Enviar mensaje",
     msg_success:"¡Gracias! Tu mensaje ha sido enviado.", msg_error:"Ocurrió un error. Intenta de nuevo.",
     footer_rights:"© 2026 Radio Télé Unité (RTU). Todos los derechos reservados." },
-  pt:{ nav_direct:"Ouvir ao vivo", nav_programs:"Programas", nav_news:"Notícias", nav_contact:"Contato", nav_cta:"Ouvir",
+  pt:{ nav_direct:"Ouvir ao vivo", nav_programs:"Programas", nav_news:"Notícias", nav_about:"Sobre", nav_team:"Equipe", nav_gallery:"Galeria", nav_contact:"Contato", nav_cta:"Ouvir",
     ph_eyebrow:"FALE CONOSCO", ph_title:"Contate a RTU", ph_desc:"Uma dúvida, uma parceria, um pedido de publicidade? Escreva para nós.",
     info_email:"EMAIL", info_phone:"TELEFONE", info_address:"ENDEREÇO", info_reach:"ALCANCE", info_reach_val:"Mundial, 24/7",
     f_name:"Nome completo", f_email:"Email", f_phone:"Telefone (opcional)", f_message:"Mensagem", f_submit:"Enviar mensagem",

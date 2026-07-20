@@ -67,8 +67,8 @@ img{max-width:100%; display:block;}
 .brand .mark .t{color:#fff;}
 .brand .mark .u{color:var(--gold);}
 .brand .tagline{font-size:10px; color:var(--ink-soft); font-family:var(--font-mono); letter-spacing:.08em; text-transform:uppercase; margin-top:1px;}
-.nav-links{display:flex; align-items:center; gap:30px;}
-.nav-links a{font-size:13.5px; font-weight:600; color:rgba(255,255,255,.7); transition:color .15s;}
+.nav-links{display:flex; align-items:center; gap:22px;}
+.nav-links a{font-size:12.5px; font-weight:600; color:rgba(255,255,255,.7); transition:color .15s; white-space:nowrap;}
 .nav-links a:hover{color:#fff;}
 .nav-right{display:flex; align-items:center; gap:16px;}
 .lang-select{
@@ -81,7 +81,7 @@ img{max-width:100%; display:block;}
 .nav-cta{display:flex; align-items:center; gap:8px; background:var(--gold); color:var(--ink); font-weight:700; font-size:12.5px; padding:9px 16px; border-radius:20px; border:none;}
 .nav-cta:hover{background:var(--gold-hover);}
 .nav-burger{display:none;}
-@media (max-width:900px){
+@media (max-width:1000px){
   .nav-links{display:none;}
   .nav-cta span.full{display:none;}
 }
@@ -218,8 +218,11 @@ footer{background:var(--navy); border-top:1px solid var(--line); padding:56px 0 
       <span class="eq" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span></span>
     </a>
     <div class="nav-links">
+      <a href="apropos.html" data-i18n="nav_about">À propos</a>
       <a href="#direct" data-i18n="nav_direct">Écouter en direct</a>
       <a href="programmes.html" data-i18n="nav_programs">Programmes</a>
+      <a href="equipe.html" data-i18n="nav_team">Équipe</a>
+      <a href="galerie.html" data-i18n="nav_gallery">Galerie</a>
       <a href="actualites.html" data-i18n="nav_news">Actualités</a>
       <a href="contact.html" data-i18n="nav_contact">Contact</a>
     </div>
@@ -388,8 +391,11 @@ footer{background:var(--navy); border-top:1px solid var(--line); padding:56px 0 
       </div>
       <div class="foot-col">
         <h4 data-i18n="footer_nav">NAVIGATION</h4>
+        <a href="apropos.html" data-i18n="nav_about">À propos</a>
         <a href="#direct" data-i18n="nav_direct">Écouter en direct</a>
         <a href="programmes.html" data-i18n="nav_programs">Programmes</a>
+        <a href="equipe.html" data-i18n="nav_team">Équipe</a>
+        <a href="galerie.html" data-i18n="nav_gallery">Galerie</a>
         <a href="actualites.html" data-i18n="nav_news">Actualités</a>
       </div>
       <div class="foot-col">
@@ -412,7 +418,7 @@ footer{background:var(--navy); border-top:1px solid var(--line); padding:56px 0 
 <script>
 const translations = {
   fr:{
-    nav_direct:"Écouter en direct", nav_programs:"Programmes", nav_news:"Actualités", nav_contact:"Contact", nav_cta:"Écouter",
+    nav_direct:"Écouter en direct", nav_programs:"Programmes", nav_news:"Actualités", nav_about:"À propos", nav_team:"Équipe", nav_gallery:"Galerie", nav_contact:"Contact", nav_cta:"Écouter",
     hero_live_badge:"EN DIRECT MAINTENANT", hero_eyebrow:"RADIO TÉLÉ UNITÉ",
     hero_title:"La voix qui unit, <span class=\"accent\">l'écran qui informe.</span>",
     hero_lead:"Radio Télé Unité diffuse en direct, dans le monde entier — musique, actualités et débats, produits en Haïti pour toute la diaspora.",
@@ -437,7 +443,7 @@ const translations = {
     footer_contact:"CONTACT", footer_rights:"© 2026 Radio Télé Unité (RTU). Tous droits réservés."
   },
   ht:{
-    nav_direct:"Koute an dirèk", nav_programs:"Pwogram", nav_news:"Aktyalite", nav_contact:"Kontak", nav_cta:"Koute",
+    nav_direct:"Koute an dirèk", nav_programs:"Pwogram", nav_news:"Aktyalite", nav_about:"Konsènan", nav_team:"Ekip", nav_gallery:"Galri", nav_contact:"Kontak", nav_cta:"Koute",
     hero_live_badge:"AN DIRÈK KOUNYE A", hero_eyebrow:"RADIO TÉLÉ UNITÉ",
     hero_title:"Vwa ki inifye, <span class=\"accent\">ekran ki enfòme.</span>",
     hero_lead:"Radio Télé Unité ap difize an dirèk, nan tout mond lan — mizik, aktyalite ak deba, ki fèt an Ayiti pou tout dyaspora a.",
@@ -462,7 +468,7 @@ const translations = {
     footer_contact:"KONTAK", footer_rights:"© 2026 Radio Télé Unité (RTU). Tout dwa rezève."
   },
   en:{
-    nav_direct:"Listen Live", nav_programs:"Programs", nav_news:"News", nav_contact:"Contact", nav_cta:"Listen",
+    nav_direct:"Listen Live", nav_programs:"Programs", nav_news:"News", nav_about:"About", nav_team:"Team", nav_gallery:"Gallery", nav_contact:"Contact", nav_cta:"Listen",
     hero_live_badge:"LIVE NOW", hero_eyebrow:"RADIO TÉLÉ UNITÉ",
     hero_title:"The voice that unites, <span class=\"accent\">the screen that informs.</span>",
     hero_lead:"Radio Télé Unité broadcasts live, worldwide — music, news and debate, produced in Haiti for the whole diaspora.",
@@ -487,7 +493,7 @@ const translations = {
     footer_contact:"CONTACT", footer_rights:"© 2026 Radio Télé Unité (RTU). All rights reserved."
   },
   es:{
-    nav_direct:"Escuchar en vivo", nav_programs:"Programas", nav_news:"Noticias", nav_contact:"Contacto", nav_cta:"Escuchar",
+    nav_direct:"Escuchar en vivo", nav_programs:"Programas", nav_news:"Noticias", nav_about:"Nosotros", nav_team:"Equipo", nav_gallery:"Galería", nav_contact:"Contacto", nav_cta:"Escuchar",
     hero_live_badge:"EN VIVO AHORA", hero_eyebrow:"RADIO TÉLÉ UNITÉ",
     hero_title:"La voz que une, <span class=\"accent\">la pantalla que informa.</span>",
     hero_lead:"Radio Télé Unité transmite en vivo, en todo el mundo — música, noticias y debate, producidos en Haití para toda la diáspora.",
@@ -512,7 +518,7 @@ const translations = {
     footer_contact:"CONTACTO", footer_rights:"© 2026 Radio Télé Unité (RTU). Todos los derechos reservados."
   },
   pt:{
-    nav_direct:"Ouvir ao vivo", nav_programs:"Programas", nav_news:"Notícias", nav_contact:"Contato", nav_cta:"Ouvir",
+    nav_direct:"Ouvir ao vivo", nav_programs:"Programas", nav_news:"Notícias", nav_about:"Sobre", nav_team:"Equipe", nav_gallery:"Galeria", nav_contact:"Contato", nav_cta:"Ouvir",
     hero_live_badge:"AO VIVO AGORA", hero_eyebrow:"RADIO TÉLÉ UNITÉ",
     hero_title:"A voz que une, <span class=\"accent\">a tela que informa.</span>",
     hero_lead:"Radio Télé Unité transmite ao vivo, no mundo todo — música, notícias e debate, produzidos no Haiti para toda a diáspora.",
