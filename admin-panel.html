@@ -1,0 +1,340 @@
+﻿<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Panel Administration — RTU</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+:root{
+  --navy-deep:#070A1C; --navy:#0D1230; --navy-panel:#121840;
+  --blue:#3E7BFA; --blue-soft:#7FA4FF; --gold:#E8B84B; --gold-hover:#D6A53A;
+  --ivory:#F6F4EE; --ink:#0B0F2E; --ink-soft:#8890AC; --line:rgba(255,255,255,.09);
+  --green:#3FA66B; --red:#EE5B4F;
+  --font-display:"Space Grotesk", sans-serif; --font-body:"Inter", sans-serif; --font-mono:"JetBrains Mono", monospace;
+}
+*,*::before,*::after{box-sizing:border-box;}
+body{margin:0; font-family:var(--font-body); background:var(--ivory); color:var(--ink);}
+button, input, select, textarea{font-family:inherit;}
+button{cursor:pointer;}
+h1,h2,h3{margin:0; font-family:var(--font-display);}
+
+.shell{display:grid; grid-template-columns:240px 1fr; min-height:100vh;}
+.sidebar{background:var(--navy-deep); color:#fff; padding:24px 16px; display:flex; flex-direction:column;}
+.sidebar .logo{display:flex; align-items:center; gap:10px; padding:8px 10px 24px;}
+.sidebar .logo img{height:34px;}
+.sidebar nav{flex:1; display:flex; flex-direction:column; gap:2px;}
+.sidebar nav button{display:flex; align-items:center; gap:10px; background:none; border:none; color:rgba(255,255,255,.65); text-align:left; padding:11px 14px; border-radius:10px; font-size:13.5px; font-weight:600; transition:background .15s, color .15s;}
+.sidebar nav button:hover{background:rgba(255,255,255,.06); color:#fff;}
+.sidebar nav button.active{background:var(--gold); color:var(--navy-deep);}
+.sidebar .who{padding:14px; border-top:1px solid var(--line); margin-top:10px;}
+.sidebar .who .name{font-size:13px; font-weight:700;}
+.sidebar .who .role{font-size:11px; color:var(--ink-soft); font-family:var(--font-mono); text-transform:uppercase;}
+.sidebar .logout{margin-top:10px; background:rgba(238,91,79,.13); color:#F4879F; border:none; padding:10px; border-radius:9px; font-size:12.5px; font-weight:700; width:100%;}
+
+.main{padding:34px 40px; overflow-x:hidden;}
+.main h2{font-size:22px; margin-bottom:6px;}
+.main .desc{font-size:13px; color:var(--ink-soft); margin-bottom:28px;}
+
+.panel-hidden{display:none;}
+.card{background:#fff; border:1px solid #E7E3D8; border-radius:16px; padding:24px; margin-bottom:20px;}
+.card h3{font-size:15px; margin-bottom:16px;}
+.grid-2{display:grid; grid-template-columns:1fr 1fr; gap:14px;}
+@media (max-width:800px){ .grid-2{grid-template-columns:1fr;} .shell{grid-template-columns:1fr;} .sidebar{display:none;} }
+.field{margin-bottom:14px;}
+.field label{display:block; font-size:12px; font-weight:700; color:var(--ink); margin-bottom:5px;}
+.field input, .field select{width:100%; padding:10px 12px; border:1.5px solid #E7E3D8; border-radius:8px; font-size:13.5px; outline:none; background:var(--ivory);}
+.field input:focus, .field select:focus{border-color:var(--blue);}
+.btn-primary{background:var(--gold); color:var(--ink); border:none; font-weight:700; font-size:13.5px; padding:11px 20px; border-radius:9px;}
+.btn-primary:hover{background:var(--gold-hover);}
+.btn-primary:disabled{opacity:.6;}
+.btn-danger{background:rgba(238,91,79,.1); color:var(--red); border:1px solid rgba(238,91,79,.25); font-weight:700; font-size:12px; padding:7px 14px; border-radius:8px;}
+
+table{width:100%; border-collapse:collapse; font-size:13px;}
+th{text-align:left; font-family:var(--font-mono); font-size:10.5px; text-transform:uppercase; letter-spacing:.04em; color:var(--ink-soft); padding:8px 10px; border-bottom:1px solid #E7E3D8;}
+td{padding:10px; border-bottom:1px solid #F0EDE4;}
+.badge{font-family:var(--font-mono); font-size:10px; font-weight:700; padding:3px 9px; border-radius:10px; text-transform:uppercase;}
+.badge.admin{background:rgba(232,184,75,.15); color:var(--gold-hover);}
+.badge.directeur_programmation{background:rgba(62,123,250,.1); color:var(--blue);}
+.badge.animateur{background:rgba(63,166,107,.1); color:var(--green);}
+.badge.inactive{background:rgba(238,91,79,.1); color:var(--red);}
+
+.code-reveal{background:var(--navy); color:#fff; border-radius:12px; padding:18px 20px; margin-top:14px; display:none;}
+.code-reveal.show{display:block;}
+.code-reveal .label{font-size:11px; color:var(--ink-soft); text-transform:uppercase; letter-spacing:.06em; margin-bottom:6px;}
+.code-reveal .code{font-family:var(--font-mono); font-size:20px; font-weight:700; color:var(--gold); letter-spacing:.05em;}
+.code-reveal .warn{font-size:11.5px; color:rgba(255,255,255,.5); margin-top:8px;}
+
+.msg{margin-top:12px; padding:10px 14px; border-radius:8px; font-size:13px; display:none;}
+.msg.show{display:block;}
+.msg.error{background:rgba(238,91,79,.1); color:var(--red);}
+.msg.success{background:rgba(63,166,107,.1); color:var(--green);}
+.loading-screen{position:fixed; inset:0; background:var(--navy-deep); color:#fff; display:flex; align-items:center; justify-content:center; font-family:var(--font-mono); font-size:13px; z-index:999;}
+</style>
+</head>
+<body>
+
+<div class="loading-screen" id="loadingScreen">Vérification de l'accès...</div>
+
+<div class="shell" id="shellWrap" style="display:none;">
+  <aside class="sidebar">
+    <div class="logo"><img src="assets/logo.png" alt="RTU"></div>
+    <nav id="sideNav">
+      <button data-panel="panel-staff" class="active">👤 Équipe & Accès</button>
+      <button data-panel="panel-guests">🔑 Codes Invités</button>
+    </nav>
+    <div class="who">
+      <div class="name" id="whoName">—</div>
+      <div class="role" id="whoRole">—</div>
+    </div>
+    <button class="logout" id="logoutBtn">Déconnexion</button>
+  </aside>
+
+  <main class="main">
+    <section id="panel-staff">
+      <h2>Équipe & Accès</h2>
+      <p class="desc">Créez des comptes pour les animateurs et gérez leurs accès.</p>
+
+      <div class="card">
+        <h3>Ajouter un membre de l'équipe</h3>
+        <form id="staffForm">
+          <div class="grid-2">
+            <div class="field"><label>Nom complet</label><input type="text" id="s_fullname" required></div>
+            <div class="field"><label>Rôle</label>
+              <select id="s_role">
+                <option value="animateur">Animateur</option>
+                <option value="directeur_programmation">Directeur de programmation</option>
+                <option value="admin">Administrateur</option>
+              </select>
+            </div>
+          </div>
+          <div class="grid-2">
+            <div class="field"><label>Email</label><input type="email" id="s_email" required></div>
+            <div class="field"><label>Mot de passe temporaire</label><input type="text" id="s_password" required></div>
+          </div>
+          <button type="submit" class="btn-primary" id="staffSubmitBtn">Créer le compte</button>
+          <div class="msg" id="staffMsg"></div>
+          <div class="code-reveal" id="codeReveal">
+            <div class="label">Code de sécurité généré (à transmettre au membre)</div>
+            <div class="code" id="codeRevealValue">—</div>
+            <div class="warn">⚠️ Ce code ne sera plus affiché après avoir quitté cette page. Notez-le maintenant.</div>
+          </div>
+        </form>
+      </div>
+
+      <div class="card">
+        <h3>Membres de l'équipe</h3>
+        <table>
+          <thead><tr><th>Nom</th><th>Rôle</th><th>Statut</th><th>Action</th></tr></thead>
+          <tbody id="staffTableBody"><tr><td colspan="4">Chargement...</td></tr></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="panel-guests" class="panel-hidden">
+      <h2>Codes d'accès Invités</h2>
+      <p class="desc">Générez des codes temporaires pour vos invités.</p>
+      <div class="card">
+        <h3>Générer un nouveau code</h3>
+        <form id="guestForm">
+          <div class="grid-2">
+            <div class="field"><label>Nom de l'invité</label><input type="text" id="g_name" required></div>
+            <div class="field"><label>Expire le</label><input type="datetime-local" id="g_expires" required></div>
+          </div>
+          <div class="field"><label>Objet / Notes</label><input type="text" id="g_purpose" placeholder="Ex: Invité spécial émission du 20 juillet"></div>
+          <button type="submit" class="btn-primary">Générer le code</button>
+          <div class="msg" id="guestMsg"></div>
+        </form>
+      </div>
+      <div class="card">
+        <h3>Codes actifs</h3>
+        <table>
+          <thead><tr><th>Code</th><th>Invité</th><th>Expire</th><th>Statut</th><th>Action</th></tr></thead>
+          <tbody id="guestTableBody"><tr><td colspan="5">Chargement...</td></tr></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+</div>
+
+<script>
+const SUPABASE_URL = 'https://dznqpltxfhpuorxxwypb.supabase.co';
+const SUPABASE_ANON_KEY = 'sb_publishable_GPyfox6GpwC1HK-fwchdEw_XdkKOhQ1';
+const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+let currentSession = null;
+let currentProfile = null;
+
+async function checkAccess(){
+  const { data: { session } } = await sb.auth.getSession();
+  if(!session){ window.location.href = 'admin-login.html'; return; }
+  currentSession = session;
+
+  const { data: profile, error } = await sb.from('staff_profiles').select('*').eq('id', session.user.id).maybeSingle();
+  if(error || !profile || !profile.active){
+    await sb.auth.signOut();
+    window.location.href = 'admin-login.html';
+    return;
+  }
+  currentProfile = profile;
+  document.getElementById('whoName').textContent = profile.full_name;
+  document.getElementById('whoRole').textContent = profile.role.replace('_',' ');
+  document.getElementById('loadingScreen').style.display = 'none';
+  document.getElementById('shellWrap').style.display = 'grid';
+
+  if(profile.role !== 'admin'){
+    document.querySelectorAll('#sideNav button').forEach(b=>{
+      if(b.dataset.panel !== 'panel-staff') b.style.display = 'none';
+    });
+  }
+
+  loadStaffList();
+  loadGuestList();
+}
+checkAccess();
+
+document.getElementById('logoutBtn').addEventListener('click', async ()=>{
+  await sb.auth.signOut();
+  window.location.href = 'admin-login.html';
+});
+
+document.querySelectorAll('#sideNav button').forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    document.querySelectorAll('#sideNav button').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('.main > section').forEach(s=>s.classList.add('panel-hidden'));
+    document.getElementById(btn.dataset.panel).classList.remove('panel-hidden');
+  });
+});
+
+// ===== STAFF MANAGEMENT =====
+document.getElementById('staffForm').addEventListener('submit', async (e)=>{
+  e.preventDefault();
+  const btn = document.getElementById('staffSubmitBtn');
+  const msg = document.getElementById('staffMsg');
+  const codeReveal = document.getElementById('codeReveal');
+  btn.disabled = true;
+  msg.className = 'msg';
+  codeReveal.classList.remove('show');
+
+  const payload = {
+    adminAccessToken: currentSession.access_token,
+    email: document.getElementById('s_email').value.trim(),
+    password: document.getElementById('s_password').value,
+    fullName: document.getElementById('s_fullname').value.trim(),
+    role: document.getElementById('s_role').value
+  };
+
+  try {
+    const res = await fetch('/api/create-staff', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+    const result = await res.json();
+
+    if(!res.ok || result.error){
+      msg.classList.add('show','error');
+      msg.textContent = result.error || 'Erreur lors de la création.';
+    } else {
+      msg.classList.add('show','success');
+      msg.textContent = 'Compte créé avec succès !';
+      codeReveal.classList.add('show');
+      document.getElementById('codeRevealValue').textContent = result.securityCode;
+      document.getElementById('staffForm').reset();
+      loadStaffList();
+    }
+  } catch(err){
+    msg.classList.add('show','error');
+    msg.textContent = 'Erreur réseau. Réessayez.';
+  }
+  btn.disabled = false;
+});
+
+async function loadStaffList(){
+  const tbody = document.getElementById('staffTableBody');
+  const { data, error } = await sb.from('staff_profiles').select('*').order('created_at', { ascending:false });
+  if(error || !data || !data.length){
+    tbody.innerHTML = '<tr><td colspan="4">Aucun membre trouvé.</td></tr>';
+    return;
+  }
+  tbody.innerHTML = data.map(s => `
+    <tr>
+      <td>${s.full_name}</td>
+      <td><span class="badge ${s.role}">${s.role.replace('_',' ')}</span></td>
+      <td><span class="badge ${s.active ? '' : 'inactive'}">${s.active ? 'Actif' : 'Révoqué'}</span></td>
+      <td>${s.active ? `<button class="btn-danger" onclick="revokeStaff('${s.id}')">Révoquer</button>` : ''}</td>
+    </tr>
+  `).join('');
+}
+
+async function revokeStaff(id){
+  if(!confirm('Révoquer l\\'accès de ce membre ?')) return;
+  await sb.from('staff_profiles').update({ active:false }).eq('id', id);
+  loadStaffList();
+}
+
+// ===== GUEST CODES =====
+function generateGuestCode(){
+  const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+  let code = '';
+  for(let i=0;i<10;i++) code += chars[Math.floor(Math.random()*chars.length)];
+  return code;
+}
+
+document.getElementById('guestForm').addEventListener('submit', async (e)=>{
+  e.preventDefault();
+  const msg = document.getElementById('guestMsg');
+  msg.className = 'msg';
+
+  const payload = {
+    code: generateGuestCode(),
+    guest_name: document.getElementById('g_name').value.trim(),
+    purpose: document.getElementById('g_purpose').value.trim(),
+    expires_at: new Date(document.getElementById('g_expires').value).toISOString(),
+    created_by: currentProfile.id
+  };
+
+  const { error } = await sb.from('guest_access_codes').insert(payload);
+  if(error){
+    msg.classList.add('show','error');
+    msg.textContent = 'Erreur: ' + error.message;
+  } else {
+    msg.classList.add('show','success');
+    msg.textContent = 'Code généré: ' + payload.code;
+    document.getElementById('guestForm').reset();
+    loadGuestList();
+  }
+});
+
+async function loadGuestList(){
+  const tbody = document.getElementById('guestTableBody');
+  const { data, error } = await sb.from('guest_access_codes').select('*').order('created_at', { ascending:false });
+  if(error || !data || !data.length){
+    tbody.innerHTML = '<tr><td colspan="5">Aucun code généré.</td></tr>';
+    return;
+  }
+  const now = new Date();
+  tbody.innerHTML = data.map(g => {
+    const expired = new Date(g.expires_at) < now;
+    const status = g.revoked ? 'Révoqué' : (expired ? 'Expiré' : 'Actif');
+    return `
+      <tr>
+        <td style="font-family:var(--font-mono);">${g.code}</td>
+        <td>${g.guest_name}</td>
+        <td>${new Date(g.expires_at).toLocaleString('fr-FR')}</td>
+        <td><span class="badge ${g.revoked || expired ? 'inactive' : ''}">${status}</span></td>
+        <td>${!g.revoked && !expired ? `<button class="btn-danger" onclick="revokeGuest(${g.id})">Révoquer</button>` : ''}</td>
+      </tr>`;
+  }).join('');
+}
+
+async function revokeGuest(id){
+  if(!confirm('Révoquer ce code d\\'accès ?')) return;
+  await sb.from('guest_access_codes').update({ revoked:true }).eq('id', id);
+  loadGuestList();
+}
+</script>
+</body>
+</html>

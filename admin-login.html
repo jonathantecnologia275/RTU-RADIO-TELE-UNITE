@@ -1,0 +1,115 @@
+﻿<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Connexion Admin — RTU</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+:root{
+  --navy-deep:#070A1C; --navy:#0D1230; --navy-panel:#121840;
+  --blue:#3E7BFA; --gold:#E8B84B; --gold-hover:#D6A53A;
+  --ink-soft:#8890AC; --line:rgba(255,255,255,.09);
+  --font-display:"Space Grotesk", sans-serif; --font-body:"Inter", sans-serif; --font-mono:"JetBrains Mono", monospace;
+}
+*{box-sizing:border-box;}
+body{margin:0; min-height:100vh; display:flex; align-items:center; justify-content:center; font-family:var(--font-body);
+  background:radial-gradient(circle at 20% 20%, rgba(62,123,250,.15), transparent 55%), var(--navy-deep); color:#fff; padding:20px;}
+.card{background:var(--navy-panel); border:1px solid var(--line); border-radius:20px; padding:40px 36px; max-width:400px; width:100%; box-shadow:0 30px 70px -30px rgba(0,0,0,.6);}
+.logo{display:flex; justify-content:center; margin-bottom:22px;}
+.logo img{height:52px;}
+h1{font-family:var(--font-display); font-size:20px; text-align:center; margin:0 0 6px;}
+.sub{text-align:center; font-size:12.5px; color:var(--ink-soft); margin-bottom:28px;}
+.field{margin-bottom:16px;}
+.field label{display:block; font-size:12px; font-weight:600; color:var(--ink-soft); margin-bottom:6px; text-transform:uppercase; letter-spacing:.04em;}
+.field input{width:100%; padding:12px 14px; border-radius:9px; border:1.5px solid var(--line); background:rgba(255,255,255,.05); color:#fff; font-size:14px; outline:none; transition:border-color .15s;}
+.field input:focus{border-color:var(--blue);}
+.field input::placeholder{color:rgba(255,255,255,.3);}
+button.submit{width:100%; padding:13px; border:none; border-radius:10px; background:var(--gold); color:var(--navy-deep); font-weight:700; font-size:14px; margin-top:6px; cursor:pointer; transition:background .15s;}
+button.submit:hover{background:var(--gold-hover);}
+button.submit:disabled{opacity:.6; cursor:not-allowed;}
+.msg{margin-top:16px; padding:11px 14px; border-radius:9px; font-size:13px; display:none;}
+.msg.show{display:block;}
+.msg.error{background:rgba(238,91,79,.13); color:#F4879F;}
+.back{display:block; text-align:center; margin-top:20px; font-size:12.5px; color:var(--ink-soft); text-decoration:none;}
+.back:hover{color:#fff;}
+</style>
+</head>
+<body>
+
+<div class="card">
+  <div class="logo"><img src="assets/logo.png" alt="RTU"></div>
+  <h1>Panel Administration</h1>
+  <p class="sub">Accès réservé au personnel autorisé de RTU</p>
+
+  <form id="loginForm">
+    <div class="field">
+      <label>Email</label>
+      <input type="email" id="loginEmail" required placeholder="votre@email.com" autocomplete="username">
+    </div>
+    <div class="field">
+      <label>Mot de passe</label>
+      <input type="password" id="loginPassword" required placeholder="••••••••" autocomplete="current-password">
+    </div>
+    <div class="field">
+      <label>Code de sécurité</label>
+      <input type="text" id="loginCode" required placeholder="XXXX-XXXX" style="font-family:var(--font-mono); letter-spacing:.05em;">
+    </div>
+    <button type="submit" class="submit" id="loginBtn">Se connecter</button>
+    <div class="msg" id="loginMsg"></div>
+  </form>
+
+  <a href="index.html" class="back">← Retour au site</a>
+</div>
+
+<script>
+const SUPABASE_URL = 'https://dznqpltxfhpuorxxwypb.supabase.co';
+const SUPABASE_ANON_KEY = 'sb_publishable_GPyfox6GpwC1HK-fwchdEw_XdkKOhQ1';
+const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+const form = document.getElementById('loginForm');
+const btn = document.getElementById('loginBtn');
+const msg = document.getElementById('loginMsg');
+
+form.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  btn.disabled = true;
+  const original = btn.textContent;
+  btn.textContent = 'Connexion...';
+  msg.className = 'msg';
+
+  const email = document.getElementById('loginEmail').value.trim();
+  const password = document.getElementById('loginPassword').value;
+  const code = document.getElementById('loginCode').value.trim();
+
+  const { data: authData, error: authErr } = await sb.auth.signInWithPassword({ email, password });
+
+  if (authErr || !authData?.user) {
+    msg.classList.add('show', 'error');
+    msg.textContent = "Email ou mot de passe incorrect.";
+    btn.disabled = false;
+    btn.textContent = original;
+    return;
+  }
+
+  const { data: isValid, error: codeErr } = await sb.rpc('verify_staff_security_code', {
+    p_id: authData.user.id,
+    p_security_code: code
+  });
+
+  if (codeErr || !isValid) {
+    await sb.auth.signOut();
+    msg.classList.add('show', 'error');
+    msg.textContent = "Code de sécurité incorrect.";
+    btn.disabled = false;
+    btn.textContent = original;
+    return;
+  }
+
+  window.location.href = 'admin-panel.html';
+});
+</script>
+</body>
+</html>
