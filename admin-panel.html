@@ -82,8 +82,10 @@ td{padding:10px; border-bottom:1px solid #F0EDE4;}
   <aside class="sidebar">
     <div class="logo"><img src="assets/logo.png" alt="RTU"></div>
     <nav id="sideNav">
-      <button data-panel="panel-staff" class="active">👤 Équipe & Accès</button>
-      <button data-panel="panel-guests">🔑 Codes Invités</button>
+      <button data-panel="panel-staff" class="active" data-roles="admin">👤 Équipe & Accès</button>
+      <button data-panel="panel-guests" data-roles="admin">🔑 Codes Invités</button>
+      <button data-panel="panel-schedules" data-roles="admin,directeur_programmation">📅 Horaires</button>
+      <button data-panel="panel-my-space" data-roles="animateur">🎙️ Mon Espace</button>
     </nav>
     <div class="who">
       <div class="name" id="whoName">—</div>
@@ -156,6 +158,61 @@ td{padding:10px; border-bottom:1px solid #F0EDE4;}
         </table>
       </div>
     </section>
+    <section id="panel-schedules" class="panel-hidden">
+      <h2>Horaires des animateurs</h2>
+      <p class="desc">Assignez un jour et une plage horaire fixe à chaque animateur.</p>
+      <div class="card">
+        <h3>Ajouter un horaire</h3>
+        <form id="scheduleForm">
+          <div class="grid-2">
+            <div class="field"><label>Animateur</label>
+              <select id="sch_staff" required></select>
+            </div>
+            <div class="field"><label>Jour</label>
+              <select id="sch_day">
+                <option value="1">Lundi</option>
+                <option value="2">Mardi</option>
+                <option value="3">Mercredi</option>
+                <option value="4">Jeudi</option>
+                <option value="5">Vendredi</option>
+                <option value="6">Samedi</option>
+                <option value="0">Dimanche</option>
+              </select>
+            </div>
+          </div>
+          <div class="grid-2">
+            <div class="field"><label>Heure de début</label><input type="time" id="sch_start" required></div>
+            <div class="field"><label>Heure de fin</label><input type="time" id="sch_end" required></div>
+          </div>
+          <button type="submit" class="btn-primary">Assigner l'horaire</button>
+          <div class="msg" id="scheduleMsg"></div>
+        </form>
+      </div>
+      <div class="card">
+        <h3>Horaires assignés</h3>
+        <table>
+          <thead><tr><th>Animateur</th><th>Jour</th><th>Heure</th><th>Action</th></tr></thead>
+          <tbody id="scheduleTableBody"><tr><td colspan="4">Chargement...</td></tr></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="panel-my-space" class="panel-hidden">
+      <h2>Mon Espace Animateur</h2>
+      <p class="desc">Retrouvez vos horaires assignés et diffusez votre émission.</p>
+      <div class="card">
+        <h3>Mes horaires cette semaine</h3>
+        <table>
+          <thead><tr><th>Jour</th><th>Heure</th></tr></thead>
+          <tbody id="mySchedulesBody"><tr><td colspan="2">Chargement...</td></tr></tbody>
+        </table>
+      </div>
+      <div class="card">
+        <h3>Diffusion en direct</h3>
+        <button class="btn-primary" id="goLiveBtn" disabled>Diffuser mon émission maintenant</button>
+        <div class="msg" id="goLiveMsg"></div>
+      </div>
+    </section>
   </main>
 </div>
 
@@ -183,14 +240,29 @@ async function checkAccess(){
   document.getElementById('loadingScreen').style.display = 'none';
   document.getElementById('shellWrap').style.display = 'grid';
 
-  if(profile.role !== 'admin'){
-    document.querySelectorAll('#sideNav button').forEach(b=>{
-      if(b.dataset.panel !== 'panel-staff') b.style.display = 'none';
-    });
-  }
+  document.querySelectorAll('#sideNav button').forEach(b=>{
+    const allowedRoles = (b.dataset.roles || '').split(',');
+    if(!allowedRoles.includes(profile.role)){
+      b.style.display = 'none';
+    }
+  });
 
-  loadStaffList();
-  loadGuestList();
+  const defaultPanelByRole = {
+    admin: 'panel-staff',
+    directeur_programmation: 'panel-schedules',
+    animateur: 'panel-my-space'
+  };
+  const defaultPanel = defaultPanelByRole[profile.role] || 'panel-staff';
+  document.querySelectorAll('#sideNav button').forEach(b=>b.classList.remove('active'));
+  document.querySelectorAll('.main > section').forEach(s=>s.classList.add('panel-hidden'));
+  const defaultBtn = document.querySelector(`#sideNav button[data-panel="${defaultPanel}"]`);
+  if(defaultBtn) defaultBtn.classList.add('active');
+  const defaultSection = document.getElementById(defaultPanel);
+  if(defaultSection) defaultSection.classList.remove('panel-hidden');
+
+  if(profile.role === 'admin'){ loadStaffList(); loadGuestList(); }
+  if(profile.role === 'admin' || profile.role === 'directeur_programmation'){ loadStaffOptionsForSchedule(); loadScheduleTable(); }
+  if(profile.role === 'animateur'){ loadMySchedules(); }
 }
 checkAccess();
 
@@ -335,7 +407,135 @@ async function revokeGuest(id){
   await sb.from('guest_access_codes').update({ revoked:true }).eq('id', id);
   loadGuestList();
 }
+// ===== SCHEDULES (Admin / Directeur Programmation) =====
+async function loadStaffOptionsForSchedule(){
+  const sel = document.getElementById('sch_staff');
+  if(!sel) return;
+  const { data, error } = await sb.from('staff_profiles').select('id, full_name').eq('role', 'animateur').eq('active', true);
+  if(error || !data){ return; }
+  sel.innerHTML = data.map(s => `<option value="${s.id}">${s.full_name}</option>`).join('');
+}
+
+const dayNames = ['Dimanche','Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi'];
+
+document.getElementById('scheduleForm')?.addEventListener('submit', async (e)=>{
+  e.preventDefault();
+  const msg = document.getElementById('scheduleMsg');
+  msg.className = 'msg';
+
+  const payload = {
+    staff_id: document.getElementById('sch_staff').value,
+    day_of_week: parseInt(document.getElementById('sch_day').value, 10),
+    start_time: document.getElementById('sch_start').value,
+    end_time: document.getElementById('sch_end').value
+  };
+
+  const { error } = await sb.from('staff_schedules').insert(payload);
+  if(error){
+    msg.classList.add('show','error');
+    msg.textContent = 'Erreur: ' + error.message;
+  } else {
+    msg.classList.add('show','success');
+    msg.textContent = 'Horaire assigné avec succès !';
+    document.getElementById('scheduleForm').reset();
+    loadScheduleTable();
+  }
+});
+
+async function loadScheduleTable(){
+  const tbody = document.getElementById('scheduleTableBody');
+  if(!tbody) return;
+  const { data, error } = await sb.from('staff_schedules').select('*, staff_profiles(full_name)').eq('active', true).order('day_of_week');
+  if(error || !data || !data.length){
+    tbody.innerHTML = '<tr><td colspan="4">Aucun horaire assigné.</td></tr>';
+    return;
+  }
+  tbody.innerHTML = data.map(s => `
+    <tr>
+      <td>${s.staff_profiles?.full_name || '—'}</td>
+      <td>${dayNames[s.day_of_week]}</td>
+      <td>${s.start_time?.slice(0,5)} - ${s.end_time?.slice(0,5)}</td>
+      <td><button class="btn-danger" onclick="removeSchedule(${s.id})">Retirer</button></td>
+    </tr>
+  `).join('');
+}
+
+async function removeSchedule(id){
+  if(!confirm('Retirer cet horaire ?')) return;
+  await sb.from('staff_schedules').update({ active:false }).eq('id', id);
+  loadScheduleTable();
+}
+
+// ===== MY SPACE (Animateur) =====
+async function loadMySchedules(){
+  const tbody = document.getElementById('mySchedulesBody');
+  if(!tbody) return;
+  const { data, error } = await sb.from('staff_schedules').select('*').eq('staff_id', currentProfile.id).eq('active', true).order('day_of_week');
+  if(error || !data || !data.length){
+    tbody.innerHTML = '<tr><td colspan="2">Aucun horaire assigné pour le moment.</td></tr>';
+    checkGoLiveEligibility([]);
+    return;
+  }
+  tbody.innerHTML = data.map(s => `
+    <tr>
+      <td>${dayNames[s.day_of_week]}</td>
+      <td>${s.start_time?.slice(0,5)} - ${s.end_time?.slice(0,5)}</td>
+    </tr>
+  `).join('');
+  checkGoLiveEligibility(data);
+}
+
+function isWithinSchedule(schedules){
+  const now = new Date();
+  const currentDay = now.getDay();
+  const currentMinutes = now.getHours()*60 + now.getMinutes();
+  return schedules.some(s => {
+    if(s.day_of_week !== currentDay) return false;
+    const [sh, sm] = s.start_time.split(':').map(Number);
+    const [eh, em] = s.end_time.split(':').map(Number);
+    const startMin = sh*60+sm;
+    const endMin = eh*60+em;
+    if(endMin <= startMin){
+      return currentMinutes >= startMin || currentMinutes < endMin;
+    }
+    return currentMinutes >= startMin && currentMinutes < endMin;
+  });
+}
+
+function checkGoLiveEligibility(schedules){
+  const btn = document.getElementById('goLiveBtn');
+  const msg = document.getElementById('goLiveMsg');
+  if(!btn) return;
+  const eligible = isWithinSchedule(schedules);
+  btn.disabled = !eligible;
+  msg.className = 'msg show';
+  msg.textContent = eligible
+    ? "Vous êtes dans votre créneau horaire. Vous pouvez diffuser."
+    : "Vous ne pouvez diffuser que pendant votre créneau horaire assigné.";
+  msg.classList.toggle('success', eligible);
+  msg.classList.toggle('error', !eligible);
+}
+
+document.getElementById('goLiveBtn')?.addEventListener('click', async ()=>{
+  const btn = document.getElementById('goLiveBtn');
+  btn.disabled = true;
+  await sb.from('now_playing').update({
+    show_title: 'Émission de ' + currentProfile.full_name,
+    host_name: currentProfile.full_name
+  }).eq('id', 1);
+  const msg = document.getElementById('goLiveMsg');
+  msg.classList.add('show','success');
+  msg.textContent = "Votre émission est maintenant en direct sur le site !";
+});
+
+setInterval(()=>{
+  if(currentProfile?.role === 'animateur'){ loadMySchedules(); }
+}, 30000);
 </script>
 </body>
 </html>
+
+
+
+
 
