@@ -168,16 +168,16 @@ td{padding:10px; border-bottom:1px solid #F0EDE4;}
             <div class="field"><label>Animateur</label>
               <select id="sch_staff" required></select>
             </div>
-            <div class="field"><label>Jour</label>
-              <select id="sch_day">
-                <option value="1">Lundi</option>
-                <option value="2">Mardi</option>
-                <option value="3">Mercredi</option>
-                <option value="4">Jeudi</option>
-                <option value="5">Vendredi</option>
-                <option value="6">Samedi</option>
-                <option value="0">Dimanche</option>
-              </select>
+            <div class="field"><label>Jours (plusieurs possibles)</label>
+              <div id="sch_days_group" style="display:flex; flex-wrap:wrap; gap:8px;">
+                <label style="display:flex; align-items:center; gap:5px; font-size:12.5px; font-weight:600; background:var(--ivory); border:1px solid #E7E3D8; padding:7px 12px; border-radius:8px;"><input type="checkbox" value="1" checked> Lundi</label>
+                <label style="display:flex; align-items:center; gap:5px; font-size:12.5px; font-weight:600; background:var(--ivory); border:1px solid #E7E3D8; padding:7px 12px; border-radius:8px;"><input type="checkbox" value="2"> Mardi</label>
+                <label style="display:flex; align-items:center; gap:5px; font-size:12.5px; font-weight:600; background:var(--ivory); border:1px solid #E7E3D8; padding:7px 12px; border-radius:8px;"><input type="checkbox" value="3"> Mercredi</label>
+                <label style="display:flex; align-items:center; gap:5px; font-size:12.5px; font-weight:600; background:var(--ivory); border:1px solid #E7E3D8; padding:7px 12px; border-radius:8px;"><input type="checkbox" value="4"> Jeudi</label>
+                <label style="display:flex; align-items:center; gap:5px; font-size:12.5px; font-weight:600; background:var(--ivory); border:1px solid #E7E3D8; padding:7px 12px; border-radius:8px;"><input type="checkbox" value="5"> Vendredi</label>
+                <label style="display:flex; align-items:center; gap:5px; font-size:12.5px; font-weight:600; background:var(--ivory); border:1px solid #E7E3D8; padding:7px 12px; border-radius:8px;"><input type="checkbox" value="6"> Samedi</label>
+                <label style="display:flex; align-items:center; gap:5px; font-size:12.5px; font-weight:600; background:var(--ivory); border:1px solid #E7E3D8; padding:7px 12px; border-radius:8px;"><input type="checkbox" value="0"> Dimanche</label>
+              </div>
             </div>
           </div>
           <div class="grid-2">
@@ -423,21 +423,34 @@ document.getElementById('scheduleForm')?.addEventListener('submit', async (e)=>{
   const msg = document.getElementById('scheduleMsg');
   msg.className = 'msg';
 
-  const payload = {
-    staff_id: document.getElementById('sch_staff').value,
-    day_of_week: parseInt(document.getElementById('sch_day').value, 10),
-    start_time: document.getElementById('sch_start').value,
-    end_time: document.getElementById('sch_end').value
-  };
+  const checkedDays = Array.from(document.querySelectorAll('#sch_days_group input[type="checkbox"]:checked')).map(cb => parseInt(cb.value, 10));
 
-  const { error } = await sb.from('staff_schedules').insert(payload);
+  if(!checkedDays.length){
+    msg.classList.add('show','error');
+    msg.textContent = 'Sélectionnez au moins un jour.';
+    return;
+  }
+
+  const staffId = document.getElementById('sch_staff').value;
+  const startTime = document.getElementById('sch_start').value;
+  const endTime = document.getElementById('sch_end').value;
+
+  const rows = checkedDays.map(day => ({
+    staff_id: staffId,
+    day_of_week: day,
+    start_time: startTime,
+    end_time: endTime
+  }));
+
+  const { error } = await sb.from('staff_schedules').insert(rows);
   if(error){
     msg.classList.add('show','error');
     msg.textContent = 'Erreur: ' + error.message;
   } else {
     msg.classList.add('show','success');
-    msg.textContent = 'Horaire assigné avec succès !';
+    msg.textContent = `${checkedDays.length} jour(s) assigné(s) avec succès !`;
     document.getElementById('scheduleForm').reset();
+    document.querySelector('#sch_days_group input[value="1"]').checked = true;
     loadScheduleTable();
   }
 });
@@ -534,6 +547,8 @@ setInterval(()=>{
 </script>
 </body>
 </html>
+
+
 
 
 
