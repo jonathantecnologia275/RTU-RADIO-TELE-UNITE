@@ -1,0 +1,210 @@
+﻿<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Programmes — Radio Télé Unité (RTU)</title>
+<meta name="description" content="La grille complète des programmes de Radio Télé Unité (RTU) — émissions, horaires et animateurs." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+:root{
+  --navy-deep:#070A1C; --navy:#0D1230; --navy-panel:#121840;
+  --blue:#3E7BFA; --blue-soft:#7FA4FF;
+  --gold:#E8B84B; --gold-hover:#D6A53A;
+  --ivory:#F6F4EE; --ink:#0B0F2E; --ink-soft:#8890AC;
+  --line:rgba(255,255,255,.09); --live:#EE5B4F;
+  --font-display:"Space Grotesk", sans-serif;
+  --font-body:"Inter", sans-serif;
+  --font-mono:"JetBrains Mono", monospace;
+  --ease:cubic-bezier(.2,.8,.2,1);
+}
+*,*::before,*::after{box-sizing:border-box;}
+body{margin:0; font-family:var(--font-body); background:var(--ivory); color:var(--ink); -webkit-font-smoothing:antialiased;}
+a{color:inherit; text-decoration:none;}
+button{font-family:inherit; cursor:pointer;}
+h1,h2,h3{margin:0; font-family:var(--font-display); font-weight:700;}
+p{margin:0;}
+.wrap{max-width:1180px; margin:0 auto; padding:0 28px;}
+@media (max-width:640px){ .wrap{padding:0 18px;} }
+
+.eq{display:inline-flex; align-items:flex-end; gap:3px; height:16px;}
+.eq span{width:3px; background:var(--gold); border-radius:2px; animation:eqbounce 1.1s ease-in-out infinite;}
+.eq span:nth-child(1){height:40%; animation-delay:-0.9s;}
+.eq span:nth-child(2){height:100%; animation-delay:-0.4s;}
+.eq span:nth-child(3){height:65%; animation-delay:-1.1s;}
+.eq span:nth-child(4){height:85%; animation-delay:-0.2s;}
+.eq span:nth-child(5){height:50%; animation-delay:-0.6s;}
+@keyframes eqbounce{0%,100%{transform:scaleY(0.35);} 50%{transform:scaleY(1);}}
+
+.nav{position:sticky; top:0; z-index:60; background:rgba(7,10,28,.92); backdrop-filter:blur(10px); border-bottom:1px solid var(--line);}
+.nav-inner{display:flex; align-items:center; justify-content:space-between; padding:16px 0;}
+.brand{display:flex; align-items:center; gap:10px;}
+.brand .mark{display:flex; align-items:center; gap:8px; font-family:var(--font-display); font-weight:700; font-size:18px;}
+.brand .mark .r{color:var(--blue-soft);} .brand .mark .t{color:#fff;} .brand .mark .u{color:var(--gold);}
+.nav-links{display:flex; align-items:center; gap:30px;}
+.nav-links a{font-size:13.5px; font-weight:600; color:rgba(255,255,255,.7); transition:color .15s;}
+.nav-links a:hover, .nav-links a.active{color:#fff;}
+.nav-right{display:flex; align-items:center; gap:16px;}
+.lang-select{
+  appearance:none; background:rgba(255,255,255,.06); border:1px solid var(--line); color:#fff;
+  font-size:12px; font-weight:600; font-family:var(--font-mono); padding:7px 26px 7px 12px; border-radius:20px;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='9' height='6'><path d='M0 0l4.5 5.5L9 0z' fill='%238890AC'/></svg>");
+  background-repeat:no-repeat; background-position:right 11px center;
+}
+.lang-select option{color:#111; background:#fff;}
+.nav-cta{display:flex; align-items:center; gap:8px; background:var(--gold); color:var(--ink); font-weight:700; font-size:12.5px; padding:9px 16px; border-radius:20px; border:none;}
+@media (max-width:900px){ .nav-links{display:none;} }
+
+.page-hero{background:linear-gradient(155deg, var(--navy-panel), var(--navy-deep)); color:#fff; padding:60px 0 54px;}
+.page-hero .eyebrow{font-family:var(--font-mono); font-size:12px; letter-spacing:.14em; color:var(--blue-soft); text-transform:uppercase; margin-bottom:12px;}
+.page-hero h1{font-size:clamp(28px,3.6vw,42px); margin-bottom:12px;}
+.page-hero p{color:rgba(255,255,255,.62); font-size:15px; max-width:520px;}
+
+.pad{padding:64px 0 90px;}
+.timeline{display:flex; flex-direction:column; gap:14px;}
+.prog-row{
+  display:grid; grid-template-columns:110px 1fr auto; align-items:center; gap:22px;
+  background:#fff; border:1px solid #E7E3D8; border-radius:16px; padding:20px 24px;
+  transition:transform .15s var(--ease), box-shadow .15s;
+}
+.prog-row:hover{transform:translateY(-2px); box-shadow:0 14px 30px -16px rgba(11,15,46,.18);}
+.prog-row .time{font-family:var(--font-mono); font-weight:700; font-size:15px; color:var(--blue);}
+.prog-row .time small{display:block; font-family:var(--font-body); font-weight:600; font-size:10px; color:var(--ink-soft); text-transform:uppercase; letter-spacing:.06em; margin-top:2px;}
+.prog-row .info h3{font-size:16.5px; margin-bottom:4px;}
+.prog-row .info p{font-size:13px; color:#6B7085; line-height:1.5;}
+.prog-row .info .host{font-size:12px; color:var(--gold-hover); font-weight:700; margin-top:6px; display:block;}
+.cat-tag{font-family:var(--font-mono); font-size:10.5px; font-weight:700; letter-spacing:.04em; padding:6px 13px; border-radius:14px; background:rgba(62,123,250,.09); color:var(--blue); text-transform:uppercase; white-space:nowrap;}
+@media (max-width:700px){
+  .prog-row{grid-template-columns:1fr; gap:10px;}
+  .cat-tag{justify-self:flex-start;}
+}
+.empty-note{padding:60px 20px; text-align:center; color:var(--ink-soft); font-size:14px;}
+
+footer{background:var(--navy); border-top:1px solid var(--line); padding:44px 0 24px; color:#fff;}
+.foot-bottom{display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;}
+.foot-bottom p{font-size:12px; color:rgba(255,255,255,.45); margin:0;}
+.foot-links{display:flex; gap:18px;}
+.foot-links a{font-size:13px; color:rgba(255,255,255,.7);}
+.foot-links a:hover{color:#fff;}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="wrap nav-inner">
+    <a href="index.html" class="brand">
+      <span class="mark"><span class="r">R</span><span class="t">T</span><span class="u">U</span></span>
+      <span class="eq" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span></span>
+    </a>
+    <div class="nav-links">
+      <a href="index.html#direct" data-i18n="nav_direct">Écouter en direct</a>
+      <a href="programmes.html" class="active" data-i18n="nav_programs">Programmes</a>
+      <a href="actualites.html" data-i18n="nav_news">Actualités</a>
+      <a href="contact.html" data-i18n="nav_contact">Contact</a>
+    </div>
+    <div class="nav-right">
+      <select class="lang-select" id="langSelect" onchange="setLang(this.value)">
+        <option value="fr">FR</option><option value="ht">HT</option><option value="en">EN</option><option value="es">ES</option><option value="pt">PT</option>
+      </select>
+      <a href="index.html#direct" class="nav-cta"><span aria-hidden="true">▶</span><span data-i18n="nav_cta">Écouter</span></a>
+    </div>
+  </div>
+</nav>
+
+<header class="page-hero">
+  <div class="wrap">
+    <div class="eyebrow" data-i18n="ph_eyebrow">GRILLE COMPLÈTE</div>
+    <h1 data-i18n="ph_title">Les programmes de RTU</h1>
+    <p data-i18n="ph_desc">Retrouvez tous nos rendez-vous quotidiens — information, culture et musique.</p>
+  </div>
+</header>
+
+<section class="pad">
+  <div class="wrap">
+    <div class="timeline" id="timelineWrap">
+      <p class="empty-note" data-i18n="loading">Chargement des programmes…</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-bottom">
+      <p data-i18n="footer_rights">© 2026 Radio Télé Unité (RTU). Tous droits réservés.</p>
+      <div class="foot-links">
+        <a href="index.html">Accueil</a>
+        <a href="actualites.html" data-i18n="nav_news">Actualités</a>
+        <a href="contact.html" data-i18n="nav_contact">Contact</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+const translations = {
+  fr:{ nav_direct:"Écouter en direct", nav_programs:"Programmes", nav_news:"Actualités", nav_contact:"Contact", nav_cta:"Écouter",
+    ph_eyebrow:"GRILLE COMPLÈTE", ph_title:"Les programmes de RTU", ph_desc:"Retrouvez tous nos rendez-vous quotidiens — information, culture et musique.",
+    loading:"Chargement des programmes…", daily_tag:"Chaque jour", no_programs:"Aucun programme disponible pour le moment.",
+    footer_rights:"© 2026 Radio Télé Unité (RTU). Tous droits réservés." },
+  ht:{ nav_direct:"Koute an dirèk", nav_programs:"Pwogram", nav_news:"Aktyalite", nav_contact:"Kontak", nav_cta:"Koute",
+    ph_eyebrow:"GRIY KONPLÈ", ph_title:"Pwogram RTU yo", ph_desc:"Jwenn tout randevou chak jou nou yo — enfòmasyon, kilti ak mizik.",
+    loading:"Chajman pwogram yo…", daily_tag:"Chak jou", no_programs:"Pa gen okenn pwogram disponib kounye a.",
+    footer_rights:"© 2026 Radio Télé Unité (RTU). Tout dwa rezève." },
+  en:{ nav_direct:"Listen Live", nav_programs:"Programs", nav_news:"News", nav_contact:"Contact", nav_cta:"Listen",
+    ph_eyebrow:"FULL SCHEDULE", ph_title:"RTU Programs", ph_desc:"Find all our daily shows — news, culture and music.",
+    loading:"Loading programs…", daily_tag:"Every day", no_programs:"No programs available right now.",
+    footer_rights:"© 2026 Radio Télé Unité (RTU). All rights reserved." },
+  es:{ nav_direct:"Escuchar en vivo", nav_programs:"Programas", nav_news:"Noticias", nav_contact:"Contacto", nav_cta:"Escuchar",
+    ph_eyebrow:"PARRILLA COMPLETA", ph_title:"Los programas de RTU", ph_desc:"Encuentra todas nuestras citas diarias — noticias, cultura y música.",
+    loading:"Cargando programas…", daily_tag:"Todos los días", no_programs:"No hay programas disponibles por ahora.",
+    footer_rights:"© 2026 Radio Télé Unité (RTU). Todos los derechos reservados." },
+  pt:{ nav_direct:"Ouvir ao vivo", nav_programs:"Programas", nav_news:"Notícias", nav_contact:"Contato", nav_cta:"Ouvir",
+    ph_eyebrow:"GRADE COMPLETA", ph_title:"Os programas da RTU", ph_desc:"Encontre todos os nossos encontros diários — notícias, cultura e música.",
+    loading:"Carregando programas…", daily_tag:"Todos os dias", no_programs:"Nenhum programa disponível no momento.",
+    footer_rights:"© 2026 Radio Télé Unité (RTU). Todos os direitos reservados." }
+};
+function getCurrentLang(){ return localStorage.getItem('rtu_lang') || 'fr'; }
+function setLang(lang){
+  localStorage.setItem('rtu_lang', lang);
+  document.getElementById('langSelect').value = lang;
+  const dict = translations[lang] || translations.fr;
+  document.querySelectorAll('[data-i18n]').forEach(el=>{
+    const key = el.getAttribute('data-i18n');
+    if(dict[key] !== undefined) el.textContent = dict[key];
+  });
+}
+setLang(getCurrentLang());
+
+const SUPABASE_URL = 'https://dznqpltxfhpuorxxwypb.supabase.co';
+const SUPABASE_ANON_KEY = 'sb_publishable_GPyfox6GpwC1HK-fwchdEw_XdkKOhQ1';
+const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+async function loadAllPrograms(){
+  const wrap = document.getElementById('timelineWrap');
+  const { data, error } = await sb.from('programs').select('*').eq('active', true).order('start_time');
+  const dict = translations[getCurrentLang()] || translations.fr;
+  if(error || !data || !data.length){
+    wrap.innerHTML = `<p class="empty-note">${dict.no_programs}</p>`;
+    return;
+  }
+  wrap.innerHTML = data.map(p => `
+    <div class="prog-row">
+      <div class="time">${(p.start_time || '').slice(0,5)}<small>${dict.daily_tag}</small></div>
+      <div class="info">
+        <h3>${p.title}</h3>
+        <p>${p.description || ''}</p>
+        ${p.host_name ? `<span class="host">— ${p.host_name}</span>` : ''}
+      </div>
+      <span class="cat-tag">${p.category || ''}</span>
+    </div>
+  `).join('');
+}
+loadAllPrograms();
+</script>
+
+</body>
+</html>
+

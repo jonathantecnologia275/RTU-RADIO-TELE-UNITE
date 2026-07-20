@@ -219,9 +219,9 @@ footer{background:var(--navy); border-top:1px solid var(--line); padding:56px 0 
     </a>
     <div class="nav-links">
       <a href="#direct" data-i18n="nav_direct">Écouter en direct</a>
-      <a href="#programmes" data-i18n="nav_programs">Programmes</a>
-      <a href="#actualites" data-i18n="nav_news">Actualités</a>
-      <a href="#contact" data-i18n="nav_contact">Contact</a>
+      <a href="programmes.html" data-i18n="nav_programs">Programmes</a>
+      <a href="actualites.html" data-i18n="nav_news">Actualités</a>
+      <a href="contact.html" data-i18n="nav_contact">Contact</a>
     </div>
     <div class="nav-right">
       <select class="lang-select" id="langSelect" onchange="setLang(this.value)">
@@ -389,13 +389,13 @@ footer{background:var(--navy); border-top:1px solid var(--line); padding:56px 0 
       <div class="foot-col">
         <h4 data-i18n="footer_nav">NAVIGATION</h4>
         <a href="#direct" data-i18n="nav_direct">Écouter en direct</a>
-        <a href="#programmes" data-i18n="nav_programs">Programmes</a>
-        <a href="#actualites" data-i18n="nav_news">Actualités</a>
+        <a href="programmes.html" data-i18n="nav_programs">Programmes</a>
+        <a href="actualites.html" data-i18n="nav_news">Actualités</a>
       </div>
       <div class="foot-col">
         <h4 data-i18n="footer_legal">LÉGAL</h4>
-        <a href="#" data-i18n="footer_privacy">Confidentialité</a>
-        <a href="#" data-i18n="footer_terms">Conditions d'utilisation</a>
+        <a href="contact.html" data-i18n="footer_privacy">Confidentialité</a>
+        <a href="contact.html" data-i18n="footer_terms">Conditions d'utilisation</a>
       </div>
       <div class="foot-col">
         <h4 data-i18n="footer_contact">CONTACT</h4>
@@ -594,13 +594,13 @@ async function loadNews(){
   if(error || !data || !data.length || !wrap) return;
   const classes = ['n1','n2','n3'];
   wrap.innerHTML = data.map((n,i) => `
-    <div class="news-card ${classes[i] || 'n3'}">
+    <a class="news-card ${classes[i] || 'n3'}" href="news-detail.html?id=${n.id}">
       <div>
         <span class="cat">${(n.category || '').toUpperCase()}</span>
         <h3>${n.title}</h3>
         <span class="date">${new Date(n.published_at).toLocaleDateString('fr-FR', {day:'numeric', month:'long', year:'numeric'})}</span>
       </div>
-    </div>
+    </a>
   `).join('');
 }
 
