@@ -128,6 +128,7 @@ footer{background:var(--navy); border-top:1px solid var(--line); padding:44px 0 
       <a href="galerie.html" data-i18n="nav_gallery">Galerie</a>
       <a href="actualites.html" data-i18n="nav_news">Actualités</a>
       <a href="contact.html" data-i18n="nav_contact">Contact</a>
+        <a href="publicite.html" data-i18n="nav_ads">Publicité</a>
     </div>
     <div class="nav-right">
       <select class="lang-select" id="langSelect" onchange="setLang(this.value)">
@@ -239,6 +240,7 @@ footer{background:var(--navy); border-top:1px solid var(--line); padding:44px 0 
         <a href="equipe.html" data-i18n="nav_team">Équipe</a>
         <a href="galerie.html" data-i18n="nav_gallery">Galerie</a>
         <a href="contact.html" data-i18n="nav_contact">Contact</a>
+        <a href="publicite.html" data-i18n="nav_ads">Publicité</a>
       </div>
     </div>
   </div>
@@ -246,7 +248,7 @@ footer{background:var(--navy); border-top:1px solid var(--line); padding:44px 0 
 
 <script>
 const translations = {
-  fr:{ nav_about:"À propos", nav_programs:"Programmes", nav_team:"Équipe", nav_gallery:"Galerie", nav_news:"Actualités", nav_contact:"Contact", nav_cta:"Écouter",
+  fr:{ nav_about:"À propos", nav_programs:"Programmes", nav_team:"Équipe", nav_gallery:"Galerie", nav_news:"Actualités", nav_contact:"Contact", nav_cta:"Écouter", nav_ads:"Publicité",
     ph_eyebrow:"NOTRE HISTOIRE", ph_title:"À propos de RTU", ph_desc:"Une radio et une télé au service de l'information, de l'unité et de l'avenir.",
     story_eyebrow:"DEPUIS LE DÉBUT", story_title:"Une radio qui rassemble",
     story_p1:"Radio Télé Unité (RTU) est née de la volonté d'informer, d'éduquer et de rapprocher les communautés à travers une programmation riche et accessible à tous.",
@@ -263,7 +265,7 @@ const translations = {
     stat1:"Diffusion continue", stat2:"Langues disponibles", stat3:"Radio et Télé", stat4:"Diffusion mondiale",
     cta_title:"Rejoignez la communauté RTU", cta_desc:"Écoutez en direct, suivez nos programmes et restez connecté à l'actualité.", cta_listen:"Écouter en direct",
     footer_rights:"© 2026 Radio Télé Unité (RTU). Tous droits réservés." },
-  ht:{ nav_about:"Konsènan", nav_programs:"Pwogram", nav_team:"Ekip", nav_gallery:"Galri", nav_news:"Aktyalite", nav_contact:"Kontak", nav_cta:"Koute",
+  ht:{ nav_about:"Konsènan", nav_programs:"Pwogram", nav_team:"Ekip", nav_gallery:"Galri", nav_news:"Aktyalite", nav_contact:"Kontak", nav_cta:"Koute", nav_ads:"Piblisite",
     ph_eyebrow:"ISTWA NOU", ph_title:"Konsènan RTU", ph_desc:"Yon radyo ak yon tele ki nan sèvis enfòmasyon, inite ak avni.",
     story_eyebrow:"DEPI KÒMANSMAN", story_title:"Yon radyo ki rasanble",
     story_p1:"Radio Télé Unité (RTU) fèt ak volonte pou enfòme, edike ak rapwoche kominote yo atravè yon pwogramasyon rich ki aksesib pou tout moun.",
@@ -280,7 +282,7 @@ const translations = {
     stat1:"Difizyon kontinyèl", stat2:"Lang disponib", stat3:"Radyo ak Tele", stat4:"Difizyon mondyal",
     cta_title:"Rejwenn kominote RTU a", cta_desc:"Koute an dirèk, swiv pwogram nou yo epi rete konekte ak aktyalite.", cta_listen:"Koute an dirèk",
     footer_rights:"© 2026 Radio Télé Unité (RTU). Tout dwa rezève." },
-  en:{ nav_about:"About", nav_programs:"Programs", nav_team:"Team", nav_gallery:"Gallery", nav_news:"News", nav_contact:"Contact", nav_cta:"Listen",
+  en:{ nav_about:"About", nav_programs:"Programs", nav_team:"Team", nav_gallery:"Gallery", nav_news:"News", nav_contact:"Contact", nav_cta:"Listen", nav_ads:"Advertising",
     ph_eyebrow:"OUR STORY", ph_title:"About RTU", ph_desc:"A radio and TV station in service of information, unity, and the future.",
     story_eyebrow:"SINCE THE BEGINNING", story_title:"A radio that brings people together",
     story_p1:"Radio Télé Unité (RTU) was born from a desire to inform, educate, and bring communities closer through rich, accessible programming.",
@@ -297,7 +299,7 @@ const translations = {
     stat1:"Continuous broadcast", stat2:"Available languages", stat3:"Radio and TV", stat4:"Global broadcast",
     cta_title:"Join the RTU community", cta_desc:"Listen live, follow our programs, and stay connected to the news.", cta_listen:"Listen Live",
     footer_rights:"© 2026 Radio Télé Unité (RTU). All rights reserved." },
-  es:{ nav_about:"Nosotros", nav_programs:"Programas", nav_team:"Equipo", nav_gallery:"Galería", nav_news:"Noticias", nav_contact:"Contacto", nav_cta:"Escuchar",
+  es:{ nav_about:"Nosotros", nav_programs:"Programas", nav_team:"Equipo", nav_gallery:"Galería", nav_news:"Noticias", nav_contact:"Contacto", nav_cta:"Escuchar", nav_ads:"Publicidad",
     ph_eyebrow:"NUESTRA HISTORIA", ph_title:"Sobre RTU", ph_desc:"Una radio y televisión al servicio de la información, la unidad y el futuro.",
     story_eyebrow:"DESDE EL PRINCIPIO", story_title:"Una radio que une",
     story_p1:"Radio Télé Unité (RTU) nació del deseo de informar, educar y acercar a las comunidades a través de una programación rica y accesible para todos.",
@@ -314,7 +316,7 @@ const translations = {
     stat1:"Transmisión continua", stat2:"Idiomas disponibles", stat3:"Radio y TV", stat4:"Transmisión mundial",
     cta_title:"Únete a la comunidad RTU", cta_desc:"Escucha en vivo, sigue nuestros programas y mantente conectado a la actualidad.", cta_listen:"Escuchar en vivo",
     footer_rights:"© 2026 Radio Télé Unité (RTU). Todos los derechos reservados." },
-  pt:{ nav_about:"Sobre", nav_programs:"Programas", nav_team:"Equipe", nav_gallery:"Galeria", nav_news:"Notícias", nav_contact:"Contato", nav_cta:"Ouvir",
+  pt:{ nav_about:"Sobre", nav_programs:"Programas", nav_team:"Equipe", nav_gallery:"Galeria", nav_news:"Notícias", nav_contact:"Contato", nav_cta:"Ouvir", nav_ads:"Publicidade",
     ph_eyebrow:"NOSSA HISTÓRIA", ph_title:"Sobre a RTU", ph_desc:"Uma rádio e TV a serviço da informação, da unidade e do futuro.",
     story_eyebrow:"DESDE O INÍCIO", story_title:"Uma rádio que une",
     story_p1:"Radio Télé Unité (RTU) nasceu da vontade de informar, educar e aproximar as comunidades por meio de uma programação rica e acessível a todos.",
@@ -349,6 +351,8 @@ setLang(getCurrentLang());
 <script src="js/newsletter.js"></script>
 </body>
 </html>
+
+
 
 
 

@@ -1,0 +1,338 @@
+﻿<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Publicité & Annonceurs — Radio Télé Unité (RTU)</title>
+<meta name="description" content="Faites la promotion de votre marque sur Radio Télé Unité (RTU) — spots radio, bannières digitales et partenariats." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+:root{
+  --navy-deep:#070A1C; --navy:#0D1230; --navy-panel:#121840;
+  --blue:#3E7BFA; --blue-soft:#7FA4FF;
+  --gold:#E8B84B; --gold-hover:#D6A53A;
+  --ivory:#F6F4EE; --ink:#0B0F2E; --ink-soft:#8890AC;
+  --line:rgba(255,255,255,.09); --green:#3FA66B;
+  --font-display:"Space Grotesk", sans-serif;
+  --font-body:"Inter", sans-serif;
+  --font-mono:"JetBrains Mono", monospace;
+  --ease:cubic-bezier(.2,.8,.2,1);
+}
+*,*::before,*::after{box-sizing:border-box;}
+body{margin:0; font-family:var(--font-body); background:var(--ivory); color:var(--ink); -webkit-font-smoothing:antialiased;}
+a{color:inherit; text-decoration:none;}
+button, input, textarea{font-family:inherit;}
+button{cursor:pointer;}
+h1,h2,h3{margin:0; font-family:var(--font-display); font-weight:700;}
+p{margin:0;}
+.wrap{max-width:1180px; margin:0 auto; padding:0 28px;}
+@media (max-width:640px){ .wrap{padding:0 18px;} }
+
+.eq{display:inline-flex; align-items:flex-end; gap:3px; height:16px;}
+.eq span{width:3px; background:var(--gold); border-radius:2px; animation:eqbounce 1.1s ease-in-out infinite;}
+.eq span:nth-child(1){height:40%; animation-delay:-0.9s;}
+.eq span:nth-child(2){height:100%; animation-delay:-0.4s;}
+.eq span:nth-child(3){height:65%; animation-delay:-1.1s;}
+.eq span:nth-child(4){height:85%; animation-delay:-0.2s;}
+.eq span:nth-child(5){height:50%; animation-delay:-0.6s;}
+@keyframes eqbounce{0%,100%{transform:scaleY(0.35);} 50%{transform:scaleY(1);}}
+
+.nav{position:sticky; top:0; z-index:60; background:rgba(7,10,28,.92); backdrop-filter:blur(10px); border-bottom:1px solid var(--line);}
+.nav-inner{display:flex; align-items:center; justify-content:space-between; padding:16px 0;}
+.brand{display:flex; align-items:center; gap:10px;}
+.brand-logo{height:40px;width:auto;display:block;}
+.nav-links{display:flex; align-items:center; gap:22px;}
+.nav-links a{font-size:12.5px; font-weight:600; color:rgba(255,255,255,.7); transition:color .15s; white-space:nowrap;}
+.nav-links a:hover, .nav-links a.active{color:#fff;}
+.nav-right{display:flex; align-items:center; gap:16px;}
+.lang-select{
+  appearance:none; background:rgba(255,255,255,.06); border:1px solid var(--line); color:#fff;
+  font-size:12px; font-weight:600; font-family:var(--font-mono); padding:7px 26px 7px 12px; border-radius:20px;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='9' height='6'><path d='M0 0l4.5 5.5L9 0z' fill='%238890AC'/></svg>");
+  background-repeat:no-repeat; background-position:right 11px center;
+}
+.lang-select option{color:#111; background:#fff;}
+.nav-cta{display:flex; align-items:center; gap:8px; background:var(--gold); color:var(--ink); font-weight:700; font-size:12.5px; padding:9px 16px; border-radius:20px; border:none;}
+@media (max-width:1000px){ .nav-links{display:none;} }
+
+.page-hero{background:linear-gradient(155deg, var(--navy-panel), var(--navy-deep)); color:#fff; padding:60px 0 54px;}
+.page-hero .eyebrow{font-family:var(--font-mono); font-size:12px; letter-spacing:.14em; color:var(--blue-soft); text-transform:uppercase; margin-bottom:12px;}
+.page-hero h1{font-size:clamp(28px,3.6vw,42px); margin-bottom:12px;}
+.page-hero p{color:rgba(255,255,255,.62); font-size:15px; max-width:560px;}
+
+.pad{padding:64px 0 90px;}
+.section-head{margin-bottom:36px;}
+.section-head .eyebrow{font-family:var(--font-mono); font-size:11.5px; letter-spacing:.12em; text-transform:uppercase; color:var(--gold-hover); margin-bottom:8px;}
+.section-head h2{font-size:26px;}
+
+.pkg-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:20px; margin-bottom:70px;}
+@media (max-width:900px){ .pkg-grid{grid-template-columns:1fr;} }
+.pkg-card{background:#fff; border:1px solid #E7E3D8; border-radius:18px; padding:30px; transition:transform .15s var(--ease), box-shadow .15s;}
+.pkg-card:hover{transform:translateY(-3px); box-shadow:0 16px 34px -18px rgba(11,15,46,.2);}
+.pkg-card.featured{border:2px solid var(--gold); position:relative;}
+.pkg-card.featured::before{content:"POPULAIRE"; position:absolute; top:-12px; right:24px; background:var(--gold); color:var(--ink); font-family:var(--font-mono); font-size:10px; font-weight:700; letter-spacing:.06em; padding:4px 12px; border-radius:10px;}
+.pkg-card .ic{width:42px; height:42px; border-radius:11px; background:rgba(62,123,250,.1); display:flex; align-items:center; justify-content:center; margin-bottom:18px;}
+.pkg-card .ic svg{width:20px; height:20px; stroke:var(--blue); fill:none; stroke-width:1.8;}
+.pkg-card h3{font-size:18px; margin-bottom:8px;}
+.pkg-card .price{font-family:var(--font-mono); font-size:13px; color:var(--gold-hover); font-weight:700; margin-bottom:14px;}
+.pkg-card ul{list-style:none; padding:0; margin:0 0 20px;}
+.pkg-card li{font-size:13px; color:#5B6178; padding:7px 0 7px 22px; position:relative; line-height:1.4;}
+.pkg-card li::before{content:"✓"; position:absolute; left:0; color:var(--green); font-weight:700;}
+
+.form-section{display:grid; grid-template-columns:1fr 1.2fr; gap:44px; align-items:flex-start;}
+@media (max-width:860px){ .form-section{grid-template-columns:1fr;} }
+.stat-card{background:var(--navy); color:#fff; border-radius:18px; padding:32px; margin-bottom:16px;}
+.stat-row{display:flex; justify-content:space-between; align-items:center; padding:14px 0; border-bottom:1px solid var(--line);}
+.stat-row:last-child{border-bottom:none;}
+.stat-row b{font-family:var(--font-display); font-size:20px; color:var(--gold);}
+.stat-row span{font-size:12.5px; color:rgba(255,255,255,.6);}
+
+.form-card{background:#fff; border:1px solid #E7E3D8; border-radius:18px; padding:34px;}
+.field{margin-bottom:16px;}
+.field label{display:block; font-size:12.5px; font-weight:700; color:var(--ink); margin-bottom:6px;}
+.field input, .field textarea{
+  width:100%; padding:12px 14px; border:1.5px solid #E7E3D8; border-radius:9px; font-size:14px; outline:none; transition:border-color .15s; background:var(--ivory);
+}
+.field input:focus, .field textarea:focus{border-color:var(--blue);}
+.field textarea{resize:vertical; min-height:100px;}
+.field-row{display:grid; grid-template-columns:1fr 1fr; gap:14px;}
+@media (max-width:520px){ .field-row{grid-template-columns:1fr;} }
+.btn-submit{width:100%; padding:14px; border-radius:10px; border:none; background:var(--gold); color:var(--ink); font-weight:700; font-size:14.5px; margin-top:4px; transition:background .15s;}
+.btn-submit:hover{background:var(--gold-hover);}
+.btn-submit:disabled{opacity:.6; cursor:not-allowed;}
+.form-msg{margin-top:14px; padding:12px 14px; border-radius:9px; font-size:13px; display:none;}
+.form-msg.show{display:block;}
+.form-msg.success{background:rgba(63,166,107,.12); color:var(--green);}
+.form-msg.error{background:#FAEAF1; color:#C24E7A;}
+
+footer{background:var(--navy); border-top:1px solid var(--line); padding:44px 0 24px; color:#fff;}
+.foot-bottom{display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;}
+.foot-bottom p{font-size:12px; color:rgba(255,255,255,.45); margin:0;}
+.foot-links{display:flex; gap:18px;}
+.foot-links a{font-size:13px; color:rgba(255,255,255,.7);}
+.foot-links a:hover{color:#fff;}
+</style>
+<link rel="stylesheet" href="css/partners-ads.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="wrap nav-inner">
+    <a href="index.html" class="brand"><img src="assets/logo.png" alt="RTU - Radio Tele Unite" class="brand-logo"></a>
+    <div class="nav-links">
+      <a href="apropos.html" data-i18n="nav_about">À propos</a>
+      <a href="index.html#direct" data-i18n="nav_direct">Écouter en direct</a>
+      <a href="programmes.html" data-i18n="nav_programs">Programmes</a>
+      <a href="equipe.html" data-i18n="nav_team">Équipe</a>
+      <a href="galerie.html" data-i18n="nav_gallery">Galerie</a>
+      <a href="actualites.html" data-i18n="nav_news">Actualités</a>
+      <a href="contact.html" data-i18n="nav_contact">Contact</a>
+    </div>
+    <div class="nav-right">
+      <select class="lang-select" id="langSelect" onchange="setLang(this.value)">
+        <option value="fr">FR</option><option value="ht">HT</option><option value="en">EN</option><option value="es">ES</option><option value="pt">PT</option>
+      </select>
+      <a href="index.html#direct" class="nav-cta"><span aria-hidden="true">▶</span><span data-i18n="nav_cta">Écouter</span></a>
+    </div>
+  </div>
+</nav>
+
+<header class="page-hero">
+  <div class="wrap">
+    <div class="eyebrow" data-i18n="ph_eyebrow">ESPACE ANNONCEURS</div>
+    <h1 data-i18n="ph_title">Faites entendre votre marque sur RTU</h1>
+    <p data-i18n="ph_desc">Touchez une audience fidèle en Haïti et dans toute la diaspora — radio, télé et digital, sous une seule bannière.</p>
+  </div>
+</header>
+
+<section class="pad">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow" data-i18n="pkg_eyebrow">NOS FORMULES</div>
+      <h2 data-i18n="pkg_title">Choisissez votre visibilité</h2>
+    </div>
+    <div class="pkg-grid">
+      <div class="pkg-card">
+        <div class="ic"><svg viewBox="0 0 24 24"><path d="M4 4h16v14H8l-4 4z"/></svg></div>
+        <h3 data-i18n="pkg1_title">Spot Radio</h3>
+        <div class="price" data-i18n="pkg1_price">Sur devis</div>
+        <ul>
+          <li data-i18n="pkg1_f1">Spots audio pendant les émissions phares</li>
+          <li data-i18n="pkg1_f2">Mention en direct par les animateurs</li>
+          <li data-i18n="pkg1_f3">Rapport de diffusion mensuel</li>
+        </ul>
+      </div>
+      <div class="pkg-card featured">
+        <div class="ic"><svg viewBox="0 0 24 24"><rect x="2" y="6" width="20" height="13" rx="2"/><path d="M8 21h8"/></svg></div>
+        <h3 data-i18n="pkg2_title">Bannière Digitale</h3>
+        <div class="price" data-i18n="pkg2_price">Sur devis</div>
+        <ul>
+          <li data-i18n="pkg2_f1">Bannière sur le site RTU (section Publicité)</li>
+          <li data-i18n="pkg2_f2">Logo dans la section Partenaires</li>
+          <li data-i18n="pkg2_f3">Lien direct vers votre site</li>
+        </ul>
+      </div>
+      <div class="pkg-card">
+        <div class="ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a15 15 0 0 1 0 18 15 15 0 0 1 0-18z"/></svg></div>
+        <h3 data-i18n="pkg3_title">Pack Complet</h3>
+        <div class="price" data-i18n="pkg3_price">Sur devis</div>
+        <ul>
+          <li data-i18n="pkg3_f1">Radio + Digital combinés</li>
+          <li data-i18n="pkg3_f2">Contenu sponsorisé sur Actualités</li>
+          <li data-i18n="pkg3_f3">Accompagnement personnalisé</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="form-section">
+      <div>
+        <div class="stat-card">
+          <div class="stat-row"><span data-i18n="stat1_label">Audience quotidienne</span><b>1 200+</b></div>
+          <div class="stat-row"><span data-i18n="stat2_label">Diffusion</span><b>24/7</b></div>
+          <div class="stat-row"><span data-i18n="stat3_label">Portée</span><b data-i18n="stat3_val">Mondiale</b></div>
+        </div>
+      </div>
+      <div class="form-card">
+        <form id="adForm">
+          <div class="field-row">
+            <div class="field"><label data-i18n="f_name">Nom complet</label><input type="text" id="a_name" required /></div>
+            <div class="field"><label data-i18n="f_company">Entreprise (optionnel)</label><input type="text" id="a_company" /></div>
+          </div>
+          <div class="field-row">
+            <div class="field"><label data-i18n="f_email">Email</label><input type="email" id="a_email" required /></div>
+            <div class="field"><label data-i18n="f_phone">Téléphone (optionnel)</label><input type="tel" id="a_phone" /></div>
+          </div>
+          <div class="field"><label data-i18n="f_message">Votre projet publicitaire</label><textarea id="a_message" required></textarea></div>
+          <button type="submit" class="btn-submit" id="adSubmitBtn" data-i18n="f_submit">Envoyer ma demande</button>
+          <div class="form-msg" id="adFormMsg"></div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div id="partners-ads-mount"></div>
+<footer>
+  <div class="wrap">
+    <div id="newsletter-mount"></div>
+    <div class="foot-bottom">
+      <p data-i18n="footer_rights">© 2026 Radio Télé Unité (RTU). Tous droits réservés.</p>
+      <div class="foot-links">
+        <a href="index.html">Accueil</a>
+        <a href="apropos.html" data-i18n="nav_about">À propos</a>
+        <a href="programmes.html" data-i18n="nav_programs">Programmes</a>
+        <a href="equipe.html" data-i18n="nav_team">Équipe</a>
+        <a href="galerie.html" data-i18n="nav_gallery">Galerie</a>
+        <a href="actualites.html" data-i18n="nav_news">Actualités</a>
+        <a href="contact.html" data-i18n="nav_contact">Contact</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+const translations = {
+  fr:{ nav_direct:"Écouter en direct", nav_programs:"Programmes", nav_news:"Actualités", nav_about:"À propos", nav_team:"Équipe", nav_gallery:"Galerie", nav_contact:"Contact", nav_cta:"Écouter",
+    ph_eyebrow:"ESPACE ANNONCEURS", ph_title:"Faites entendre votre marque sur RTU", ph_desc:"Touchez une audience fidèle en Haïti et dans toute la diaspora — radio, télé et digital, sous une seule bannière.",
+    pkg_eyebrow:"NOS FORMULES", pkg_title:"Choisissez votre visibilité",
+    pkg1_title:"Spot Radio", pkg1_price:"Sur devis", pkg1_f1:"Spots audio pendant les émissions phares", pkg1_f2:"Mention en direct par les animateurs", pkg1_f3:"Rapport de diffusion mensuel",
+    pkg2_title:"Bannière Digitale", pkg2_price:"Sur devis", pkg2_f1:"Bannière sur le site RTU (section Publicité)", pkg2_f2:"Logo dans la section Partenaires", pkg2_f3:"Lien direct vers votre site",
+    pkg3_title:"Pack Complet", pkg3_price:"Sur devis", pkg3_f1:"Radio + Digital combinés", pkg3_f2:"Contenu sponsorisé sur Actualités", pkg3_f3:"Accompagnement personnalisé",
+    stat1_label:"Audience quotidienne", stat2_label:"Diffusion", stat3_label:"Portée", stat3_val:"Mondiale",
+    f_name:"Nom complet", f_company:"Entreprise (optionnel)", f_email:"Email", f_phone:"Téléphone (optionnel)", f_message:"Votre projet publicitaire", f_submit:"Envoyer ma demande",
+    msg_success:"Merci ! Votre demande a bien été envoyée, nous vous contacterons rapidement.", msg_error:"Une erreur est survenue. Réessayez.",
+    footer_rights:"© 2026 Radio Télé Unité (RTU). Tous droits réservés." },
+  ht:{ nav_direct:"Koute an dirèk", nav_programs:"Pwogram", nav_news:"Aktyalite", nav_about:"Konsènan", nav_team:"Ekip", nav_gallery:"Galri", nav_contact:"Kontak", nav_cta:"Koute",
+    ph_eyebrow:"ESPAS ANONSÈ", ph_title:"Fè mak ou tande sou RTU", ph_desc:"Touche yon odyans fidèl an Ayiti ak nan tout dyaspora a — radyo, tele ak dijital, anba yon sèl mak.",
+    pkg_eyebrow:"FÒMIL NOU YO", pkg_title:"Chwazi vizibilite w",
+    pkg1_title:"Spot Radyo", pkg1_price:"Sou demand", pkg1_f1:"Spot odyo pandan gwo emisyon yo", pkg1_f2:"Mansyone an dirèk pa animatè yo", pkg1_f3:"Rapò difizyon chak mwa",
+    pkg2_title:"Bannè Dijital", pkg2_price:"Sou demand", pkg2_f1:"Bannè sou sit RTU (seksyon Piblisite)", pkg2_f2:"Logo nan seksyon Patenè yo", pkg2_f3:"Lyen dirèk pou sit ou",
+    pkg3_title:"Pak Konplè", pkg3_price:"Sou demand", pkg3_f1:"Radyo + Dijital ansanm", pkg3_f2:"Kontni esponsorize sou Aktyalite", pkg3_f3:"Akonpayman pèsonalize",
+    stat1_label:"Odyans chak jou", stat2_label:"Difizyon", stat3_label:"Pòte", stat3_val:"Mondyal",
+    f_name:"Non konplè", f_company:"Antrepriz (opsyonèl)", f_email:"Imèl", f_phone:"Telefòn (opsyonèl)", f_message:"Pwojè piblisite w", f_submit:"Voye demand mwen",
+    msg_success:"Mèsi! Demand ou a byen voye, n ap kontakte w byen vit.", msg_error:"Gen yon erè ki rive. Eseye ankò.",
+    footer_rights:"© 2026 Radio Télé Unité (RTU). Tout dwa rezève." },
+  en:{ nav_direct:"Listen Live", nav_programs:"Programs", nav_news:"News", nav_about:"About", nav_team:"Team", nav_gallery:"Gallery", nav_contact:"Contact", nav_cta:"Listen",
+    ph_eyebrow:"ADVERTISER SPACE", ph_title:"Get your brand heard on RTU", ph_desc:"Reach a loyal audience in Haiti and across the diaspora — radio, TV and digital, under one banner.",
+    pkg_eyebrow:"OUR PACKAGES", pkg_title:"Choose your visibility",
+    pkg1_title:"Radio Spot", pkg1_price:"On request", pkg1_f1:"Audio spots during flagship shows", pkg1_f2:"Live mentions by hosts", pkg1_f3:"Monthly airplay report",
+    pkg2_title:"Digital Banner", pkg2_price:"On request", pkg2_f1:"Banner on RTU's website (Ads section)", pkg2_f2:"Logo in the Partners section", pkg2_f3:"Direct link to your website",
+    pkg3_title:"Full Package", pkg3_price:"On request", pkg3_f1:"Radio + Digital combined", pkg3_f2:"Sponsored content on News", pkg3_f3:"Personalized support",
+    stat1_label:"Daily audience", stat2_label:"Broadcast", stat3_label:"Reach", stat3_val:"Global",
+    f_name:"Full name", f_company:"Company (optional)", f_email:"Email", f_phone:"Phone (optional)", f_message:"Your advertising project", f_submit:"Send my request",
+    msg_success:"Thanks! Your request has been sent, we'll contact you soon.", msg_error:"Something went wrong. Please try again.",
+    footer_rights:"© 2026 Radio Télé Unité (RTU). All rights reserved." },
+  es:{ nav_direct:"Escuchar en vivo", nav_programs:"Programas", nav_news:"Noticias", nav_about:"Nosotros", nav_team:"Equipo", nav_gallery:"Galería", nav_contact:"Contacto", nav_cta:"Escuchar",
+    ph_eyebrow:"ESPACIO ANUNCIANTES", ph_title:"Haz que tu marca suene en RTU", ph_desc:"Llega a una audiencia fiel en Haití y en toda la diáspora — radio, TV y digital, bajo una sola marca.",
+    pkg_eyebrow:"NUESTROS PAQUETES", pkg_title:"Elige tu visibilidad",
+    pkg1_title:"Spot de Radio", pkg1_price:"A cotizar", pkg1_f1:"Spots de audio durante programas estrella", pkg1_f2:"Mención en vivo por los presentadores", pkg1_f3:"Reporte de difusión mensual",
+    pkg2_title:"Banner Digital", pkg2_price:"A cotizar", pkg2_f1:"Banner en el sitio de RTU (sección Publicidad)", pkg2_f2:"Logo en la sección de Socios", pkg2_f3:"Enlace directo a tu sitio",
+    pkg3_title:"Paquete Completo", pkg3_price:"A cotizar", pkg3_f1:"Radio + Digital combinados", pkg3_f2:"Contenido patrocinado en Noticias", pkg3_f3:"Acompañamiento personalizado",
+    stat1_label:"Audiencia diaria", stat2_label:"Difusión", stat3_label:"Alcance", stat3_val:"Mundial",
+    f_name:"Nombre completo", f_company:"Empresa (opcional)", f_email:"Correo", f_phone:"Teléfono (opcional)", f_message:"Tu proyecto publicitario", f_submit:"Enviar mi solicitud",
+    msg_success:"¡Gracias! Tu solicitud fue enviada, te contactaremos pronto.", msg_error:"Ocurrió un error. Intenta de nuevo.",
+    footer_rights:"© 2026 Radio Télé Unité (RTU). Todos los derechos reservados." },
+  pt:{ nav_direct:"Ouvir ao vivo", nav_programs:"Programas", nav_news:"Notícias", nav_about:"Sobre", nav_team:"Equipe", nav_gallery:"Galeria", nav_contact:"Contato", nav_cta:"Ouvir",
+    ph_eyebrow:"ESPAÇO ANUNCIANTES", ph_title:"Faça sua marca ser ouvida na RTU", ph_desc:"Alcance um público fiel no Haiti e em toda a diáspora — rádio, TV e digital, sob uma só marca.",
+    pkg_eyebrow:"NOSSOS PACOTES", pkg_title:"Escolha sua visibilidade",
+    pkg1_title:"Spot de Rádio", pkg1_price:"Sob consulta", pkg1_f1:"Spots de áudio durante programas principais", pkg1_f2:"Menção ao vivo pelos apresentadores", pkg1_f3:"Relatório mensal de veiculação",
+    pkg2_title:"Banner Digital", pkg2_price:"Sob consulta", pkg2_f1:"Banner no site da RTU (seção Publicidade)", pkg2_f2:"Logo na seção de Parceiros", pkg2_f3:"Link direto para o seu site",
+    pkg3_title:"Pacote Completo", pkg3_price:"Sob consulta", pkg3_f1:"Rádio + Digital combinados", pkg3_f2:"Conteúdo patrocinado em Notícias", pkg3_f3:"Acompanhamento personalizado",
+    stat1_label:"Audiência diária", stat2_label:"Transmissão", stat3_label:"Alcance", stat3_val:"Mundial",
+    f_name:"Nome completo", f_company:"Empresa (opcional)", f_email:"Email", f_phone:"Telefone (opcional)", f_message:"Seu projeto publicitário", f_submit:"Enviar minha solicitação",
+    msg_success:"Obrigado! Sua solicitação foi enviada, entraremos em contato em breve.", msg_error:"Ocorreu um erro. Tente novamente.",
+    footer_rights:"© 2026 Radio Télé Unité (RTU). Todos os direitos reservados." }
+};
+function getCurrentLang(){ return localStorage.getItem('rtu_lang') || 'fr'; }
+function setLang(lang){
+  localStorage.setItem('rtu_lang', lang);
+  document.getElementById('langSelect').value = lang;
+  const dict = translations[lang] || translations.fr;
+  document.querySelectorAll('[data-i18n]').forEach(el=>{
+    const key = el.getAttribute('data-i18n');
+    if(dict[key] !== undefined) el.textContent = dict[key];
+  });
+}
+setLang(getCurrentLang());
+
+const SUPABASE_URL = 'https://dznqpltxfhpuorxxwypb.supabase.co';
+const SUPABASE_ANON_KEY = 'sb_publishable_GPyfox6GpwC1HK-fwchdEw_XdkKOhQ1';
+const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+const adForm = document.getElementById('adForm');
+const adSubmitBtn = document.getElementById('adSubmitBtn');
+const adFormMsg = document.getElementById('adFormMsg');
+
+adForm.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const dict = translations[getCurrentLang()] || translations.fr;
+  adSubmitBtn.disabled = true;
+  const original = adSubmitBtn.textContent;
+  adSubmitBtn.textContent = '...';
+
+  const payload = {
+    full_name: document.getElementById('a_name').value.trim(),
+    company: document.getElementById('a_company').value.trim(),
+    email: document.getElementById('a_email').value.trim(),
+    phone: document.getElementById('a_phone').value.trim(),
+    message: document.getElementById('a_message').value.trim(),
+  };
+
+  const { error } = await sb.from('ad_inquiries').insert(payload);
+
+  adFormMsg.className = 'form-msg show ' + (error ? 'error' : 'success');
+  adFormMsg.textContent = error ? dict.msg_error : dict.msg_success;
+
+  if(!error) adForm.reset();
+  adSubmitBtn.disabled = false;
+  adSubmitBtn.textContent = original;
+});
+</script>
+
+<script src="js/partners-ads.js"></script>
+<script src="js/newsletter.js"></script>
+</body>
+</html>

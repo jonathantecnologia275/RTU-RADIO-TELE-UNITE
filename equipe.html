@@ -100,6 +100,7 @@ footer{background:var(--navy); border-top:1px solid var(--line); padding:44px 0 
       <a href="galerie.html" data-i18n="nav_gallery">Galerie</a>
       <a href="actualites.html" data-i18n="nav_news">Actualités</a>
       <a href="contact.html" data-i18n="nav_contact">Contact</a>
+        <a href="publicite.html" data-i18n="nav_ads">Publicité</a>
     </div>
     <div class="nav-right">
       <select class="lang-select" id="langSelect" onchange="setLang(this.value)">
@@ -135,6 +136,7 @@ footer{background:var(--navy); border-top:1px solid var(--line); padding:44px 0 
         <a href="apropos.html" data-i18n="nav_about">À propos</a>
         <a href="galerie.html" data-i18n="nav_gallery">Galerie</a>
         <a href="contact.html" data-i18n="nav_contact">Contact</a>
+        <a href="publicite.html" data-i18n="nav_ads">Publicité</a>
       </div>
     </div>
   </div>
@@ -142,27 +144,27 @@ footer{background:var(--navy); border-top:1px solid var(--line); padding:44px 0 
 
 <script>
 const translations = {
-  fr:{ nav_about:"À propos", nav_programs:"Programmes", nav_team:"Équipe", nav_gallery:"Galerie", nav_news:"Actualités", nav_contact:"Contact", nav_cta:"Écouter",
+  fr:{ nav_about:"À propos", nav_programs:"Programmes", nav_team:"Équipe", nav_gallery:"Galerie", nav_news:"Actualités", nav_contact:"Contact", nav_cta:"Écouter", nav_ads:"Publicité",
     ph_eyebrow:"DERRIÈRE LE MICRO", ph_title:"Notre équipe", ph_desc:"Les voix et les visages qui font vivre RTU chaque jour.",
     loading:"Chargement de l'équipe…", no_team:"Aucun membre à afficher pour le moment.",
     role_animateur:"Animateurs", role_journaliste:"Journalistes", role_technicien:"Techniciens", role_admin:"Direction", role_other:"Équipe",
     footer_rights:"© 2026 Radio Télé Unité (RTU). Tous droits réservés." },
-  ht:{ nav_about:"Konsènan", nav_programs:"Pwogram", nav_team:"Ekip", nav_gallery:"Galri", nav_news:"Aktyalite", nav_contact:"Kontak", nav_cta:"Koute",
+  ht:{ nav_about:"Konsènan", nav_programs:"Pwogram", nav_team:"Ekip", nav_gallery:"Galri", nav_news:"Aktyalite", nav_contact:"Kontak", nav_cta:"Koute", nav_ads:"Piblisite",
     ph_eyebrow:"DÈYÈ MIKWO A", ph_title:"Ekip nou an", ph_desc:"Vwa ak figi ki fè RTU vivan chak jou.",
     loading:"Chajman ekip la…", no_team:"Pa gen okenn manm pou montre kounye a.",
     role_animateur:"Animatè", role_journaliste:"Jounalis", role_technicien:"Teknisyen", role_admin:"Direksyon", role_other:"Ekip",
     footer_rights:"© 2026 Radio Télé Unité (RTU). Tout dwa rezève." },
-  en:{ nav_about:"About", nav_programs:"Programs", nav_team:"Team", nav_gallery:"Gallery", nav_news:"News", nav_contact:"Contact", nav_cta:"Listen",
+  en:{ nav_about:"About", nav_programs:"Programs", nav_team:"Team", nav_gallery:"Gallery", nav_news:"News", nav_contact:"Contact", nav_cta:"Listen", nav_ads:"Advertising",
     ph_eyebrow:"BEHIND THE MIC", ph_title:"Our team", ph_desc:"The voices and faces that bring RTU to life every day.",
     loading:"Loading team…", no_team:"No team members to display right now.",
     role_animateur:"Hosts", role_journaliste:"Journalists", role_technicien:"Technicians", role_admin:"Management", role_other:"Team",
     footer_rights:"© 2026 Radio Télé Unité (RTU). All rights reserved." },
-  es:{ nav_about:"Nosotros", nav_programs:"Programas", nav_team:"Equipo", nav_gallery:"Galería", nav_news:"Noticias", nav_contact:"Contacto", nav_cta:"Escuchar",
+  es:{ nav_about:"Nosotros", nav_programs:"Programas", nav_team:"Equipo", nav_gallery:"Galería", nav_news:"Noticias", nav_contact:"Contacto", nav_cta:"Escuchar", nav_ads:"Publicidad",
     ph_eyebrow:"DETRÁS DEL MICRÓFONO", ph_title:"Nuestro equipo", ph_desc:"Las voces y los rostros que dan vida a RTU cada día.",
     loading:"Cargando equipo…", no_team:"No hay miembros para mostrar por ahora.",
     role_animateur:"Presentadores", role_journaliste:"Periodistas", role_technicien:"Técnicos", role_admin:"Dirección", role_other:"Equipo",
     footer_rights:"© 2026 Radio Télé Unité (RTU). Todos los derechos reservados." },
-  pt:{ nav_about:"Sobre", nav_programs:"Programas", nav_team:"Equipe", nav_gallery:"Galeria", nav_news:"Notícias", nav_contact:"Contato", nav_cta:"Ouvir",
+  pt:{ nav_about:"Sobre", nav_programs:"Programas", nav_team:"Equipe", nav_gallery:"Galeria", nav_news:"Notícias", nav_contact:"Contato", nav_cta:"Ouvir", nav_ads:"Publicidade",
     ph_eyebrow:"POR TRÁS DO MICROFONE", ph_title:"Nossa equipe", ph_desc:"As vozes e rostos que dão vida à RTU todos os dias.",
     loading:"Carregando equipe…", no_team:"Nenhum membro para exibir no momento.",
     role_animateur:"Apresentadores", role_journaliste:"Jornalistas", role_technicien:"Técnicos", role_admin:"Direção", role_other:"Equipe",
@@ -229,6 +231,8 @@ loadTeam();
 <script src="js/newsletter.js"></script>
 </body>
 </html>
+
+
 
 
 

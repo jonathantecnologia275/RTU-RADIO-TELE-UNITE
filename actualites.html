@@ -108,6 +108,7 @@ footer{background:var(--navy); border-top:1px solid var(--line); padding:44px 0 
       <a href="galerie.html" data-i18n="nav_gallery">Galerie</a>
       <a href="actualites.html" class="active" data-i18n="nav_news">Actualités</a>
       <a href="contact.html" data-i18n="nav_contact">Contact</a>
+        <a href="publicite.html" data-i18n="nav_ads">Publicité</a>
     </div>
     <div class="nav-right">
       <select class="lang-select" id="langSelect" onchange="setLang(this.value)">
@@ -148,6 +149,7 @@ footer{background:var(--navy); border-top:1px solid var(--line); padding:44px 0 
         <a href="equipe.html" data-i18n="nav_team">Équipe</a>
         <a href="galerie.html" data-i18n="nav_gallery">Galerie</a>
         <a href="contact.html" data-i18n="nav_contact">Contact</a>
+        <a href="publicite.html" data-i18n="nav_ads">Publicité</a>
       </div>
     </div>
   </div>
@@ -155,27 +157,27 @@ footer{background:var(--navy); border-top:1px solid var(--line); padding:44px 0 
 
 <script>
 const translations = {
-  fr:{ nav_direct:"Écouter en direct", nav_programs:"Programmes", nav_news:"Actualités", nav_about:"À propos", nav_team:"Équipe", nav_gallery:"Galerie", nav_contact:"Contact", nav_cta:"Écouter",
+  fr:{ nav_direct:"Écouter en direct", nav_ads:"Publicité", nav_programs:"Programmes", nav_news:"Actualités", nav_about:"À propos", nav_team:"Équipe", nav_gallery:"Galerie", nav_contact:"Contact", nav_cta:"Écouter",
     ph_eyebrow:"À LA UNE", ph_title:"Actualités RTU", ph_desc:"Toutes les nouvelles couvertes par nos journalistes, en un seul endroit.",
     loading:"Chargement des actualités…", no_news:"Aucune actualité disponible pour le moment.", read_more:"Lire l'article",
     filter_all:"Tous",
     footer_rights:"© 2026 Radio Télé Unité (RTU). Tous droits réservés." },
-  ht:{ nav_direct:"Koute an dirèk", nav_programs:"Pwogram", nav_news:"Aktyalite", nav_about:"Konsènan", nav_team:"Ekip", nav_gallery:"Galri", nav_contact:"Kontak", nav_cta:"Koute",
+  ht:{ nav_direct:"Koute an dirèk", nav_ads:"Piblisite", nav_programs:"Pwogram", nav_news:"Aktyalite", nav_about:"Konsènan", nav_team:"Ekip", nav_gallery:"Galri", nav_contact:"Kontak", nav_cta:"Koute",
     ph_eyebrow:"NAN INE A", ph_title:"Aktyalite RTU", ph_desc:"Tout nouvèl jounalis nou yo kouvri, nan yon sèl kote.",
     loading:"Chajman aktyalite yo…", no_news:"Pa gen okenn aktyalite disponib kounye a.", read_more:"Li atik la",
     filter_all:"Tout",
     footer_rights:"© 2026 Radio Télé Unité (RTU). Tout dwa rezève." },
-  en:{ nav_direct:"Listen Live", nav_programs:"Programs", nav_news:"News", nav_about:"About", nav_team:"Team", nav_gallery:"Gallery", nav_contact:"Contact", nav_cta:"Listen",
+  en:{ nav_direct:"Listen Live", nav_ads:"Advertising", nav_programs:"Programs", nav_news:"News", nav_about:"About", nav_team:"Team", nav_gallery:"Gallery", nav_contact:"Contact", nav_cta:"Listen",
     ph_eyebrow:"HEADLINES", ph_title:"RTU News", ph_desc:"All the stories covered by our journalists, in one place.",
     loading:"Loading news…", no_news:"No news available right now.", read_more:"Read article",
     filter_all:"All",
     footer_rights:"© 2026 Radio Télé Unité (RTU). All rights reserved." },
-  es:{ nav_direct:"Escuchar en vivo", nav_programs:"Programas", nav_news:"Noticias", nav_about:"Nosotros", nav_team:"Equipo", nav_gallery:"Galería", nav_contact:"Contacto", nav_cta:"Escuchar",
+  es:{ nav_direct:"Escuchar en vivo", nav_ads:"Publicidad", nav_programs:"Programas", nav_news:"Noticias", nav_about:"Nosotros", nav_team:"Equipo", nav_gallery:"Galería", nav_contact:"Contacto", nav_cta:"Escuchar",
     ph_eyebrow:"DESTACADAS", ph_title:"Noticias RTU", ph_desc:"Todas las noticias cubiertas por nuestros periodistas, en un solo lugar.",
     loading:"Cargando noticias…", no_news:"No hay noticias disponibles por ahora.", read_more:"Leer artículo",
     filter_all:"Todas",
     footer_rights:"© 2026 Radio Télé Unité (RTU). Todos los derechos reservados." },
-  pt:{ nav_direct:"Ouvir ao vivo", nav_programs:"Programas", nav_news:"Notícias", nav_about:"Sobre", nav_team:"Equipe", nav_gallery:"Galeria", nav_contact:"Contato", nav_cta:"Ouvir",
+  pt:{ nav_direct:"Ouvir ao vivo", nav_ads:"Publicidade", nav_programs:"Programas", nav_news:"Notícias", nav_about:"Sobre", nav_team:"Equipe", nav_gallery:"Galeria", nav_contact:"Contato", nav_cta:"Ouvir",
     ph_eyebrow:"DESTAQUES", ph_title:"Notícias RTU", ph_desc:"Todas as notícias cobertas pelos nossos jornalistas, em um só lugar.",
     loading:"Carregando notícias…", no_news:"Nenhuma notícia disponível no momento.", read_more:"Ler artigo",
     filter_all:"Todas",
@@ -262,6 +264,8 @@ loadAllNews();
 <script src="js/newsletter.js"></script>
 </body>
 </html>
+
+
 
 
 
