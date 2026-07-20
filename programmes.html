@@ -101,6 +101,7 @@ footer{background:var(--navy); border-top:1px solid var(--line); padding:44px 0 
     <div class="nav-links">
       <a href="apropos.html" data-i18n="nav_about">À propos</a>
       <a href="index.html#direct" data-i18n="nav_direct">Écouter en direct</a>
+      <a href="tv-direct.html" data-i18n="nav_tv">RTU TV</a>
       <a href="programmes.html" class="active" data-i18n="nav_programs">Programmes</a>
       <a href="repriz.html" data-i18n="nav_repriz">Repriz</a>
       <a href="equipe.html" data-i18n="nav_team">Équipe</a>
@@ -155,23 +156,23 @@ footer{background:var(--navy); border-top:1px solid var(--line); padding:44px 0 
 
 <script>
 const translations = {
-  fr:{ nav_direct:"Écouter en direct", nav_ads:"Publicité", nav_programs:"Programmes", nav_repriz:"Repriz", nav_news:"Actualités", nav_about:"À propos", nav_team:"Équipe", nav_gallery:"Galerie", nav_contact:"Contact", nav_cta:"Écouter",
+  fr:{ nav_direct:"Écouter en direct", nav_tv:"RTU TV", nav_ads:"Publicité", nav_programs:"Programmes", nav_repriz:"Repriz", nav_news:"Actualités", nav_about:"À propos", nav_team:"Équipe", nav_gallery:"Galerie", nav_contact:"Contact", nav_cta:"Écouter",
     ph_eyebrow:"GRILLE COMPLÈTE", ph_title:"Les programmes de RTU", ph_desc:"Retrouvez tous nos rendez-vous quotidiens — information, culture et musique.",
     loading:"Chargement des programmes…", daily_tag:"Chaque jour", no_programs:"Aucun programme disponible pour le moment.",
     footer_rights:"© 2026 Radio Télé Unité (RTU). Tous droits réservés." },
-  ht:{ nav_direct:"Koute an dirèk", nav_ads:"Piblisite", nav_programs:"Pwogram", nav_repriz:"Repriz", nav_news:"Aktyalite", nav_about:"Konsènan", nav_team:"Ekip", nav_gallery:"Galri", nav_contact:"Kontak", nav_cta:"Koute",
+  ht:{ nav_direct:"Koute an dirèk", nav_tv:"RTU TV", nav_ads:"Piblisite", nav_programs:"Pwogram", nav_repriz:"Repriz", nav_news:"Aktyalite", nav_about:"Konsènan", nav_team:"Ekip", nav_gallery:"Galri", nav_contact:"Kontak", nav_cta:"Koute",
     ph_eyebrow:"GRIY KONPLÈ", ph_title:"Pwogram RTU yo", ph_desc:"Jwenn tout randevou chak jou nou yo — enfòmasyon, kilti ak mizik.",
     loading:"Chajman pwogram yo…", daily_tag:"Chak jou", no_programs:"Pa gen okenn pwogram disponib kounye a.",
     footer_rights:"© 2026 Radio Télé Unité (RTU). Tout dwa rezève." },
-  en:{ nav_direct:"Listen Live", nav_ads:"Advertising", nav_programs:"Programs", nav_repriz:"Replays", nav_news:"News", nav_about:"About", nav_team:"Team", nav_gallery:"Gallery", nav_contact:"Contact", nav_cta:"Listen",
+  en:{ nav_direct:"Listen Live", nav_tv:"RTU TV", nav_ads:"Advertising", nav_programs:"Programs", nav_repriz:"Replays", nav_news:"News", nav_about:"About", nav_team:"Team", nav_gallery:"Gallery", nav_contact:"Contact", nav_cta:"Listen",
     ph_eyebrow:"FULL SCHEDULE", ph_title:"RTU Programs", ph_desc:"Find all our daily shows — news, culture and music.",
     loading:"Loading programs…", daily_tag:"Every day", no_programs:"No programs available right now.",
     footer_rights:"© 2026 Radio Télé Unité (RTU). All rights reserved." },
-  es:{ nav_direct:"Escuchar en vivo", nav_ads:"Publicidad", nav_programs:"Programas", nav_repriz:"Repeticiones", nav_news:"Noticias", nav_about:"Nosotros", nav_team:"Equipo", nav_gallery:"Galería", nav_contact:"Contacto", nav_cta:"Escuchar",
+  es:{ nav_direct:"Escuchar en vivo", nav_tv:"RTU TV", nav_ads:"Publicidad", nav_programs:"Programas", nav_repriz:"Repeticiones", nav_news:"Noticias", nav_about:"Nosotros", nav_team:"Equipo", nav_gallery:"Galería", nav_contact:"Contacto", nav_cta:"Escuchar",
     ph_eyebrow:"PARRILLA COMPLETA", ph_title:"Los programas de RTU", ph_desc:"Encuentra todas nuestras citas diarias — noticias, cultura y música.",
     loading:"Cargando programas…", daily_tag:"Todos los días", no_programs:"No hay programas disponibles por ahora.",
     footer_rights:"© 2026 Radio Télé Unité (RTU). Todos los derechos reservados." },
-  pt:{ nav_direct:"Ouvir ao vivo", nav_ads:"Publicidade", nav_programs:"Programas", nav_repriz:"Reprises", nav_news:"Notícias", nav_about:"Sobre", nav_team:"Equipe", nav_gallery:"Galeria", nav_contact:"Contato", nav_cta:"Ouvir",
+  pt:{ nav_direct:"Ouvir ao vivo", nav_tv:"RTU TV", nav_ads:"Publicidade", nav_programs:"Programas", nav_repriz:"Reprises", nav_news:"Notícias", nav_about:"Sobre", nav_team:"Equipe", nav_gallery:"Galeria", nav_contact:"Contato", nav_cta:"Ouvir",
     ph_eyebrow:"GRADE COMPLETA", ph_title:"Os programas da RTU", ph_desc:"Encontre todos os nossos encontros diários — notícias, cultura e música.",
     loading:"Carregando programas…", daily_tag:"Todos os dias", no_programs:"Nenhum programa disponível no momento.",
     footer_rights:"© 2026 Radio Télé Unité (RTU). Todos os direitos reservados." }
@@ -219,6 +220,8 @@ loadAllPrograms();
 <script src="js/newsletter.js"></script>
 </body>
 </html>
+
+
 
 
 

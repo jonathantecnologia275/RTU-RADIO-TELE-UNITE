@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Repriz & Podcasts — Radio Télé Unité (RTU)</title>
-<meta name="description" content="Réécoutez les émissions passées de Radio Télé Unité (RTU) — repriz audio et vidéo à la demande." />
+<title>RTU TV en Direct — Radio Télé Unité</title>
+<meta name="description" content="Regardez Radio Télé Unité (RTU) en direct — diffusion télé mondiale, 24h/24." />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
@@ -15,14 +15,14 @@
   --blue:#3E7BFA; --blue-soft:#7FA4FF;
   --gold:#E8B84B; --gold-hover:#D6A53A;
   --ivory:#F6F4EE; --ink:#0B0F2E; --ink-soft:#8890AC;
-  --line:rgba(255,255,255,.09); --green:#3FA66B;
+  --line:rgba(255,255,255,.09); --live:#EE5B4F;
   --font-display:"Space Grotesk", sans-serif;
   --font-body:"Inter", sans-serif;
   --font-mono:"JetBrains Mono", monospace;
   --ease:cubic-bezier(.2,.8,.2,1);
 }
 *,*::before,*::after{box-sizing:border-box;}
-body{margin:0; font-family:var(--font-body); background:var(--ivory); color:var(--ink); -webkit-font-smoothing:antialiased;}
+body{margin:0; font-family:var(--font-body); background:var(--navy-deep); color:#fff; -webkit-font-smoothing:antialiased;}
 a{color:inherit; text-decoration:none;}
 button{font-family:inherit; cursor:pointer;}
 h1,h2,h3{margin:0; font-family:var(--font-display); font-weight:700;}
@@ -43,8 +43,8 @@ p{margin:0;}
 .nav-inner{display:flex; align-items:center; justify-content:space-between; padding:16px 0;}
 .brand{display:flex; align-items:center; gap:10px;}
 .brand-logo{height:40px;width:auto;display:block;}
-.nav-links{display:flex; align-items:center; gap:20px;}
-.nav-links a{font-size:12.5px; font-weight:600; color:rgba(255,255,255,.7); transition:color .15s; white-space:nowrap;}
+.nav-links{display:flex; align-items:center; gap:18px;}
+.nav-links a{font-size:12px; font-weight:600; color:rgba(255,255,255,.7); transition:color .15s; white-space:nowrap;}
 .nav-links a:hover, .nav-links a.active{color:#fff;}
 .nav-right{display:flex; align-items:center; gap:16px;}
 .lang-select{
@@ -55,30 +55,35 @@ p{margin:0;}
 }
 .lang-select option{color:#111; background:#fff;}
 .nav-cta{display:flex; align-items:center; gap:8px; background:var(--gold); color:var(--ink); font-weight:700; font-size:12.5px; padding:9px 16px; border-radius:20px; border:none;}
-@media (max-width:1080px){ .nav-links{display:none;} }
+@media (max-width:1140px){ .nav-links{display:none;} }
 
-.page-hero{background:linear-gradient(155deg, var(--navy-panel), var(--navy-deep)); color:#fff; padding:60px 0 54px;}
+.page-hero{background:linear-gradient(155deg, var(--navy-panel), var(--navy-deep)); padding:48px 0 20px;}
 .page-hero .eyebrow{font-family:var(--font-mono); font-size:12px; letter-spacing:.14em; color:var(--blue-soft); text-transform:uppercase; margin-bottom:12px;}
-.page-hero h1{font-size:clamp(28px,3.6vw,42px); margin-bottom:12px;}
-.page-hero p{color:rgba(255,255,255,.62); font-size:15px; max-width:520px;}
+.page-hero h1{font-size:clamp(26px,3.4vw,38px); margin-bottom:10px;}
 
-.pad{padding:56px 0 90px;}
-.ep-list{display:flex; flex-direction:column; gap:16px;}
-.ep-card{background:#fff; border:1px solid #E7E3D8; border-radius:16px; padding:22px 24px; display:grid; grid-template-columns:88px 1fr; gap:20px; transition:box-shadow .15s;}
-.ep-card:hover{box-shadow:0 14px 30px -18px rgba(11,15,46,.18);}
-.ep-cover{width:88px; height:88px; border-radius:12px; object-fit:cover; background:linear-gradient(155deg,#1F2A66,#0C1030);}
-.ep-body h3{font-size:16.5px; margin-bottom:5px;}
-.ep-body .meta{font-family:var(--font-mono); font-size:11px; color:var(--ink-soft); text-transform:uppercase; letter-spacing:.05em; margin-bottom:8px;}
-.ep-body p.desc{font-size:13px; color:#6B7085; line-height:1.5; margin-bottom:14px;}
-.ep-controls{display:flex; align-items:center; gap:14px; flex-wrap:wrap;}
-.ep-play{display:flex; align-items:center; gap:8px; background:var(--gold); color:var(--ink); border:none; font-weight:700; font-size:12.5px; padding:9px 16px; border-radius:20px; transition:background .15s;}
-.ep-play:hover{background:var(--gold-hover);}
-.ep-watch{display:flex; align-items:center; gap:6px; background:rgba(62,123,250,.09); color:var(--blue); font-weight:700; font-size:12.5px; padding:9px 16px; border-radius:20px; border:1px solid rgba(62,123,250,.2);}
-.ep-audio{display:none; width:100%; margin-top:12px;}
-.ep-audio.show{display:block;}
-.ep-audio audio{width:100%;}
-.empty-note{padding:60px 20px; text-align:center; color:var(--ink-soft); font-size:14px;}
-@media (max-width:560px){ .ep-card{grid-template-columns:1fr;} .ep-cover{width:100%; height:160px;} }
+.pad{padding:20px 0 90px;}
+.live-badge-lg{display:inline-flex; align-items:center; gap:8px; background:rgba(238,91,79,.14); border:1px solid rgba(238,91,79,.4); padding:7px 16px 7px 12px; border-radius:20px; margin-bottom:22px;}
+.live-dot-lg{width:8px; height:8px; border-radius:50%; background:var(--live); animation:pulse 1.6s ease-in-out infinite;}
+@keyframes pulse{0%,100%{opacity:1; box-shadow:0 0 0 0 rgba(238,91,79,.5);} 50%{opacity:.55; box-shadow:0 0 0 6px rgba(238,91,79,0);}}
+.live-badge-lg span.txt{font-family:var(--font-mono); font-size:11.5px; font-weight:600; letter-spacing:.08em; color:#FFCFC9;}
+
+.player-wrap{position:relative; width:100%; aspect-ratio:16/9; background:#000; border-radius:18px; overflow:hidden; border:1px solid var(--line); margin-bottom:26px;}
+.player-wrap iframe{width:100%; height:100%; border:none; display:block;}
+.offline-state{position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:14px; background:linear-gradient(155deg,#121840,#0A0E28); text-align:center; padding:20px;}
+.offline-state .ic{width:56px; height:56px; border-radius:50%; background:rgba(255,255,255,.06); display:flex; align-items:center; justify-content:center;}
+.offline-state .ic svg{width:26px; height:26px; stroke:var(--ink-soft); fill:none; stroke-width:1.6;}
+.offline-state h3{font-size:17px; color:#fff;}
+.offline-state p{font-size:13px; color:rgba(255,255,255,.5); max-width:340px;}
+
+.social-follow{display:flex; gap:12px; flex-wrap:wrap; margin-bottom:10px;}
+.social-follow-btn{display:none; align-items:center; gap:9px; background:rgba(255,255,255,.06); border:1px solid var(--line); padding:12px 18px; border-radius:12px; font-size:13px; font-weight:600; transition:background .15s, transform .15s;}
+.social-follow-btn.show{display:flex;}
+.social-follow-btn:hover{background:rgba(255,255,255,.11); transform:translateY(-1px);}
+.social-follow-btn .dot{width:8px; height:8px; border-radius:50%; flex-shrink:0;}
+.social-follow-btn.yt .dot{background:#FF0000;}
+.social-follow-btn.tk .dot{background:#25F4EE;}
+.social-follow-btn.fb .dot{background:#1877F2;}
+.social-follow-btn.ig .dot{background:#E1306C;}
 
 footer{background:var(--navy); border-top:1px solid var(--line); padding:44px 0 24px; color:#fff;}
 .foot-bottom{display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;}
@@ -97,9 +102,9 @@ footer{background:var(--navy); border-top:1px solid var(--line); padding:44px 0 
     <div class="nav-links">
       <a href="apropos.html" data-i18n="nav_about">À propos</a>
       <a href="index.html#direct" data-i18n="nav_direct">Écouter en direct</a>
-      <a href="tv-direct.html" data-i18n="nav_tv">RTU TV</a>
+      <a href="tv-direct.html" class="active" data-i18n="nav_tv">RTU TV</a>
       <a href="programmes.html" data-i18n="nav_programs">Programmes</a>
-      <a href="repriz.html" class="active" data-i18n="nav_repriz">Repriz</a>
+      <a href="repriz.html" data-i18n="nav_repriz">Repriz</a>
       <a href="equipe.html" data-i18n="nav_team">Équipe</a>
       <a href="actualites.html" data-i18n="nav_news">Actualités</a>
       <a href="contact.html" data-i18n="nav_contact">Contact</a>
@@ -115,17 +120,22 @@ footer{background:var(--navy); border-top:1px solid var(--line); padding:44px 0 
 
 <header class="page-hero">
   <div class="wrap">
-    <div class="eyebrow" data-i18n="ph_eyebrow">À LA DEMANDE</div>
-    <h1 data-i18n="ph_title">Repriz & Podcasts</h1>
-    <p data-i18n="ph_desc">Vous avez manqué une émission ? Réécoutez-la ici, à tout moment.</p>
+    <div class="eyebrow" data-i18n="ph_eyebrow">DIFFUSION TÉLÉ</div>
+    <h1 data-i18n="ph_title">RTU TV en direct</h1>
   </div>
 </header>
 
 <section class="pad">
   <div class="wrap">
-    <div class="ep-list" id="epListWrap">
-      <p class="empty-note" data-i18n="loading">Chargement des repriz…</p>
+    <div id="liveBadgeWrap"></div>
+    <div class="player-wrap" id="playerWrap">
+      <div class="offline-state" id="offlineState">
+        <div class="ic"><svg viewBox="0 0 24 24"><rect x="2" y="6" width="20" height="13" rx="2"/><path d="M8 21h8"/></svg></div>
+        <h3 data-i18n="offline_title">Le direct n'est pas actif pour le moment</h3>
+        <p data-i18n="offline_desc">Revenez plus tard ou suivez-nous sur nos réseaux pour être notifié du prochain direct.</p>
+      </div>
     </div>
+    <div class="social-follow" id="socialFollow"></div>
   </div>
 </section>
 
@@ -138,8 +148,8 @@ footer{background:var(--navy); border-top:1px solid var(--line); padding:44px 0 
       <div class="foot-links">
         <a href="index.html">Accueil</a>
         <a href="apropos.html" data-i18n="nav_about">À propos</a>
-        <a href="tv-direct.html" data-i18n="nav_tv">RTU TV</a>
-      <a href="programmes.html" data-i18n="nav_programs">Programmes</a>
+        <a href="programmes.html" data-i18n="nav_programs">Programmes</a>
+        <a href="repriz.html" data-i18n="nav_repriz">Repriz</a>
         <a href="equipe.html" data-i18n="nav_team">Équipe</a>
         <a href="galerie.html" data-i18n="nav_gallery">Galerie</a>
         <a href="actualites.html" data-i18n="nav_news">Actualités</a>
@@ -153,24 +163,29 @@ footer{background:var(--navy); border-top:1px solid var(--line); padding:44px 0 
 <script>
 const translations = {
   fr:{ nav_direct:"Écouter en direct", nav_tv:"RTU TV", nav_programs:"Programmes", nav_repriz:"Repriz", nav_news:"Actualités", nav_about:"À propos", nav_team:"Équipe", nav_gallery:"Galerie", nav_contact:"Contact", nav_cta:"Écouter", nav_ads:"Publicité",
-    ph_eyebrow:"À LA DEMANDE", ph_title:"Repriz & Podcasts", ph_desc:"Vous avez manqué une émission ? Réécoutez-la ici, à tout moment.",
-    loading:"Chargement des repriz…", no_episodes:"Aucune repriz disponible pour le moment.", listen:"Écouter", watch:"Regarder la vidéo",
+    ph_eyebrow:"DIFFUSION TÉLÉ", ph_title:"RTU TV en direct",
+    live_badge:"EN DIRECT MAINTENANT", offline_title:"Le direct n'est pas actif pour le moment", offline_desc:"Revenez plus tard ou suivez-nous sur nos réseaux pour être notifié du prochain direct.",
+    follow_yt:"Suivre sur YouTube", follow_tk:"Suivre sur TikTok", follow_fb:"Suivre sur Facebook", follow_ig:"Suivre sur Instagram",
     footer_rights:"© 2026 Radio Télé Unité (RTU). Tous droits réservés." },
   ht:{ nav_direct:"Koute an dirèk", nav_tv:"RTU TV", nav_programs:"Pwogram", nav_repriz:"Repriz", nav_news:"Aktyalite", nav_about:"Konsènan", nav_team:"Ekip", nav_gallery:"Galri", nav_contact:"Kontak", nav_cta:"Koute", nav_ads:"Piblisite",
-    ph_eyebrow:"SOU DEMAND", ph_title:"Repriz & Podcast", ph_desc:"Ou te manke yon emisyon? Reekoute l isit la, nenpòt kilè.",
-    loading:"Chajman repriz yo…", no_episodes:"Pa gen okenn repriz disponib kounye a.", listen:"Koute", watch:"Gade videyo a",
+    ph_eyebrow:"DIFIZYON TELE", ph_title:"RTU TV an dirèk",
+    live_badge:"AN DIRÈK KOUNYE A", offline_title:"Dirèk la pa aktif kounye a", offline_desc:"Retounen pi ta oswa swiv nou sou rezo nou yo pou w notifye lè pwochen dirèk la.",
+    follow_yt:"Swiv sou YouTube", follow_tk:"Swiv sou TikTok", follow_fb:"Swiv sou Facebook", follow_ig:"Swiv sou Instagram",
     footer_rights:"© 2026 Radio Télé Unité (RTU). Tout dwa rezève." },
   en:{ nav_direct:"Listen Live", nav_tv:"RTU TV", nav_programs:"Programs", nav_repriz:"Replays", nav_news:"News", nav_about:"About", nav_team:"Team", nav_gallery:"Gallery", nav_contact:"Contact", nav_cta:"Listen", nav_ads:"Advertising",
-    ph_eyebrow:"ON DEMAND", ph_title:"Replays & Podcasts", ph_desc:"Missed a show? Listen back anytime, right here.",
-    loading:"Loading replays…", no_episodes:"No replays available right now.", listen:"Listen", watch:"Watch video",
+    ph_eyebrow:"TV BROADCAST", ph_title:"RTU TV Live",
+    live_badge:"LIVE NOW", offline_title:"The livestream is not active right now", offline_desc:"Check back later or follow us on our socials to get notified of the next broadcast.",
+    follow_yt:"Follow on YouTube", follow_tk:"Follow on TikTok", follow_fb:"Follow on Facebook", follow_ig:"Follow on Instagram",
     footer_rights:"© 2026 Radio Télé Unité (RTU). All rights reserved." },
   es:{ nav_direct:"Escuchar en vivo", nav_tv:"RTU TV", nav_programs:"Programas", nav_repriz:"Repeticiones", nav_news:"Noticias", nav_about:"Nosotros", nav_team:"Equipo", nav_gallery:"Galería", nav_contact:"Contacto", nav_cta:"Escuchar", nav_ads:"Publicidad",
-    ph_eyebrow:"A LA CARTA", ph_title:"Repeticiones y Podcasts", ph_desc:"¿Te perdiste un programa? Vuelve a escucharlo aquí, cuando quieras.",
-    loading:"Cargando repeticiones…", no_episodes:"No hay repeticiones disponibles por ahora.", listen:"Escuchar", watch:"Ver video",
+    ph_eyebrow:"TRANSMISIÓN TV", ph_title:"RTU TV en vivo",
+    live_badge:"EN VIVO AHORA", offline_title:"La transmisión no está activa en este momento", offline_desc:"Vuelve más tarde o síguenos en redes para saber cuándo será la próxima.",
+    follow_yt:"Seguir en YouTube", follow_tk:"Seguir en TikTok", follow_fb:"Seguir en Facebook", follow_ig:"Seguir en Instagram",
     footer_rights:"© 2026 Radio Télé Unité (RTU). Todos los derechos reservados." },
   pt:{ nav_direct:"Ouvir ao vivo", nav_tv:"RTU TV", nav_programs:"Programas", nav_repriz:"Reprises", nav_news:"Notícias", nav_about:"Sobre", nav_team:"Equipe", nav_gallery:"Galeria", nav_contact:"Contato", nav_cta:"Ouvir", nav_ads:"Publicidade",
-    ph_eyebrow:"SOB DEMANDA", ph_title:"Reprises & Podcasts", ph_desc:"Perdeu um programa? Reouça aqui, a qualquer momento.",
-    loading:"Carregando reprises…", no_episodes:"Nenhuma reprise disponível no momento.", listen:"Ouvir", watch:"Assistir vídeo",
+    ph_eyebrow:"TRANSMISSÃO TV", ph_title:"RTU TV ao vivo",
+    live_badge:"AO VIVO AGORA", offline_title:"A transmissão não está ativa no momento", offline_desc:"Volte mais tarde ou siga-nos nas redes para saber da próxima transmissão.",
+    follow_yt:"Seguir no YouTube", follow_tk:"Seguir no TikTok", follow_fb:"Seguir no Facebook", follow_ig:"Seguir no Instagram",
     footer_rights:"© 2026 Radio Télé Unité (RTU). Todos os direitos reservados." }
 };
 function getCurrentLang(){ return localStorage.getItem('rtu_lang') || 'fr'; }
@@ -189,57 +204,58 @@ const SUPABASE_URL = 'https://dznqpltxfhpuorxxwypb.supabase.co';
 const SUPABASE_ANON_KEY = 'sb_publishable_GPyfox6GpwC1HK-fwchdEw_XdkKOhQ1';
 const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-function formatDuration(seconds){
-  if(!seconds) return '';
-  const m = Math.floor(seconds/60);
-  return m + ' min';
-}
-
-function toggleAudio(id){
-  document.querySelectorAll('.ep-audio').forEach(el=>{
-    if(el.id !== 'audioWrap-' + id){
-      el.classList.remove('show');
-      const a = el.querySelector('audio');
-      if(a){ a.pause(); }
-    }
-  });
-  const target = document.getElementById('audioWrap-' + id);
-  target.classList.toggle('show');
-  if(target.classList.contains('show')){
-    target.querySelector('audio').play();
+function extractYouTubeId(url){
+  if(!url) return null;
+  const patterns = [
+    /(?:youtube\.com\/(?:live\/|watch\?v=)|youtu\.be\/)([a-zA-Z0-9_-]{6,})/
+  ];
+  for(const p of patterns){
+    const m = url.match(p);
+    if(m) return m[1];
   }
+  return null;
 }
 
-async function loadEpisodes(){
-  const wrap = document.getElementById('epListWrap');
+async function loadLiveTV(){
   const dict = translations[getCurrentLang()] || translations.fr;
-  const { data, error } = await sb.from('episodes').select('*').eq('active', true).order('display_order').order('published_at', { ascending:false });
-  if(error || !data || !data.length){
-    wrap.innerHTML = `<p class="empty-note">${dict.no_episodes}</p>`;
-    return;
+  const { data, error } = await sb.from('live_tv_settings').select('*').eq('id', 1).maybeSingle();
+  if(error || !data) return;
+
+  const badgeWrap = document.getElementById('liveBadgeWrap');
+  const playerWrap = document.getElementById('playerWrap');
+  const offlineState = document.getElementById('offlineState');
+
+  if(data.is_live && data.stream_url){
+    badgeWrap.innerHTML = `<div class="live-badge-lg"><span class="live-dot-lg"></span><span class="txt">${dict.live_badge}</span></div>`;
+    const ytId = extractYouTubeId(data.stream_url);
+    if(ytId){
+      playerWrap.innerHTML = `<iframe src="https://www.youtube.com/embed/${ytId}?autoplay=1" title="RTU TV Live" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>`;
+    } else {
+      playerWrap.innerHTML = `<iframe src="${data.stream_url}" title="RTU TV Live" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>`;
+    }
+  } else {
+    badgeWrap.innerHTML = '';
+    offlineState.querySelector('h3').textContent = dict.offline_title;
+    offlineState.querySelector('p').textContent = dict.offline_desc;
   }
-  wrap.innerHTML = data.map(ep => `
-    <div class="ep-card">
-      <img class="ep-cover" src="${ep.cover_image_url || ''}" alt="${ep.title}" loading="lazy" onerror="this.style.background='linear-gradient(155deg,#1F2A66,#0C1030)'; this.src='';">
-      <div class="ep-body">
-        <span class="meta">${new Date(ep.published_at).toLocaleDateString('fr-FR', {day:'numeric', month:'long', year:'numeric'})}${ep.duration_seconds ? ' · ' + formatDuration(ep.duration_seconds) : ''}</span>
-        <h3>${ep.title}</h3>
-        <p class="desc">${ep.description || ''}</p>
-        <div class="ep-controls">
-          ${ep.audio_url ? `<button class="ep-play" onclick="toggleAudio('${ep.id}')"><span aria-hidden="true">▶</span> ${dict.listen}</button>` : ''}
-          ${ep.video_url ? `<a class="ep-watch" href="${ep.video_url}" target="_blank" rel="noopener"><span aria-hidden="true">📺</span> ${dict.watch}</a>` : ''}
-        </div>
-        ${ep.audio_url ? `<div class="ep-audio" id="audioWrap-${ep.id}"><audio controls src="${ep.audio_url}"></audio></div>` : ''}
-      </div>
-    </div>
-  `).join('');
+
+  const social = document.getElementById('socialFollow');
+  const items = [
+    { key:'youtube_url', cls:'yt', label:dict.follow_yt },
+    { key:'tiktok_url', cls:'tk', label:dict.follow_tk },
+    { key:'facebook_url', cls:'fb', label:dict.follow_fb },
+    { key:'instagram_url', cls:'ig', label:dict.follow_ig }
+  ];
+  social.innerHTML = items
+    .filter(it => data[it.key])
+    .map(it => `<a class="social-follow-btn ${it.cls} show" href="${data[it.key]}" target="_blank" rel="noopener"><span class="dot"></span>${it.label}</a>`)
+    .join('');
 }
-loadEpisodes();
+loadLiveTV();
+setInterval(loadLiveTV, 60000);
 </script>
 
 <script src="js/partners-ads.js"></script>
 <script src="js/newsletter.js"></script>
 </body>
 </html>
-
-

@@ -125,6 +125,7 @@ footer{background:var(--navy); border-top:1px solid var(--line); padding:44px 0 
     <div class="nav-links">
       <a href="apropos.html" data-i18n="nav_about">À propos</a>
       <a href="index.html#direct" data-i18n="nav_direct">Écouter en direct</a>
+      <a href="tv-direct.html" data-i18n="nav_tv">RTU TV</a>
       <a href="programmes.html" data-i18n="nav_programs">Programmes</a>
       <a href="equipe.html" data-i18n="nav_team">Équipe</a>
       <a href="galerie.html" data-i18n="nav_gallery">Galerie</a>
@@ -223,7 +224,8 @@ footer{background:var(--navy); border-top:1px solid var(--line); padding:44px 0 
       <div class="foot-links">
         <a href="index.html">Accueil</a>
         <a href="apropos.html" data-i18n="nav_about">À propos</a>
-        <a href="programmes.html" data-i18n="nav_programs">Programmes</a>
+        <a href="tv-direct.html" data-i18n="nav_tv">RTU TV</a>
+      <a href="programmes.html" data-i18n="nav_programs">Programmes</a>
         <a href="equipe.html" data-i18n="nav_team">Équipe</a>
         <a href="galerie.html" data-i18n="nav_gallery">Galerie</a>
         <a href="actualites.html" data-i18n="nav_news">Actualités</a>
@@ -235,7 +237,7 @@ footer{background:var(--navy); border-top:1px solid var(--line); padding:44px 0 
 
 <script>
 const translations = {
-  fr:{ nav_direct:"Écouter en direct", nav_programs:"Programmes", nav_news:"Actualités", nav_about:"À propos", nav_team:"Équipe", nav_gallery:"Galerie", nav_contact:"Contact", nav_cta:"Écouter",
+  fr:{ nav_direct:"Écouter en direct", nav_tv:"RTU TV", nav_programs:"Programmes", nav_news:"Actualités", nav_about:"À propos", nav_team:"Équipe", nav_gallery:"Galerie", nav_contact:"Contact", nav_cta:"Écouter",
     ph_eyebrow:"ESPACE ANNONCEURS", ph_title:"Faites entendre votre marque sur RTU", ph_desc:"Touchez une audience fidèle en Haïti et dans toute la diaspora — radio, télé et digital, sous une seule bannière.",
     pkg_eyebrow:"NOS FORMULES", pkg_title:"Choisissez votre visibilité",
     pkg1_title:"Spot Radio", pkg1_price:"Sur devis", pkg1_f1:"Spots audio pendant les émissions phares", pkg1_f2:"Mention en direct par les animateurs", pkg1_f3:"Rapport de diffusion mensuel",
@@ -245,7 +247,7 @@ const translations = {
     f_name:"Nom complet", f_company:"Entreprise (optionnel)", f_email:"Email", f_phone:"Téléphone (optionnel)", f_message:"Votre projet publicitaire", f_submit:"Envoyer ma demande",
     msg_success:"Merci ! Votre demande a bien été envoyée, nous vous contacterons rapidement.", msg_error:"Une erreur est survenue. Réessayez.",
     footer_rights:"© 2026 Radio Télé Unité (RTU). Tous droits réservés." },
-  ht:{ nav_direct:"Koute an dirèk", nav_programs:"Pwogram", nav_news:"Aktyalite", nav_about:"Konsènan", nav_team:"Ekip", nav_gallery:"Galri", nav_contact:"Kontak", nav_cta:"Koute",
+  ht:{ nav_direct:"Koute an dirèk", nav_tv:"RTU TV", nav_programs:"Pwogram", nav_news:"Aktyalite", nav_about:"Konsènan", nav_team:"Ekip", nav_gallery:"Galri", nav_contact:"Kontak", nav_cta:"Koute",
     ph_eyebrow:"ESPAS ANONSÈ", ph_title:"Fè mak ou tande sou RTU", ph_desc:"Touche yon odyans fidèl an Ayiti ak nan tout dyaspora a — radyo, tele ak dijital, anba yon sèl mak.",
     pkg_eyebrow:"FÒMIL NOU YO", pkg_title:"Chwazi vizibilite w",
     pkg1_title:"Spot Radyo", pkg1_price:"Sou demand", pkg1_f1:"Spot odyo pandan gwo emisyon yo", pkg1_f2:"Mansyone an dirèk pa animatè yo", pkg1_f3:"Rapò difizyon chak mwa",
@@ -255,7 +257,7 @@ const translations = {
     f_name:"Non konplè", f_company:"Antrepriz (opsyonèl)", f_email:"Imèl", f_phone:"Telefòn (opsyonèl)", f_message:"Pwojè piblisite w", f_submit:"Voye demand mwen",
     msg_success:"Mèsi! Demand ou a byen voye, n ap kontakte w byen vit.", msg_error:"Gen yon erè ki rive. Eseye ankò.",
     footer_rights:"© 2026 Radio Télé Unité (RTU). Tout dwa rezève." },
-  en:{ nav_direct:"Listen Live", nav_programs:"Programs", nav_news:"News", nav_about:"About", nav_team:"Team", nav_gallery:"Gallery", nav_contact:"Contact", nav_cta:"Listen",
+  en:{ nav_direct:"Listen Live", nav_tv:"RTU TV", nav_programs:"Programs", nav_news:"News", nav_about:"About", nav_team:"Team", nav_gallery:"Gallery", nav_contact:"Contact", nav_cta:"Listen",
     ph_eyebrow:"ADVERTISER SPACE", ph_title:"Get your brand heard on RTU", ph_desc:"Reach a loyal audience in Haiti and across the diaspora — radio, TV and digital, under one banner.",
     pkg_eyebrow:"OUR PACKAGES", pkg_title:"Choose your visibility",
     pkg1_title:"Radio Spot", pkg1_price:"On request", pkg1_f1:"Audio spots during flagship shows", pkg1_f2:"Live mentions by hosts", pkg1_f3:"Monthly airplay report",
@@ -265,7 +267,7 @@ const translations = {
     f_name:"Full name", f_company:"Company (optional)", f_email:"Email", f_phone:"Phone (optional)", f_message:"Your advertising project", f_submit:"Send my request",
     msg_success:"Thanks! Your request has been sent, we'll contact you soon.", msg_error:"Something went wrong. Please try again.",
     footer_rights:"© 2026 Radio Télé Unité (RTU). All rights reserved." },
-  es:{ nav_direct:"Escuchar en vivo", nav_programs:"Programas", nav_news:"Noticias", nav_about:"Nosotros", nav_team:"Equipo", nav_gallery:"Galería", nav_contact:"Contacto", nav_cta:"Escuchar",
+  es:{ nav_direct:"Escuchar en vivo", nav_tv:"RTU TV", nav_programs:"Programas", nav_news:"Noticias", nav_about:"Nosotros", nav_team:"Equipo", nav_gallery:"Galería", nav_contact:"Contacto", nav_cta:"Escuchar",
     ph_eyebrow:"ESPACIO ANUNCIANTES", ph_title:"Haz que tu marca suene en RTU", ph_desc:"Llega a una audiencia fiel en Haití y en toda la diáspora — radio, TV y digital, bajo una sola marca.",
     pkg_eyebrow:"NUESTROS PAQUETES", pkg_title:"Elige tu visibilidad",
     pkg1_title:"Spot de Radio", pkg1_price:"A cotizar", pkg1_f1:"Spots de audio durante programas estrella", pkg1_f2:"Mención en vivo por los presentadores", pkg1_f3:"Reporte de difusión mensual",
@@ -275,7 +277,7 @@ const translations = {
     f_name:"Nombre completo", f_company:"Empresa (opcional)", f_email:"Correo", f_phone:"Teléfono (opcional)", f_message:"Tu proyecto publicitario", f_submit:"Enviar mi solicitud",
     msg_success:"¡Gracias! Tu solicitud fue enviada, te contactaremos pronto.", msg_error:"Ocurrió un error. Intenta de nuevo.",
     footer_rights:"© 2026 Radio Télé Unité (RTU). Todos los derechos reservados." },
-  pt:{ nav_direct:"Ouvir ao vivo", nav_programs:"Programas", nav_news:"Notícias", nav_about:"Sobre", nav_team:"Equipe", nav_gallery:"Galeria", nav_contact:"Contato", nav_cta:"Ouvir",
+  pt:{ nav_direct:"Ouvir ao vivo", nav_tv:"RTU TV", nav_programs:"Programas", nav_news:"Notícias", nav_about:"Sobre", nav_team:"Equipe", nav_gallery:"Galeria", nav_contact:"Contato", nav_cta:"Ouvir",
     ph_eyebrow:"ESPAÇO ANUNCIANTES", ph_title:"Faça sua marca ser ouvida na RTU", ph_desc:"Alcance um público fiel no Haiti e em toda a diáspora — rádio, TV e digital, sob uma só marca.",
     pkg_eyebrow:"NOSSOS PACOTES", pkg_title:"Escolha sua visibilidade",
     pkg1_title:"Spot de Rádio", pkg1_price:"Sob consulta", pkg1_f1:"Spots de áudio durante programas principais", pkg1_f2:"Menção ao vivo pelos apresentadores", pkg1_f3:"Relatório mensal de veiculação",
@@ -336,3 +338,5 @@ adForm.addEventListener('submit', async (e) => {
 <script src="js/newsletter.js"></script>
 </body>
 </html>
+
+
