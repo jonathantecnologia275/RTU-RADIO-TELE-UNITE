@@ -270,7 +270,7 @@ async function loadStaffList(){
 }
 
 async function revokeStaff(id){
-  if(!confirm('Révoquer l\\'accès de ce membre ?')) return;
+  if(!confirm('Révoquer l accès de ce membre ?')) return;
   await sb.from('staff_profiles').update({ active:false }).eq('id', id);
   loadStaffList();
 }
@@ -331,10 +331,11 @@ async function loadGuestList(){
 }
 
 async function revokeGuest(id){
-  if(!confirm('Révoquer ce code d\\'accès ?')) return;
+  if(!confirm('Révoquer ce code d accès ?')) return;
   await sb.from('guest_access_codes').update({ revoked:true }).eq('id', id);
   loadGuestList();
 }
 </script>
 </body>
 </html>
+
