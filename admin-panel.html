@@ -428,6 +428,59 @@ td{padding:10px; border-bottom:1px solid #F0EDE4;}
         </table>
       </div>
     </section>
+    <section id="panel-playlists" class="panel-hidden">
+      <h2>Mes Playlists</h2>
+      <p class="desc">Organisez vos musiques en playlists. Les administrateurs peuvent définir la playlist par défaut de la station.</p>
+      <div class="card">
+        <h3>Créer une playlist</h3>
+        <form id="playlistForm">
+          <div class="field"><label>Nom de la playlist</label><input type="text" id="pl_name" required></div>
+          <div class="field" id="pl_station_default_wrap" style="display:none;">
+            <label style="display:flex; align-items:center; gap:8px; cursor:pointer;">
+              <input type="checkbox" id="pl_is_default" style="width:auto;">
+              Définir comme playlist par défaut de la station
+            </label>
+          </div>
+          <button type="submit" class="btn-primary">Créer</button>
+          <div class="msg" id="playlistMsg"></div>
+        </form>
+      </div>
+      <div class="card">
+        <h3>Mes playlists</h3>
+        <table>
+          <thead><tr><th>Nom</th><th>Statut</th><th>Action</th></tr></thead>
+          <tbody id="playlistsTableBody"><tr><td colspan="3">Chargement...</td></tr></tbody>
+        </table>
+      </div>
+      <div class="card" id="playlistEditorCard" style="display:none;">
+        <h3 id="playlistEditorTitle">Contenu de la playlist</h3>
+        <div class="grid-2">
+          <div>
+            <label style="font-size:12px; font-weight:700; display:block; margin-bottom:6px;">Ajouter depuis la médiathèque</label>
+            <select id="pl_add_media" style="width:100%; padding:10px; border:1.5px solid #E7E3D8; border-radius:8px; margin-bottom:10px;"></select>
+            <button class="btn-primary" id="plAddItemBtn" style="width:100%;">Ajouter à la playlist</button>
+          </div>
+          <div>
+            <label style="font-size:12px; font-weight:700; display:block; margin-bottom:6px;">Ordre de lecture</label>
+            <div id="playlistItemsList" style="max-height:280px; overflow-y:auto;"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section id="panel-radio-rules" class="panel-hidden">
+      <h2>Réglages de la radio automatique</h2>
+      <p class="desc">Définissez la fréquence des jingles et des spots publicitaires dans la rotation.</p>
+      <div class="card">
+        <form id="radioRulesForm">
+          <div class="grid-2">
+            <div class="field"><label>Un jingle toutes les (minutes)</label><input type="number" id="rr_jingle" min="1" required></div>
+            <div class="field"><label>Un spot toutes les (minutes)</label><input type="number" id="rr_spot" min="1" required></div>
+          </div>
+          <button type="submit" class="btn-primary">Enregistrer</button>
+          <div class="msg" id="radioRulesMsg"></div>
+        </form>
+      </div>
+    </section>
   </main>
 </div>
 
@@ -475,10 +528,11 @@ async function checkAccess(){
   const defaultSection = document.getElementById(defaultPanel);
   if(defaultSection) defaultSection.classList.remove('panel-hidden');
 
-  if(profile.role === 'admin'){ loadStaffList(); loadGuestList(); loadPartnersTable(); loadAdsTable(); loadAdInquiries(); }
+  if(profile.role === 'admin'){ loadStaffList(); loadGuestList(); loadPartnersTable(); loadAdsTable(); loadAdInquiries(); loadRadioRulesForm(); }
   if(profile.role === 'admin' || profile.role === 'directeur_programmation'){ loadStaffOptionsForSchedule(); loadScheduleTable(); loadProgramsTable(); loadNewsTable(); loadEpisodesTable(); loadLiveTVForm(); }
   if(profile.role === 'animateur'){ loadMySchedules(); }
   loadMediaTable();
+  loadPlaylistsTable();
 }
 checkAccess();
 
@@ -1285,6 +1339,7 @@ document.getElementById('mediaForm')?.addEventListener('submit', async (e)=>{
     msg.textContent = 'Fichier ajouté avec succès !';
     document.getElementById('mediaForm').reset();
     loadMediaTable();
+  loadPlaylistsTable();
   }
   btn.disabled = false;
   btn.textContent = original;
@@ -1324,10 +1379,166 @@ async function deleteMedia(id){
   if(!confirm('Supprimer ce fichier définitivement ?')) return;
   await sb.from('media_files').update({ active:false }).eq('id', id);
   loadMediaTable();
+  loadPlaylistsTable();
 }
+// ===== PLAYLISTS =====
+let currentEditingPlaylistId = null;
+
+document.getElementById('playlistForm')?.addEventListener('submit', async (e)=>{
+  e.preventDefault();
+  const msg = document.getElementById('playlistMsg');
+  msg.className = 'msg';
+
+  const payload = {
+    name: document.getElementById('pl_name').value.trim(),
+    owner_id: currentProfile.role === 'animateur' ? currentProfile.id : null,
+    is_station_default: currentProfile.role === 'admin' ? document.getElementById('pl_is_default').checked : false
+  };
+
+  if(payload.is_station_default){
+    await sb.from('playlists').update({ is_station_default:false }).eq('is_station_default', true);
+  }
+
+  const { error } = await sb.from('playlists').insert(payload);
+  if(error){
+    msg.classList.add('show','error');
+    msg.textContent = 'Erreur: ' + error.message;
+  } else {
+    msg.classList.add('show','success');
+    msg.textContent = 'Playlist créée !';
+    document.getElementById('playlistForm').reset();
+    loadPlaylistsTable();
+  }
+});
+
+if(document.getElementById('pl_station_default_wrap')){
+  document.addEventListener('DOMContentLoaded', ()=>{});
+}
+
+async function loadPlaylistsTable(){
+  const wrap = document.getElementById('pl_station_default_wrap');
+  if(wrap) wrap.style.display = currentProfile?.role === 'admin' ? 'block' : 'none';
+
+  const tbody = document.getElementById('playlistsTableBody');
+  if(!tbody) return;
+
+  let query = sb.from('playlists').select('*').eq('active', true);
+  if(currentProfile.role === 'animateur'){
+    query = query.eq('owner_id', currentProfile.id);
+  }
+  const { data, error } = await query.order('created_at', { ascending:false });
+
+  if(error || !data || !data.length){
+    tbody.innerHTML = '<tr><td colspan="3">Aucune playlist.</td></tr>';
+    return;
+  }
+  tbody.innerHTML = data.map(p => `
+    <tr>
+      <td>${p.name}</td>
+      <td>${p.is_station_default ? '<span class="badge">Défaut station</span>' : ''}</td>
+      <td>
+        <button class="btn-primary" style="padding:6px 12px; font-size:11.5px;" onclick="openPlaylistEditor(${p.id}, '${p.name.replace(/'/g,"\\'")}')">Éditer contenu</button>
+        <button class="btn-danger" onclick="deletePlaylist(${p.id})">Supprimer</button>
+      </td>
+    </tr>
+  `).join('');
+}
+
+async function deletePlaylist(id){
+  if(!confirm('Supprimer cette playlist ?')) return;
+  await sb.from('playlists').update({ active:false }).eq('id', id);
+  loadPlaylistsTable();
+}
+
+async function openPlaylistEditor(playlistId, name){
+  currentEditingPlaylistId = playlistId;
+  document.getElementById('playlistEditorCard').style.display = 'block';
+  document.getElementById('playlistEditorTitle').textContent = 'Contenu de : ' + name;
+
+  const sel = document.getElementById('pl_add_media');
+  const { data: mediaData } = await sb.from('media_files').select('id, title, file_type').eq('active', true);
+  sel.innerHTML = (mediaData||[]).map(m => `<option value="${m.id}">[${m.file_type}] ${m.title}</option>`).join('');
+
+  loadPlaylistItems();
+  window.scrollTo({top: document.body.scrollHeight, behavior:'smooth'});
+}
+
+document.getElementById('plAddItemBtn')?.addEventListener('click', async ()=>{
+  if(!currentEditingPlaylistId) return;
+  const mediaId = document.getElementById('pl_add_media').value;
+  if(!mediaId) return;
+
+  const { data: existing } = await sb.from('playlist_items').select('display_order').eq('playlist_id', currentEditingPlaylistId).order('display_order', { ascending:false }).limit(1);
+  const nextOrder = existing && existing.length ? existing[0].display_order + 1 : 0;
+
+  await sb.from('playlist_items').insert({ playlist_id: currentEditingPlaylistId, media_id: mediaId, display_order: nextOrder });
+  loadPlaylistItems();
+});
+
+async function loadPlaylistItems(){
+  const list = document.getElementById('playlistItemsList');
+  if(!list || !currentEditingPlaylistId) return;
+
+  const { data, error } = await sb.from('playlist_items')
+    .select('id, display_order, media_files(title, file_type, duration_seconds)')
+    .eq('playlist_id', currentEditingPlaylistId)
+    .order('display_order');
+
+  if(error || !data || !data.length){
+    list.innerHTML = '<p style="font-size:13px; color:var(--ink-soft);">Playlist vide.</p>';
+    return;
+  }
+
+  list.innerHTML = data.map((item, idx) => `
+    <div style="display:flex; justify-content:space-between; align-items:center; padding:8px 10px; border-bottom:1px solid #F0EDE4; font-size:13px;">
+      <span>${idx+1}. [${item.media_files?.file_type}] ${item.media_files?.title}</span>
+      <button class="btn-danger" style="padding:4px 10px; font-size:11px;" onclick="removePlaylistItem(${item.id})">Retirer</button>
+    </div>
+  `).join('');
+}
+
+async function removePlaylistItem(itemId){
+  await sb.from('playlist_items').delete().eq('id', itemId);
+  loadPlaylistItems();
+}
+// ===== RADIO RULES =====
+async function loadRadioRulesForm(){
+  const form = document.getElementById('radioRulesForm');
+  if(!form) return;
+  const { data, error } = await sb.from('radio_rules').select('*').eq('id', 1).maybeSingle();
+  if(error || !data) return;
+  document.getElementById('rr_jingle').value = data.jingle_interval_minutes;
+  document.getElementById('rr_spot').value = data.spot_interval_minutes;
+}
+
+document.getElementById('radioRulesForm')?.addEventListener('submit', async (e)=>{
+  e.preventDefault();
+  const msg = document.getElementById('radioRulesMsg');
+  msg.className = 'msg';
+
+  const payload = {
+    jingle_interval_minutes: parseInt(document.getElementById('rr_jingle').value, 10),
+    spot_interval_minutes: parseInt(document.getElementById('rr_spot').value, 10)
+  };
+
+  const { error } = await sb.from('radio_rules').update(payload).eq('id', 1);
+  if(error){
+    msg.classList.add('show','error');
+    msg.textContent = 'Erreur: ' + error.message;
+  } else {
+    msg.classList.add('show','success');
+    msg.textContent = 'Réglages enregistrés !';
+  }
+});
 </script>
 </body>
 </html>
+
+
+
+
+
+
 
 
 
