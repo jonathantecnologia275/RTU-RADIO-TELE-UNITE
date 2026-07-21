@@ -85,6 +85,12 @@ td{padding:10px; border-bottom:1px solid #F0EDE4;}
       <button data-panel="panel-staff" class="active" data-roles="admin">👤 Équipe & Accès</button>
       <button data-panel="panel-guests" data-roles="admin">🔑 Codes Invités</button>
       <button data-panel="panel-schedules" data-roles="admin,directeur_programmation">📅 Horaires</button>
+      <button data-panel="panel-programs" data-roles="admin,directeur_programmation">📻 Programmes</button>
+      <button data-panel="panel-news" data-roles="admin,directeur_programmation">📰 Actualités</button>
+      <button data-panel="panel-episodes" data-roles="admin,directeur_programmation">🎧 Repriz</button>
+      <button data-panel="panel-livetv" data-roles="admin,directeur_programmation">📺 RTU TV Live</button>
+      <button data-panel="panel-partners" data-roles="admin">🤝 Partenaires</button>
+      <button data-panel="panel-ads" data-roles="admin">📢 Publicité</button>
       <button data-panel="panel-my-space" data-roles="animateur">🎙️ Mon Espace</button>
     </nav>
     <div class="who">
@@ -213,6 +219,36 @@ td{padding:10px; border-bottom:1px solid #F0EDE4;}
         <div class="msg" id="goLiveMsg"></div>
       </div>
     </section>
+    <section id="panel-programs" class="panel-hidden">
+      <h2>Grille des programmes</h2>
+      <p class="desc">Gérez les émissions affichées sur le site (page Programmes + widget "En ce moment").</p>
+      <div class="card">
+        <h3 id="programFormTitle">Ajouter un programme</h3>
+        <form id="programForm">
+          <input type="hidden" id="prog_id">
+          <div class="grid-2">
+            <div class="field"><label>Titre</label><input type="text" id="prog_title" required></div>
+            <div class="field"><label>Catégorie</label><input type="text" id="prog_category" placeholder="Ex: Culture, Info"></div>
+          </div>
+          <div class="grid-2">
+            <div class="field"><label>Heure de début</label><input type="time" id="prog_start" required></div>
+            <div class="field"><label>Heure de fin</label><input type="time" id="prog_end" required></div>
+          </div>
+          <div class="field"><label>Animateur(s)</label><input type="text" id="prog_host"></div>
+          <div class="field"><label>Description</label><input type="text" id="prog_desc"></div>
+          <button type="submit" class="btn-primary" id="programSubmitBtn">Ajouter le programme</button>
+          <button type="button" class="btn-danger" id="programCancelBtn" style="display:none; margin-left:8px;">Annuler</button>
+          <div class="msg" id="programMsg"></div>
+        </form>
+      </div>
+      <div class="card">
+        <h3>Programmes existants</h3>
+        <table>
+          <thead><tr><th>Heure</th><th>Titre</th><th>Catégorie</th><th>Statut</th><th>Action</th></tr></thead>
+          <tbody id="programsTableBody"><tr><td colspan="5">Chargement...</td></tr></tbody>
+        </table>
+      </div>
+    </section>
   </main>
 </div>
 
@@ -261,7 +297,7 @@ async function checkAccess(){
   if(defaultSection) defaultSection.classList.remove('panel-hidden');
 
   if(profile.role === 'admin'){ loadStaffList(); loadGuestList(); }
-  if(profile.role === 'admin' || profile.role === 'directeur_programmation'){ loadStaffOptionsForSchedule(); loadScheduleTable(); }
+  if(profile.role === 'admin' || profile.role === 'directeur_programmation'){ loadStaffOptionsForSchedule(); loadScheduleTable(); loadProgramsTable(); }
   if(profile.role === 'animateur'){ loadMySchedules(); }
 }
 checkAccess();
@@ -544,9 +580,100 @@ document.getElementById('goLiveBtn')?.addEventListener('click', async ()=>{
 setInterval(()=>{
   if(currentProfile?.role === 'animateur'){ loadMySchedules(); }
 }, 30000);
+// ===== PROGRAMS =====
+document.getElementById('programForm')?.addEventListener('submit', async (e)=>{
+  e.preventDefault();
+  const msg = document.getElementById('programMsg');
+  msg.className = 'msg';
+  const id = document.getElementById('prog_id').value;
+
+  const payload = {
+    title: document.getElementById('prog_title').value.trim(),
+    category: document.getElementById('prog_category').value.trim(),
+    start_time: document.getElementById('prog_start').value,
+    end_time: document.getElementById('prog_end').value,
+    host_name: document.getElementById('prog_host').value.trim(),
+    description: document.getElementById('prog_desc').value.trim(),
+    day_of_week: 'daily',
+    active: true
+  };
+
+  let error;
+  if(id){
+    ({ error } = await sb.from('programs').update(payload).eq('id', id));
+  } else {
+    ({ error } = await sb.from('programs').insert(payload));
+  }
+
+  if(error){
+    msg.classList.add('show','error');
+    msg.textContent = 'Erreur: ' + error.message;
+  } else {
+    msg.classList.add('show','success');
+    msg.textContent = id ? 'Programme mis à jour !' : 'Programme ajouté !';
+    resetProgramForm();
+    loadProgramsTable();
+  }
+});
+
+document.getElementById('programCancelBtn')?.addEventListener('click', resetProgramForm);
+
+function resetProgramForm(){
+  document.getElementById('programForm').reset();
+  document.getElementById('prog_id').value = '';
+  document.getElementById('programFormTitle').textContent = 'Ajouter un programme';
+  document.getElementById('programSubmitBtn').textContent = 'Ajouter le programme';
+  document.getElementById('programCancelBtn').style.display = 'none';
+}
+
+async function loadProgramsTable(){
+  const tbody = document.getElementById('programsTableBody');
+  if(!tbody) return;
+  const { data, error } = await sb.from('programs').select('*').order('start_time');
+  if(error || !data || !data.length){
+    tbody.innerHTML = '<tr><td colspan="5">Aucun programme.</td></tr>';
+    return;
+  }
+  tbody.innerHTML = data.map(p => `
+    <tr>
+      <td>${(p.start_time||'').slice(0,5)} - ${(p.end_time||'').slice(0,5)}</td>
+      <td>${p.title}</td>
+      <td>${p.category||'—'}</td>
+      <td><span class="badge ${p.active ? '' : 'inactive'}">${p.active ? 'Actif' : 'Inactif'}</span></td>
+      <td>
+        <button class="btn-primary" style="padding:6px 12px; font-size:11.5px;" onclick='editProgram(${JSON.stringify(p)})'>Modifier</button>
+        <button class="btn-danger" onclick="deleteProgram('${p.id}')">Supprimer</button>
+      </td>
+    </tr>
+  `).join('');
+}
+
+function editProgram(p){
+  document.getElementById('prog_id').value = p.id;
+  document.getElementById('prog_title').value = p.title || '';
+  document.getElementById('prog_category').value = p.category || '';
+  document.getElementById('prog_start').value = (p.start_time||'').slice(0,5);
+  document.getElementById('prog_end').value = (p.end_time||'').slice(0,5);
+  document.getElementById('prog_host').value = p.host_name || '';
+  document.getElementById('prog_desc').value = p.description || '';
+  document.getElementById('programFormTitle').textContent = 'Modifier le programme';
+  document.getElementById('programSubmitBtn').textContent = 'Enregistrer les modifications';
+  document.getElementById('programCancelBtn').style.display = 'inline-block';
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+async function deleteProgram(id){
+  if(!confirm('Supprimer ce programme définitivement ?')) return;
+  await sb.from('programs').delete().eq('id', id);
+  loadProgramsTable();
+}
 </script>
 </body>
 </html>
+
+
+
+
 
 
 
