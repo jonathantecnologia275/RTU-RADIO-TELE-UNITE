@@ -11,6 +11,23 @@
   let ready = false;
   let loadingPromise = null;
   let currentItemKey = null;
+  let serverTimeOffsetMs = 0; // diferans ant le seve a ak le aparey la
+
+  function nowSynced(){
+    return Date.now() + serverTimeOffsetMs;
+  }
+
+  async function syncServerTime(){
+    try {
+      const before = Date.now();
+      const { data, error } = await sbr.rpc('get_server_time');
+      const after = Date.now();
+      if(error || !data) return;
+      const roundTripMs = after - before;
+      const serverNowMs = new Date(data).getTime() + (roundTripMs / 2);
+      serverTimeOffsetMs = serverNowMs - after;
+    } catch(e){}
+  }
 
   const audioEl = new Audio();
   audioEl.preload = 'auto';
@@ -53,7 +70,7 @@
 
   function getCurrentItem(){
     if(!totalDuration || !timeline.length) return null;
-    const nowSec = Date.now() / 1000;
+    const nowSec = nowSynced() / 1000;
     const position = ((nowSec - epochSeconds) % totalDuration + totalDuration) % totalDuration;
     for(const item of timeline){
       if(position >= item.start && position < item.start + item.duration){
@@ -146,6 +163,9 @@
   });
 
   async function loadRadioData(){
+    await syncServerTime();
+    setInterval(syncServerTime, 60000);
+
     const { data: playlistRow } = await sbr.from('playlists').select('id').eq('is_station_default', true).eq('active', true).maybeSingle();
     let tracks = [];
     if(playlistRow){
@@ -195,3 +215,6 @@
     waitUntilReady(){ return loadingPromise; }
   };
 })();
+
+
+
