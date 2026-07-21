@@ -92,6 +92,9 @@ td{padding:10px; border-bottom:1px solid #F0EDE4;}
       <button data-panel="panel-partners" data-roles="admin">🤝 Partenaires</button>
       <button data-panel="panel-ads" data-roles="admin">📢 Publicité</button>
       <button data-panel="panel-my-space" data-roles="animateur">🎙️ Mon Espace</button>
+      <button data-panel="panel-media" data-roles="admin,directeur_programmation,animateur">🎵 Médiathèque</button>
+      <button data-panel="panel-playlists" data-roles="admin,directeur_programmation,animateur">📀 Playlists</button>
+      <button data-panel="panel-radio-rules" data-roles="admin">⚙️ Réglages Radio</button>
     </nav>
     <div class="who">
       <div class="name" id="whoName">—</div>
@@ -389,6 +392,42 @@ td{padding:10px; border-bottom:1px solid #F0EDE4;}
         </table>
       </div>
     </section>
+    <section id="panel-media" class="panel-hidden">
+      <h2>Médiathèque</h2>
+      <p class="desc">Téléchargez vos musiques, jingles et spots publicitaires.</p>
+      <div class="card">
+        <h3>Ajouter un fichier</h3>
+        <form id="mediaForm">
+          <div class="grid-2">
+            <div class="field"><label>Titre</label><input type="text" id="md_title" required></div>
+            <div class="field"><label>Artiste (optionnel)</label><input type="text" id="md_artist"></div>
+          </div>
+          <div class="field"><label>Type</label>
+            <select id="md_type">
+              <option value="music">Musique</option>
+              <option value="jingle">Jingle</option>
+              <option value="spot">Spot publicitaire</option>
+            </select>
+          </div>
+          <div class="field"><label>Fichier audio (MP3)</label><input type="file" id="md_file" accept="audio/*" required></div>
+          <button type="submit" class="btn-primary" id="mediaSubmitBtn">Téléverser</button>
+          <div class="msg" id="mediaMsg"></div>
+        </form>
+      </div>
+      <div class="card">
+        <h3>Fichiers disponibles</h3>
+        <div style="margin-bottom:12px; display:flex; gap:8px;">
+          <button class="btn-primary" style="padding:7px 14px; font-size:12px;" onclick="filterMediaType('all')">Tous</button>
+          <button class="btn-primary" style="padding:7px 14px; font-size:12px;" onclick="filterMediaType('music')">Musique</button>
+          <button class="btn-primary" style="padding:7px 14px; font-size:12px;" onclick="filterMediaType('jingle')">Jingles</button>
+          <button class="btn-primary" style="padding:7px 14px; font-size:12px;" onclick="filterMediaType('spot')">Spots</button>
+        </div>
+        <table>
+          <thead><tr><th>Titre</th><th>Type</th><th>Écouter</th><th>Action</th></tr></thead>
+          <tbody id="mediaTableBody"><tr><td colspan="4">Chargement...</td></tr></tbody>
+        </table>
+      </div>
+    </section>
   </main>
 </div>
 
@@ -439,6 +478,7 @@ async function checkAccess(){
   if(profile.role === 'admin'){ loadStaffList(); loadGuestList(); loadPartnersTable(); loadAdsTable(); loadAdInquiries(); }
   if(profile.role === 'admin' || profile.role === 'directeur_programmation'){ loadStaffOptionsForSchedule(); loadScheduleTable(); loadProgramsTable(); loadNewsTable(); loadEpisodesTable(); loadLiveTVForm(); }
   if(profile.role === 'animateur'){ loadMySchedules(); }
+  loadMediaTable();
 }
 checkAccess();
 
@@ -1188,9 +1228,110 @@ async function loadAdInquiries(){
     </tr>
   `).join('');
 }
+// ===== MEDIA LIBRARY =====
+let currentMediaFilter = 'all';
+let allMediaFiles = [];
+
+document.getElementById('mediaForm')?.addEventListener('submit', async (e)=>{
+  e.preventDefault();
+  const msg = document.getElementById('mediaMsg');
+  const btn = document.getElementById('mediaSubmitBtn');
+  msg.className = 'msg';
+  btn.disabled = true;
+  const original = btn.textContent;
+
+  const fileInput = document.getElementById('md_file');
+  const file = fileInput.files[0];
+  if(!file){ btn.disabled = false; return; }
+
+  btn.textContent = 'Téléversement en cours...';
+
+  const safeName = Date.now() + '-' + file.name.replace(/[^a-zA-Z0-9.\-_]/g, '_');
+  const { error: uploadError } = await sb.storage.from('radio-media').upload(safeName, file);
+
+  if(uploadError){
+    msg.classList.add('show','error');
+    msg.textContent = 'Erreur upload: ' + uploadError.message;
+    btn.disabled = false;
+    btn.textContent = original;
+    return;
+  }
+
+  const { data: urlData } = sb.storage.from('radio-media').getPublicUrl(safeName);
+
+  const audioEl = new Audio(urlData.publicUrl);
+  await new Promise(resolve => {
+    audioEl.addEventListener('loadedmetadata', resolve);
+    audioEl.addEventListener('error', resolve);
+    setTimeout(resolve, 3000);
+  });
+  const duration = Math.round(audioEl.duration) || null;
+
+  const payload = {
+    title: document.getElementById('md_title').value.trim(),
+    artist: document.getElementById('md_artist').value.trim(),
+    file_type: document.getElementById('md_type').value,
+    file_url: urlData.publicUrl,
+    duration_seconds: duration,
+    uploaded_by: currentProfile.id
+  };
+
+  const { error } = await sb.from('media_files').insert(payload);
+  if(error){
+    msg.classList.add('show','error');
+    msg.textContent = 'Erreur: ' + error.message;
+  } else {
+    msg.classList.add('show','success');
+    msg.textContent = 'Fichier ajouté avec succès !';
+    document.getElementById('mediaForm').reset();
+    loadMediaTable();
+  }
+  btn.disabled = false;
+  btn.textContent = original;
+});
+
+function filterMediaType(type){
+  currentMediaFilter = type;
+  renderMediaTable();
+}
+
+async function loadMediaTable(){
+  const { data, error } = await sb.from('media_files').select('*').eq('active', true).order('created_at', { ascending:false });
+  if(error || !data){ allMediaFiles = []; } else { allMediaFiles = data; }
+  renderMediaTable();
+}
+
+function renderMediaTable(){
+  const tbody = document.getElementById('mediaTableBody');
+  if(!tbody) return;
+  const filtered = currentMediaFilter === 'all' ? allMediaFiles : allMediaFiles.filter(m => m.file_type === currentMediaFilter);
+  if(!filtered.length){
+    tbody.innerHTML = '<tr><td colspan="4">Aucun fichier.</td></tr>';
+    return;
+  }
+  const typeLabels = { music:'Musique', jingle:'Jingle', spot:'Spot' };
+  tbody.innerHTML = filtered.map(m => `
+    <tr>
+      <td>${m.title}${m.artist ? ' — '+m.artist : ''}</td>
+      <td><span class="badge">${typeLabels[m.file_type] || m.file_type}</span></td>
+      <td><audio controls src="${m.file_url}" style="height:32px; max-width:200px;"></audio></td>
+      <td><button class="btn-danger" onclick="deleteMedia(${m.id})">Supprimer</button></td>
+    </tr>
+  `).join('');
+}
+
+async function deleteMedia(id){
+  if(!confirm('Supprimer ce fichier définitivement ?')) return;
+  await sb.from('media_files').update({ active:false }).eq('id', id);
+  loadMediaTable();
+}
 </script>
 </body>
 </html>
+
+
+
+
 
 
 
