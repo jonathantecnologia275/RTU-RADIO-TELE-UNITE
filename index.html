@@ -706,12 +706,20 @@ function wireRadioButtons(){
   const playBtn = document.querySelector('.play-btn');
   const heroListenBtn = document.querySelector('.hero-ctas .btn-gold');
 
-  function handleToggle(btnEl){
-    if(!window.RTU_RADIO || !window.RTU_RADIO.isReady()){
-      alert("La playlist de la station n'est pas encore configurée.");
-      return;
+  async function handleToggle(btnEl){
+    if(!window.RTU_RADIO) return;
+    const original = btnEl.innerHTML;
+    const isSvgBtn = btnEl === playBtn;
+    if(!window.RTU_RADIO.isReady()){
+      if(!isSvgBtn) btnEl.innerHTML = '<span aria-hidden="true">⏳</span><span>Connexion...</span>';
+      await window.RTU_RADIO.waitUntilReady();
+      if(!isSvgBtn) btnEl.innerHTML = original;
+      if(!window.RTU_RADIO.isReady()){
+        alert("La playlist de la station n'est pas encore configurée.");
+        return;
+      }
     }
-    const playing = window.RTU_RADIO.togglePlay();
+    const playing = await window.RTU_RADIO.togglePlay();
     document.querySelectorAll('.play-btn svg path').forEach(p=>{
       p.setAttribute('d', playing ? 'M6 5h4v14H6zM14 5h4v14h-4z' : 'M8 5v14l11-7z');
     });
@@ -726,6 +734,7 @@ document.addEventListener('DOMContentLoaded', wireRadioButtons);
 <script src="js/newsletter.js"></script>
 </body>
 </html>
+
 
 
 

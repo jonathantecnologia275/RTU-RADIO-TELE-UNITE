@@ -9,6 +9,8 @@
   let isPlaying = false;
   let syncTimer = null;
   let ready = false;
+  let loadingPromise = null;
+  let currentItemKey = null;
 
   const audioEl = new Audio();
   audioEl.preload = 'auto';
@@ -78,7 +80,41 @@
     }
   }
 
-  function syncPlayback(){
+  function waitForLoadedMetadata(timeoutMs){
+    return new Promise(resolve => {
+      let done = false;
+      function finish(){
+        if(done) return;
+        done = true;
+        audioEl.removeEventListener('loadedmetadata', finish);
+        audioEl.removeEventListener('canplay', finish);
+        resolve();
+      }
+      audioEl.addEventListener('loadedmetadata', finish, { once:true });
+      audioEl.addEventListener('canplay', finish, { once:true });
+      setTimeout(finish, timeoutMs);
+    });
+  }
+
+  async function switchToItem(item, offset){
+    const key = item.media.id + ':' + item.type;
+    currentItemKey = key;
+    audioEl.src = item.media.file_url;
+    audioEl.load();
+    await waitForLoadedMetadata(2500);
+    if(currentItemKey !== key) return; // yon lòt switch te rive pandan n ap tann
+    try {
+      audioEl.currentTime = offset;
+    } catch(e){}
+    try {
+      await audioEl.play();
+    } catch(e){
+      // Reeseye yon fwa apre yon ti pòz kout si echwe
+      setTimeout(()=>{ if(isPlaying && currentItemKey === key) audioEl.play().catch(()=>{}); }, 800);
+    }
+  }
+
+  async function syncPlayback(){
     const current = getCurrentItem();
     if(!current) return;
     updateDisplay(current);
@@ -86,16 +122,28 @@
     if(!isPlaying) return;
 
     const { item, offset } = current;
-    if(audioEl.src !== item.media.file_url){
-      audioEl.src = item.media.file_url;
+    const key = item.media.id + ':' + item.type;
+
+    if(currentItemKey !== key){
+      await switchToItem(item, offset);
+    } else if(!audioEl.paused){
+      const drift = audioEl.currentTime - offset;
+      if(Math.abs(drift) > 2){
+        audioEl.currentTime = offset;
+      }
+    } else if(audioEl.readyState >= 2){
       audioEl.currentTime = offset;
       audioEl.play().catch(()=>{});
-    } else if(Math.abs(audioEl.currentTime - offset) > 3){
-      audioEl.currentTime = offset;
     }
   }
 
   audioEl.addEventListener('ended', syncPlayback);
+  audioEl.addEventListener('error', ()=>{
+    if(isPlaying) setTimeout(syncPlayback, 1000);
+  });
+  document.addEventListener('visibilitychange', ()=>{
+    if(!document.hidden && isPlaying) syncPlayback();
+  });
 
   async function loadRadioData(){
     const { data: playlistRow } = await sbr.from('playlists').select('id').eq('is_station_default', true).eq('active', true).maybeSingle();
@@ -121,26 +169,29 @@
     totalDuration = built.total;
     ready = timeline.length > 0;
 
-    syncPlayback();
     if(!syncTimer){
-      syncTimer = setInterval(syncPlayback, 5000);
+      syncTimer = setInterval(syncPlayback, 3000);
     }
   }
 
+  loadingPromise = loadRadioData();
+
   window.RTU_RADIO = {
-    togglePlay(){
-      if(!ready){ return false; }
+    async togglePlay(){
+      if(!ready){
+        await loadingPromise;
+        if(!ready) return null; // vrèman pa gen playlist configire
+      }
       isPlaying = !isPlaying;
       if(isPlaying){
-        syncPlayback();
+        await syncPlayback();
       } else {
         audioEl.pause();
       }
       return isPlaying;
     },
     isReady(){ return ready; },
-    isPlaying(){ return isPlaying; }
+    isPlaying(){ return isPlaying; },
+    waitUntilReady(){ return loadingPromise; }
   };
-
-  document.addEventListener('DOMContentLoaded', loadRadioData);
 })();
