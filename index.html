@@ -700,10 +700,33 @@ Promise.all([loadNowPlaying(), loadPrograms(), loadNews(), loadLiveSchedule()]).
 });
 </script>
 
+<script src="js/radio-engine.js"></script>
+<script>
+function wireRadioButtons(){
+  const playBtn = document.querySelector('.play-btn');
+  const heroListenBtn = document.querySelector('.hero-ctas .btn-gold');
+
+  function handleToggle(btnEl){
+    if(!window.RTU_RADIO || !window.RTU_RADIO.isReady()){
+      alert("La playlist de la station n'est pas encore configurée.");
+      return;
+    }
+    const playing = window.RTU_RADIO.togglePlay();
+    document.querySelectorAll('.play-btn svg path').forEach(p=>{
+      p.setAttribute('d', playing ? 'M6 5h4v14H6zM14 5h4v14h-4z' : 'M8 5v14l11-7z');
+    });
+  }
+
+  if(playBtn) playBtn.addEventListener('click', ()=>handleToggle(playBtn));
+  if(heroListenBtn) heroListenBtn.addEventListener('click', ()=>handleToggle(heroListenBtn));
+}
+document.addEventListener('DOMContentLoaded', wireRadioButtons);
+</script>
 <script src="js/partners-ads.js"></script>
 <script src="js/newsletter.js"></script>
 </body>
 </html>
+
 
 
 
