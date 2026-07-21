@@ -249,6 +249,146 @@ td{padding:10px; border-bottom:1px solid #F0EDE4;}
         </table>
       </div>
     </section>
+    <section id="panel-news" class="panel-hidden">
+      <h2>Actualités</h2>
+      <p class="desc">Gérez les articles affichés sur la page Actualités et la page d'accueil.</p>
+      <div class="card">
+        <h3 id="newsFormTitle">Ajouter un article</h3>
+        <form id="newsForm">
+          <input type="hidden" id="news_id">
+          <div class="grid-2">
+            <div class="field"><label>Titre</label><input type="text" id="news_title" required></div>
+            <div class="field"><label>Catégorie</label><input type="text" id="news_category" placeholder="Ex: Société, Culture"></div>
+          </div>
+          <div class="field"><label>Contenu (paragraphes séparés par une ligne vide)</label>
+            <textarea id="news_content" rows="6" style="width:100%; padding:10px 12px; border:1.5px solid #E7E3D8; border-radius:8px; font-size:13.5px; font-family:inherit; background:var(--ivory);"></textarea>
+          </div>
+          <button type="submit" class="btn-primary" id="newsSubmitBtn">Publier l'article</button>
+          <button type="button" class="btn-danger" id="newsCancelBtn" style="display:none; margin-left:8px;">Annuler</button>
+          <div class="msg" id="newsMsg"></div>
+        </form>
+      </div>
+      <div class="card">
+        <h3>Articles publiés</h3>
+        <table>
+          <thead><tr><th>Date</th><th>Titre</th><th>Catégorie</th><th>Statut</th><th>Action</th></tr></thead>
+          <tbody id="newsTableBody"><tr><td colspan="5">Chargement...</td></tr></tbody>
+        </table>
+      </div>
+    </section>
+    <section id="panel-episodes" class="panel-hidden">
+      <h2>Repriz & Podcasts</h2>
+      <p class="desc">Gérez les émissions disponibles en réécoute sur la page Repriz.</p>
+      <div class="card">
+        <h3 id="episodeFormTitle">Ajouter une repriz</h3>
+        <form id="episodeForm">
+          <input type="hidden" id="ep_id">
+          <div class="field"><label>Titre</label><input type="text" id="ep_title" required></div>
+          <div class="field"><label>Description</label><input type="text" id="ep_desc"></div>
+          <div class="grid-2">
+            <div class="field"><label>Lien audio (URL .mp3)</label><input type="text" id="ep_audio"></div>
+            <div class="field"><label>Lien vidéo (optionnel)</label><input type="text" id="ep_video"></div>
+          </div>
+          <div class="grid-2">
+            <div class="field"><label>Image de couverture (URL)</label><input type="text" id="ep_cover"></div>
+            <div class="field"><label>Durée (minutes)</label><input type="number" id="ep_duration" min="1"></div>
+          </div>
+          <button type="submit" class="btn-primary" id="episodeSubmitBtn">Publier la repriz</button>
+          <button type="button" class="btn-danger" id="episodeCancelBtn" style="display:none; margin-left:8px;">Annuler</button>
+          <div class="msg" id="episodeMsg"></div>
+        </form>
+      </div>
+      <div class="card">
+        <h3>Repriz publiées</h3>
+        <table>
+          <thead><tr><th>Titre</th><th>Durée</th><th>Statut</th><th>Action</th></tr></thead>
+          <tbody id="episodesTableBody"><tr><td colspan="4">Chargement...</td></tr></tbody>
+        </table>
+      </div>
+    </section>
+    <section id="panel-livetv" class="panel-hidden">
+      <h2>RTU TV en direct</h2>
+      <p class="desc">Activez le direct et gérez les liens de vos réseaux sociaux.</p>
+      <div class="card">
+        <h3>État de la diffusion</h3>
+        <form id="livetvForm">
+          <div class="field">
+            <label style="display:flex; align-items:center; gap:8px; cursor:pointer;">
+              <input type="checkbox" id="lt_is_live" style="width:auto;">
+              Le direct est actif maintenant
+            </label>
+          </div>
+          <div class="field"><label>Lien du direct (YouTube watch/live ou autre)</label><input type="text" id="lt_stream_url" placeholder="https://youtube.com/watch?v=..."></div>
+          <div class="grid-2">
+            <div class="field"><label>Lien chaîne YouTube</label><input type="text" id="lt_youtube"></div>
+            <div class="field"><label>Lien TikTok</label><input type="text" id="lt_tiktok"></div>
+          </div>
+          <div class="grid-2">
+            <div class="field"><label>Lien Facebook</label><input type="text" id="lt_facebook"></div>
+            <div class="field"><label>Lien Instagram</label><input type="text" id="lt_instagram"></div>
+          </div>
+          <button type="submit" class="btn-primary">Enregistrer</button>
+          <div class="msg" id="livetvMsg"></div>
+        </form>
+      </div>
+    </section>
+    <section id="panel-partners" class="panel-hidden">
+      <h2>Partenaires</h2>
+      <p class="desc">Gérez les logos affichés dans la bannière "Nos partenaires" sur la page d'accueil.</p>
+      <div class="card">
+        <h3 id="partnerFormTitle">Ajouter un partenaire</h3>
+        <form id="partnerForm">
+          <input type="hidden" id="pt_id">
+          <div class="grid-2">
+            <div class="field"><label>Nom</label><input type="text" id="pt_name" required></div>
+            <div class="field"><label>Site web (optionnel)</label><input type="text" id="pt_website"></div>
+          </div>
+          <div class="field"><label>Lien du logo (URL image)</label><input type="text" id="pt_logo" required></div>
+          <button type="submit" class="btn-primary" id="partnerSubmitBtn">Ajouter</button>
+          <button type="button" class="btn-danger" id="partnerCancelBtn" style="display:none; margin-left:8px;">Annuler</button>
+          <div class="msg" id="partnerMsg"></div>
+        </form>
+      </div>
+      <div class="card">
+        <h3>Partenaires actuels</h3>
+        <table>
+          <thead><tr><th>Logo</th><th>Nom</th><th>Statut</th><th>Action</th></tr></thead>
+          <tbody id="partnersTableBody"><tr><td colspan="4">Chargement...</td></tr></tbody>
+        </table>
+      </div>
+    </section>
+    <section id="panel-ads" class="panel-hidden">
+      <h2>Publicité & Promotions</h2>
+      <p class="desc">Gérez les cartes promotionnelles affichées sur la page d'accueil.</p>
+      <div class="card">
+        <h3 id="adFormTitle">Ajouter une promotion</h3>
+        <form id="adPromoForm">
+          <input type="hidden" id="ad_id">
+          <div class="field"><label>Titre</label><input type="text" id="ad_title" required></div>
+          <div class="grid-2">
+            <div class="field"><label>Lien de l'image</label><input type="text" id="ad_image"></div>
+            <div class="field"><label>Lien de destination</label><input type="text" id="ad_link"></div>
+          </div>
+          <button type="submit" class="btn-primary" id="adSubmitBtnPanel">Ajouter</button>
+          <button type="button" class="btn-danger" id="adCancelBtn" style="display:none; margin-left:8px;">Annuler</button>
+          <div class="msg" id="adPromoMsg"></div>
+        </form>
+      </div>
+      <div class="card">
+        <h3>Promotions actuelles</h3>
+        <table>
+          <thead><tr><th>Titre</th><th>Statut</th><th>Action</th></tr></thead>
+          <tbody id="adsTableBody"><tr><td colspan="3">Chargement...</td></tr></tbody>
+        </table>
+      </div>
+      <div class="card">
+        <h3>Demandes d'annonceurs reçues</h3>
+        <table>
+          <thead><tr><th>Nom</th><th>Email</th><th>Message</th><th>Date</th></tr></thead>
+          <tbody id="adInquiriesTableBody"><tr><td colspan="4">Chargement...</td></tr></tbody>
+        </table>
+      </div>
+    </section>
   </main>
 </div>
 
@@ -296,8 +436,8 @@ async function checkAccess(){
   const defaultSection = document.getElementById(defaultPanel);
   if(defaultSection) defaultSection.classList.remove('panel-hidden');
 
-  if(profile.role === 'admin'){ loadStaffList(); loadGuestList(); }
-  if(profile.role === 'admin' || profile.role === 'directeur_programmation'){ loadStaffOptionsForSchedule(); loadScheduleTable(); loadProgramsTable(); }
+  if(profile.role === 'admin'){ loadStaffList(); loadGuestList(); loadPartnersTable(); loadAdsTable(); loadAdInquiries(); }
+  if(profile.role === 'admin' || profile.role === 'directeur_programmation'){ loadStaffOptionsForSchedule(); loadScheduleTable(); loadProgramsTable(); loadNewsTable(); loadEpisodesTable(); loadLiveTVForm(); }
   if(profile.role === 'animateur'){ loadMySchedules(); }
 }
 checkAccess();
@@ -667,9 +807,405 @@ async function deleteProgram(id){
   await sb.from('programs').delete().eq('id', id);
   loadProgramsTable();
 }
+// ===== NEWS =====
+document.getElementById('newsForm')?.addEventListener('submit', async (e)=>{
+  e.preventDefault();
+  const msg = document.getElementById('newsMsg');
+  msg.className = 'msg';
+  const id = document.getElementById('news_id').value;
+
+  const payload = {
+    title: document.getElementById('news_title').value.trim(),
+    category: document.getElementById('news_category').value.trim(),
+    content: document.getElementById('news_content').value.trim(),
+    active: true
+  };
+  if(!id){ payload.published_at = new Date().toISOString(); }
+
+  let error;
+  if(id){
+    ({ error } = await sb.from('news').update(payload).eq('id', id));
+  } else {
+    ({ error } = await sb.from('news').insert(payload));
+  }
+
+  if(error){
+    msg.classList.add('show','error');
+    msg.textContent = 'Erreur: ' + error.message;
+  } else {
+    msg.classList.add('show','success');
+    msg.textContent = id ? 'Article mis à jour !' : 'Article publié !';
+    resetNewsForm();
+    loadNewsTable();
+  }
+});
+
+document.getElementById('newsCancelBtn')?.addEventListener('click', resetNewsForm);
+
+function resetNewsForm(){
+  document.getElementById('newsForm').reset();
+  document.getElementById('news_id').value = '';
+  document.getElementById('newsFormTitle').textContent = "Ajouter un article";
+  document.getElementById('newsSubmitBtn').textContent = "Publier l'article";
+  document.getElementById('newsCancelBtn').style.display = 'none';
+}
+
+async function loadNewsTable(){
+  const tbody = document.getElementById('newsTableBody');
+  if(!tbody) return;
+  const { data, error } = await sb.from('news').select('*').order('published_at', { ascending:false });
+  if(error || !data || !data.length){
+    tbody.innerHTML = '<tr><td colspan="5">Aucun article.</td></tr>';
+    return;
+  }
+  tbody.innerHTML = data.map(n => `
+    <tr>
+      <td>${new Date(n.published_at).toLocaleDateString('fr-FR')}</td>
+      <td>${n.title}</td>
+      <td>${n.category||'—'}</td>
+      <td><span class="badge ${n.active ? '' : 'inactive'}">${n.active ? 'Publié' : 'Masqué'}</span></td>
+      <td>
+        <button class="btn-primary" style="padding:6px 12px; font-size:11.5px;" onclick='editNews(${JSON.stringify(n)})'>Modifier</button>
+        <button class="btn-danger" onclick="deleteNews('${n.id}')">Supprimer</button>
+      </td>
+    </tr>
+  `).join('');
+}
+
+function editNews(n){
+  document.getElementById('news_id').value = n.id;
+  document.getElementById('news_title').value = n.title || '';
+  document.getElementById('news_category').value = n.category || '';
+  document.getElementById('news_content').value = n.content || '';
+  document.getElementById('newsFormTitle').textContent = "Modifier l'article";
+  document.getElementById('newsSubmitBtn').textContent = "Enregistrer les modifications";
+  document.getElementById('newsCancelBtn').style.display = 'inline-block';
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+async function deleteNews(id){
+  if(!confirm('Supprimer cet article définitivement ?')) return;
+  await sb.from('news').delete().eq('id', id);
+  loadNewsTable();
+}
+// ===== EPISODES =====
+document.getElementById('episodeForm')?.addEventListener('submit', async (e)=>{
+  e.preventDefault();
+  const msg = document.getElementById('episodeMsg');
+  msg.className = 'msg';
+  const id = document.getElementById('ep_id').value;
+
+  const durationMin = document.getElementById('ep_duration').value;
+
+  const payload = {
+    title: document.getElementById('ep_title').value.trim(),
+    description: document.getElementById('ep_desc').value.trim(),
+    audio_url: document.getElementById('ep_audio').value.trim(),
+    video_url: document.getElementById('ep_video').value.trim(),
+    cover_image_url: document.getElementById('ep_cover').value.trim(),
+    duration_seconds: durationMin ? parseInt(durationMin,10)*60 : null,
+    active: true
+  };
+  if(!id){ payload.published_at = new Date().toISOString(); }
+
+  let error;
+  if(id){
+    ({ error } = await sb.from('episodes').update(payload).eq('id', id));
+  } else {
+    ({ error } = await sb.from('episodes').insert(payload));
+  }
+
+  if(error){
+    msg.classList.add('show','error');
+    msg.textContent = 'Erreur: ' + error.message;
+  } else {
+    msg.classList.add('show','success');
+    msg.textContent = id ? 'Repriz mise à jour !' : 'Repriz publiée !';
+    resetEpisodeForm();
+    loadEpisodesTable();
+  }
+});
+
+document.getElementById('episodeCancelBtn')?.addEventListener('click', resetEpisodeForm);
+
+function resetEpisodeForm(){
+  document.getElementById('episodeForm').reset();
+  document.getElementById('ep_id').value = '';
+  document.getElementById('episodeFormTitle').textContent = "Ajouter une repriz";
+  document.getElementById('episodeSubmitBtn').textContent = "Publier la repriz";
+  document.getElementById('episodeCancelBtn').style.display = 'none';
+}
+
+async function loadEpisodesTable(){
+  const tbody = document.getElementById('episodesTableBody');
+  if(!tbody) return;
+  const { data, error } = await sb.from('episodes').select('*').order('display_order').order('published_at', { ascending:false });
+  if(error || !data || !data.length){
+    tbody.innerHTML = '<tr><td colspan="4">Aucune repriz.</td></tr>';
+    return;
+  }
+  tbody.innerHTML = data.map(ep => `
+    <tr>
+      <td>${ep.title}</td>
+      <td>${ep.duration_seconds ? Math.floor(ep.duration_seconds/60)+' min' : '—'}</td>
+      <td><span class="badge ${ep.active ? '' : 'inactive'}">${ep.active ? 'Publiée' : 'Masquée'}</span></td>
+      <td>
+        <button class="btn-primary" style="padding:6px 12px; font-size:11.5px;" onclick='editEpisode(${JSON.stringify(ep)})'>Modifier</button>
+        <button class="btn-danger" onclick="deleteEpisode('${ep.id}')">Supprimer</button>
+      </td>
+    </tr>
+  `).join('');
+}
+
+function editEpisode(ep){
+  document.getElementById('ep_id').value = ep.id;
+  document.getElementById('ep_title').value = ep.title || '';
+  document.getElementById('ep_desc').value = ep.description || '';
+  document.getElementById('ep_audio').value = ep.audio_url || '';
+  document.getElementById('ep_video').value = ep.video_url || '';
+  document.getElementById('ep_cover').value = ep.cover_image_url || '';
+  document.getElementById('ep_duration').value = ep.duration_seconds ? Math.floor(ep.duration_seconds/60) : '';
+  document.getElementById('episodeFormTitle').textContent = "Modifier la repriz";
+  document.getElementById('episodeSubmitBtn').textContent = "Enregistrer les modifications";
+  document.getElementById('episodeCancelBtn').style.display = 'inline-block';
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+async function deleteEpisode(id){
+  if(!confirm('Supprimer cette repriz définitivement ?')) return;
+  await sb.from('episodes').delete().eq('id', id);
+  loadEpisodesTable();
+}
+// ===== LIVE TV SETTINGS =====
+async function loadLiveTVForm(){
+  const form = document.getElementById('livetvForm');
+  if(!form) return;
+  const { data, error } = await sb.from('live_tv_settings').select('*').eq('id', 1).maybeSingle();
+  if(error || !data) return;
+  document.getElementById('lt_is_live').checked = !!data.is_live;
+  document.getElementById('lt_stream_url').value = data.stream_url || '';
+  document.getElementById('lt_youtube').value = data.youtube_url || '';
+  document.getElementById('lt_tiktok').value = data.tiktok_url || '';
+  document.getElementById('lt_facebook').value = data.facebook_url || '';
+  document.getElementById('lt_instagram').value = data.instagram_url || '';
+}
+
+document.getElementById('livetvForm')?.addEventListener('submit', async (e)=>{
+  e.preventDefault();
+  const msg = document.getElementById('livetvMsg');
+  msg.className = 'msg';
+
+  const payload = {
+    is_live: document.getElementById('lt_is_live').checked,
+    stream_url: document.getElementById('lt_stream_url').value.trim(),
+    youtube_url: document.getElementById('lt_youtube').value.trim(),
+    tiktok_url: document.getElementById('lt_tiktok').value.trim(),
+    facebook_url: document.getElementById('lt_facebook').value.trim(),
+    instagram_url: document.getElementById('lt_instagram').value.trim()
+  };
+
+  const { error } = await sb.from('live_tv_settings').update(payload).eq('id', 1);
+  if(error){
+    msg.classList.add('show','error');
+    msg.textContent = 'Erreur: ' + error.message;
+  } else {
+    msg.classList.add('show','success');
+    msg.textContent = 'Paramètres enregistrés !';
+  }
+});
+// ===== PARTNERS =====
+document.getElementById('partnerForm')?.addEventListener('submit', async (e)=>{
+  e.preventDefault();
+  const msg = document.getElementById('partnerMsg');
+  msg.className = 'msg';
+  const id = document.getElementById('pt_id').value;
+
+  const payload = {
+    name: document.getElementById('pt_name').value.trim(),
+    website_url: document.getElementById('pt_website').value.trim(),
+    logo_url: document.getElementById('pt_logo').value.trim(),
+    active: true
+  };
+
+  let error;
+  if(id){
+    ({ error } = await sb.from('partners').update(payload).eq('id', id));
+  } else {
+    ({ error } = await sb.from('partners').insert(payload));
+  }
+
+  if(error){
+    msg.classList.add('show','error');
+    msg.textContent = 'Erreur: ' + error.message;
+  } else {
+    msg.classList.add('show','success');
+    msg.textContent = id ? 'Partenaire mis à jour !' : 'Partenaire ajouté !';
+    resetPartnerForm();
+    loadPartnersTable();
+  }
+});
+
+document.getElementById('partnerCancelBtn')?.addEventListener('click', resetPartnerForm);
+
+function resetPartnerForm(){
+  document.getElementById('partnerForm').reset();
+  document.getElementById('pt_id').value = '';
+  document.getElementById('partnerFormTitle').textContent = "Ajouter un partenaire";
+  document.getElementById('partnerSubmitBtn').textContent = "Ajouter";
+  document.getElementById('partnerCancelBtn').style.display = 'none';
+}
+
+async function loadPartnersTable(){
+  const tbody = document.getElementById('partnersTableBody');
+  if(!tbody) return;
+  const { data, error } = await sb.from('partners').select('*').order('display_order');
+  if(error || !data || !data.length){
+    tbody.innerHTML = '<tr><td colspan="4">Aucun partenaire.</td></tr>';
+    return;
+  }
+  tbody.innerHTML = data.map(p => `
+    <tr>
+      <td><img src="${p.logo_url}" alt="${p.name}" style="height:28px; width:auto;" onerror="this.style.display='none'"></td>
+      <td>${p.name}</td>
+      <td><span class="badge ${p.active ? '' : 'inactive'}">${p.active ? 'Actif' : 'Masqué'}</span></td>
+      <td>
+        <button class="btn-primary" style="padding:6px 12px; font-size:11.5px;" onclick='editPartner(${JSON.stringify(p)})'>Modifier</button>
+        <button class="btn-danger" onclick="deletePartner('${p.id}')">Supprimer</button>
+      </td>
+    </tr>
+  `).join('');
+}
+
+function editPartner(p){
+  document.getElementById('pt_id').value = p.id;
+  document.getElementById('pt_name').value = p.name || '';
+  document.getElementById('pt_website').value = p.website_url || '';
+  document.getElementById('pt_logo').value = p.logo_url || '';
+  document.getElementById('partnerFormTitle').textContent = "Modifier le partenaire";
+  document.getElementById('partnerSubmitBtn').textContent = "Enregistrer les modifications";
+  document.getElementById('partnerCancelBtn').style.display = 'inline-block';
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+async function deletePartner(id){
+  if(!confirm('Supprimer ce partenaire définitivement ?')) return;
+  await sb.from('partners').delete().eq('id', id);
+  loadPartnersTable();
+}
+// ===== ADS (promotions) =====
+document.getElementById('adPromoForm')?.addEventListener('submit', async (e)=>{
+  e.preventDefault();
+  const msg = document.getElementById('adPromoMsg');
+  msg.className = 'msg';
+  const id = document.getElementById('ad_id').value;
+
+  const payload = {
+    title: document.getElementById('ad_title').value.trim(),
+    image_url: document.getElementById('ad_image').value.trim(),
+    link_url: document.getElementById('ad_link').value.trim(),
+    active: true
+  };
+
+  let error;
+  if(id){
+    ({ error } = await sb.from('ads').update(payload).eq('id', id));
+  } else {
+    ({ error } = await sb.from('ads').insert(payload));
+  }
+
+  if(error){
+    msg.classList.add('show','error');
+    msg.textContent = 'Erreur: ' + error.message;
+  } else {
+    msg.classList.add('show','success');
+    msg.textContent = id ? 'Promotion mise à jour !' : 'Promotion ajoutée !';
+    resetAdForm();
+    loadAdsTable();
+  }
+});
+
+document.getElementById('adCancelBtn')?.addEventListener('click', resetAdForm);
+
+function resetAdForm(){
+  document.getElementById('adPromoForm').reset();
+  document.getElementById('ad_id').value = '';
+  document.getElementById('adFormTitle').textContent = "Ajouter une promotion";
+  document.getElementById('adSubmitBtnPanel').textContent = "Ajouter";
+  document.getElementById('adCancelBtn').style.display = 'none';
+}
+
+async function loadAdsTable(){
+  const tbody = document.getElementById('adsTableBody');
+  if(!tbody) return;
+  const { data, error } = await sb.from('ads').select('*').order('display_order');
+  if(error || !data || !data.length){
+    tbody.innerHTML = '<tr><td colspan="3">Aucune promotion.</td></tr>';
+    return;
+  }
+  tbody.innerHTML = data.map(a => `
+    <tr>
+      <td>${a.title}</td>
+      <td><span class="badge ${a.active ? '' : 'inactive'}">${a.active ? 'Actif' : 'Masqué'}</span></td>
+      <td>
+        <button class="btn-primary" style="padding:6px 12px; font-size:11.5px;" onclick='editAd(${JSON.stringify(a)})'>Modifier</button>
+        <button class="btn-danger" onclick="deleteAd('${a.id}')">Supprimer</button>
+      </td>
+    </tr>
+  `).join('');
+}
+
+function editAd(a){
+  document.getElementById('ad_id').value = a.id;
+  document.getElementById('ad_title').value = a.title || '';
+  document.getElementById('ad_image').value = a.image_url || '';
+  document.getElementById('ad_link').value = a.link_url || '';
+  document.getElementById('adFormTitle').textContent = "Modifier la promotion";
+  document.getElementById('adSubmitBtnPanel').textContent = "Enregistrer les modifications";
+  document.getElementById('adCancelBtn').style.display = 'inline-block';
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+async function deleteAd(id){
+  if(!confirm('Supprimer cette promotion définitivement ?')) return;
+  await sb.from('ads').delete().eq('id', id);
+  loadAdsTable();
+}
+
+async function loadAdInquiries(){
+  const tbody = document.getElementById('adInquiriesTableBody');
+  if(!tbody) return;
+  const { data, error } = await sb.from('ad_inquiries').select('*').order('created_at', { ascending:false });
+  if(error || !data || !data.length){
+    tbody.innerHTML = '<tr><td colspan="4">Aucune demande reçue.</td></tr>';
+    return;
+  }
+  tbody.innerHTML = data.map(i => `
+    <tr>
+      <td>${i.full_name}${i.company ? ' ('+i.company+')' : ''}</td>
+      <td>${i.email}</td>
+      <td style="max-width:280px;">${i.message || '—'}</td>
+      <td>${new Date(i.created_at).toLocaleDateString('fr-FR')}</td>
+    </tr>
+  `).join('');
+}
 </script>
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
