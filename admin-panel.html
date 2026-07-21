@@ -95,6 +95,7 @@ td{padding:10px; border-bottom:1px solid #F0EDE4;}
       <button data-panel="panel-media" data-roles="admin,directeur_programmation,animateur">🎵 Médiathèque</button>
       <button data-panel="panel-playlists" data-roles="admin,directeur_programmation,animateur">📀 Playlists</button>
       <button data-panel="panel-radio-rules" data-roles="admin">⚙️ Réglages Radio</button>
+      <button data-panel="panel-stats" data-roles="admin">📊 Statistiques</button>
     </nav>
     <div class="who">
       <div class="name" id="whoName">—</div>
@@ -481,6 +482,26 @@ td{padding:10px; border-bottom:1px solid #F0EDE4;}
         </form>
       </div>
     </section>
+    <section id="panel-stats" class="panel-hidden">
+      <h2>Statistiques d'écoute</h2>
+      <p class="desc">Données à présenter à vos annonceurs pour justifier vos tarifs publicitaires.</p>
+      <div class="card">
+        <div class="grid-2" style="grid-template-columns:repeat(3,1fr);">
+          <div style="text-align:center; padding:20px;">
+            <div style="font-family:var(--font-mono); font-size:32px; font-weight:700; color:var(--gold-hover);" id="statTotalHours">—</div>
+            <div style="font-size:12px; color:var(--ink-soft); text-transform:uppercase;">Heures d'écoute totales</div>
+          </div>
+          <div style="text-align:center; padding:20px;">
+            <div style="font-family:var(--font-mono); font-size:32px; font-weight:700; color:var(--blue);" id="statHours30d">—</div>
+            <div style="font-size:12px; color:var(--ink-soft); text-transform:uppercase;">Heures (30 derniers jours)</div>
+          </div>
+          <div style="text-align:center; padding:20px;">
+            <div style="font-family:var(--font-mono); font-size:32px; font-weight:700; color:var(--green);" id="statSessions">—</div>
+            <div style="font-size:12px; color:var(--ink-soft); text-transform:uppercase;">Sessions d'écoute totales</div>
+          </div>
+        </div>
+      </div>
+    </section>
   </main>
 </div>
 
@@ -528,7 +549,7 @@ async function checkAccess(){
   const defaultSection = document.getElementById(defaultPanel);
   if(defaultSection) defaultSection.classList.remove('panel-hidden');
 
-  if(profile.role === 'admin'){ loadStaffList(); loadGuestList(); loadPartnersTable(); loadAdsTable(); loadAdInquiries(); loadRadioRulesForm(); }
+  if(profile.role === 'admin'){ loadStaffList(); loadGuestList(); loadPartnersTable(); loadAdsTable(); loadAdInquiries(); loadRadioRulesForm(); loadListeningStats(); }
   if(profile.role === 'admin' || profile.role === 'directeur_programmation'){ loadStaffOptionsForSchedule(); loadScheduleTable(); loadProgramsTable(); loadNewsTable(); loadEpisodesTable(); loadLiveTVForm(); }
   if(profile.role === 'animateur'){ loadMySchedules(); }
   loadMediaTable();
@@ -1530,9 +1551,23 @@ document.getElementById('radioRulesForm')?.addEventListener('submit', async (e)=
     msg.textContent = 'Réglages enregistrés !';
   }
 });
+// ===== LISTENING STATS =====
+async function loadListeningStats(){
+  const el = document.getElementById('statTotalHours');
+  if(!el) return;
+  const { data, error } = await sb.rpc('get_listening_stats');
+  if(error || !data || !data.length) return;
+  const stats = data[0];
+  document.getElementById('statTotalHours').textContent = stats.total_hours || 0;
+  document.getElementById('statHours30d').textContent = stats.hours_last_30_days || 0;
+  document.getElementById('statSessions').textContent = stats.total_sessions || 0;
+}
 </script>
 </body>
 </html>
+
+
+
 
 
 
