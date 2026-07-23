@@ -33,7 +33,9 @@
 
   async function sendHeartbeat(){
     if(!listeningDbId) return;
-    await sbr.rpc('increment_listening_seconds', { p_id: listeningDbId, p_seconds: 20 }).catch(()=>{});
+    try {
+      await sbr.rpc('increment_listening_seconds', { p_id: listeningDbId, p_seconds: 20 });
+    } catch(e) {}
   }
 
   function stopListeningSession(){
@@ -253,6 +255,9 @@
     waitUntilReady(){ return loadingPromise; }
   };
 })();
+
+
+
 
 
 
