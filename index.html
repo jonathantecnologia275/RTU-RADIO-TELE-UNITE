@@ -654,9 +654,15 @@ function timeToMinutes(t){
   return parseInt(parts[0],10)*60 + parseInt(parts[1],10);
 }
 
+function getHaitiNowMinutes(){
+  const parts = new Intl.DateTimeFormat('en-US', { timeZone: 'America/Port-au-Prince', hour12:false, hour:'2-digit', minute:'2-digit' }).formatToParts(new Date());
+  const h = parseInt(parts.find(p=>p.type==='hour').value, 10);
+  const m = parseInt(parts.find(p=>p.type==='minute').value, 10);
+  return h*60 + m;
+}
 function computeLiveSchedule(programs){
   const now = new Date();
-  const nowMin = now.getHours()*60 + now.getMinutes();
+  const nowMin = getHaitiNowMinutes();
   const sorted = [...programs].sort((a,b)=> timeToMinutes(a.start_time) - timeToMinutes(b.start_time));
   let current = null;
   sorted.forEach(p=>{
