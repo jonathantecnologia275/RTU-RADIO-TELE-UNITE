@@ -699,7 +699,7 @@ async function loadLiveSchedule(){
 }
 setInterval(loadLiveSchedule, 60000);
 
-Promise.all([loadNowPlaying(), loadPrograms(), loadNews(), loadLiveSchedule()]).then(()=>{
+Promise.all([loadPrograms(), loadNews(), loadLiveSchedule()]).then(()=>{
   setLang(getCurrentLang()); // re-tradui tikèt ki fèk enjekte yo (ex: "avec", "à l'écoute")
 });
 </script>
@@ -738,6 +738,7 @@ document.addEventListener('DOMContentLoaded', wireRadioButtons);
 <script src="js/newsletter.js"></script>
 </body>
 </html>
+
 
 
 
