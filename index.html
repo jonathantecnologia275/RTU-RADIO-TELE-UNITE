@@ -687,6 +687,10 @@ async function loadLiveSchedule(){
   if(current && nowTitleEl){
     nowTitleEl.textContent = current.title;
     nowTimeEl.textContent = (current.start_time||'').slice(0,5) + ' - ' + (current.end_time||'').slice(0,5);
+    const heroShowEl = document.querySelector('.now-info .show');
+    const heroHostEl = document.querySelector('.now-info .host');
+    if(heroShowEl) heroShowEl.textContent = current.title;
+    if(heroHostEl && current.host_name) heroHostEl.innerHTML = `<span data-i18n="console_with">avec</span> ${current.host_name}`;
   }
   if(next && nextTitleEl){
     nextTitleEl.textContent = next.title;
