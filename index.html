@@ -113,7 +113,11 @@ img{max-width:100%; display:block;}
 
 /* Player console panel */
 .console{
-  background:linear-gradient(165deg, var(--navy-panel), #0A0E28);
+  position:relative;
+  background-image: linear-gradient(180deg, rgba(10,14,40,.35) 0%, rgba(10,14,40,.78) 55%, rgba(10,14,40,.94) 100%), url('img/rtu-boombox-artwork.png'), linear-gradient(165deg, var(--navy-panel), #0A0E28);
+  background-size: cover, contain, cover;
+  background-position: center, center 15%, center;
+  background-repeat: no-repeat, no-repeat, no-repeat;
   border:1px solid var(--line); border-radius:20px; padding:26px;
   box-shadow:0 30px 70px -30px rgba(0,0,0,.6);
 }
