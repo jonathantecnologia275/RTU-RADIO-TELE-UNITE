@@ -96,6 +96,18 @@ img{max-width:100%; display:block;}
     var(--navy-deep);
 }
 .hero-grid{display:grid; grid-template-columns:1.05fr .95fr; gap:56px; align-items:center; position:relative; z-index:2;}
+
+@media (max-width:900px){
+  .hero-grid{grid-template-columns:1fr; gap:36px;}
+  .hero{padding:56px 0 50px;}
+}
+@media (max-width:480px){
+  .console{padding:18px;}
+  .console-top{flex-wrap:wrap; gap:6px;}
+  .console-top .count{font-size:11px;}
+  .now-playing{gap:12px;}
+  .now-info .show{font-size:15px;}
+}
 .live-badge{display:inline-flex; align-items:center; gap:8px; background:rgba(238,91,79,.12); border:1px solid rgba(238,91,79,.4); padding:6px 14px 6px 10px; border-radius:20px; margin-bottom:22px;}
 .live-dot{width:7px; height:7px; border-radius:50%; background:var(--live); animation:pulse 1.6s ease-in-out infinite;}
 @keyframes pulse{0%,100%{opacity:1; box-shadow:0 0 0 0 rgba(238,91,79,.5);} 50%{opacity:.55; box-shadow:0 0 0 6px rgba(238,91,79,0);}}
