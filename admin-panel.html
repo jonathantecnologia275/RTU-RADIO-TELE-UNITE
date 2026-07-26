@@ -89,6 +89,7 @@ td{padding:10px; border-bottom:1px solid #F0EDE4;}
       <button data-panel="panel-news" data-roles="admin,directeur_programmation">📰 Actualités</button>
       <button data-panel="panel-episodes" data-roles="admin,directeur_programmation">🎧 Repriz</button>
       <button data-panel="panel-livetv" data-roles="admin,directeur_programmation">📺 RTU TV Live</button>
+      <button data-panel="panel-gallery" data-roles="admin,directeur_programmation">🖼️ Galerie</button>
       <button data-panel="panel-partners" data-roles="admin">🤝 Partenaires</button>
       <button data-panel="panel-ads" data-roles="admin">📢 Publicité</button>
       <button data-panel="panel-my-space" data-roles="animateur">🎙️ Mon Espace</button>
@@ -336,6 +337,31 @@ td{padding:10px; border-bottom:1px solid #F0EDE4;}
         </form>
       </div>
     </section>
+    <section id="panel-gallery" class="panel-hidden">
+      <h2>Galerie</h2>
+      <p class="desc">Ajoutez des photos du studio (virtuel ou réel) affichées sur le site.</p>
+      <div class="card">
+        <h3 id="galleryFormTitle">Ajouter une photo</h3>
+        <form id="galleryForm">
+          <input type="hidden" id="gl_id">
+          <div class="grid-2">
+            <div class="field"><label>Titre</label><input type="text" id="gl_title" required></div>
+            <div class="field"><label>Catégorie</label><input type="text" id="gl_category" placeholder="Ex: Studio, Équipe, Émission"></div>
+          </div>
+          <div class="field"><label>Photo</label><input type="file" id="gl_file" accept="image/*"></div>
+          <button type="submit" class="btn-primary" id="gallerySubmitBtn">Ajouter la photo</button>
+          <button type="button" class="btn-danger" id="galleryCancelBtn" style="display:none; margin-left:8px;">Annuler</button>
+          <div class="msg" id="galleryMsg"></div>
+        </form>
+      </div>
+      <div class="card">
+        <h3>Photos publiées</h3>
+        <table>
+          <thead><tr><th>Aperçu</th><th>Titre</th><th>Catégorie</th><th>Statut</th><th>Action</th></tr></thead>
+          <tbody id="galleryTableBody"><tr><td colspan="5">Chargement...</td></tr></tbody>
+        </table>
+      </div>
+    </section>
     <section id="panel-partners" class="panel-hidden">
       <h2>Partenaires</h2>
       <p class="desc">Gérez les logos affichés dans la bannière "Nos partenaires" sur la page d'accueil.</p>
@@ -550,7 +576,7 @@ async function checkAccess(){
   if(defaultSection) defaultSection.classList.remove('panel-hidden');
 
   if(profile.role === 'admin'){ loadStaffList(); loadGuestList(); loadPartnersTable(); loadAdsTable(); loadAdInquiries(); loadRadioRulesForm(); loadListeningStats(); }
-  if(profile.role === 'admin' || profile.role === 'directeur_programmation'){ loadStaffOptionsForSchedule(); loadScheduleTable(); loadProgramsTable(); loadNewsTable(); loadEpisodesTable(); loadLiveTVForm(); }
+  if(profile.role === 'admin' || profile.role === 'directeur_programmation'){ loadStaffOptionsForSchedule(); loadScheduleTable(); loadProgramsTable(); loadNewsTable(); loadEpisodesTable(); loadLiveTVForm(); loadGalleryTable(); }
   if(profile.role === 'animateur'){ loadMySchedules(); }
   loadMediaTable();
   loadPlaylistsTable();
@@ -1133,6 +1159,124 @@ document.getElementById('livetvForm')?.addEventListener('submit', async (e)=>{
     msg.textContent = 'Paramètres enregistrés !';
   }
 });
+// ===== GALLERY =====
+document.getElementById('galleryForm')?.addEventListener('submit', async (e)=>{
+  e.preventDefault();
+  const msg = document.getElementById('galleryMsg');
+  const btn = document.getElementById('gallerySubmitBtn');
+  msg.className = 'msg';
+  btn.disabled = true;
+  const original = btn.textContent;
+  const id = document.getElementById('gl_id').value;
+
+  const fileInput = document.getElementById('gl_file');
+  const file = fileInput.files[0];
+  let mediaUrl = null;
+
+  if(file){
+    btn.textContent = 'Téléversement en cours...';
+    const safeName = 'gallery-' + Date.now() + '-' + file.name.replace(/[^a-zA-Z0-9.\-_]/g, '_');
+    const { error: uploadError } = await sb.storage.from('radio-media').upload(safeName, file);
+    if(uploadError){
+      msg.classList.add('show','error');
+      msg.textContent = 'Erreur upload: ' + uploadError.message;
+      btn.disabled = false;
+      btn.textContent = original;
+      return;
+    }
+    const { data: urlData } = sb.storage.from('radio-media').getPublicUrl(safeName);
+    mediaUrl = urlData.publicUrl;
+  }
+
+  if(!id && !mediaUrl){
+    msg.classList.add('show','error');
+    msg.textContent = 'Veuillez sélectionner une photo.';
+    btn.disabled = false;
+    btn.textContent = original;
+    return;
+  }
+
+  const payload = {
+    title: document.getElementById('gl_title').value.trim(),
+    category: document.getElementById('gl_category').value.trim(),
+    media_type: 'image',
+    active: true
+  };
+  if(mediaUrl){
+    payload.media_url = mediaUrl;
+    payload.thumbnail_url = mediaUrl;
+  }
+
+  let error;
+  if(id){
+    ({ error } = await sb.from('gallery_items').update(payload).eq('id', id));
+  } else {
+    const { data: existing } = await sb.from('gallery_items').select('display_order').order('display_order', { ascending:false }).limit(1);
+    payload.display_order = existing && existing.length ? existing[0].display_order + 1 : 0;
+    ({ error } = await sb.from('gallery_items').insert(payload));
+  }
+
+  if(error){
+    msg.classList.add('show','error');
+    msg.textContent = 'Erreur: ' + error.message;
+  } else {
+    msg.classList.add('show','success');
+    msg.textContent = id ? 'Photo mise à jour !' : 'Photo ajoutée !';
+    resetGalleryForm();
+    loadGalleryTable();
+  }
+  btn.disabled = false;
+  btn.textContent = original;
+});
+
+document.getElementById('galleryCancelBtn')?.addEventListener('click', resetGalleryForm);
+
+function resetGalleryForm(){
+  document.getElementById('galleryForm').reset();
+  document.getElementById('gl_id').value = '';
+  document.getElementById('galleryFormTitle').textContent = 'Ajouter une photo';
+  document.getElementById('gallerySubmitBtn').textContent = 'Ajouter la photo';
+  document.getElementById('galleryCancelBtn').style.display = 'none';
+}
+
+async function loadGalleryTable(){
+  const tbody = document.getElementById('galleryTableBody');
+  if(!tbody) return;
+  const { data, error } = await sb.from('gallery_items').select('*').order('display_order');
+  if(error || !data || !data.length){
+    tbody.innerHTML = '<tr><td colspan="5">Aucune photo.</td></tr>';
+    return;
+  }
+  tbody.innerHTML = data.map(g => `
+    <tr>
+      <td><img src="${g.thumbnail_url || g.media_url}" alt="${g.title}" style="height:44px; width:70px; object-fit:cover; border-radius:6px;" onerror="this.style.display='none'"></td>
+      <td>${g.title}</td>
+      <td>${g.category || '—'}</td>
+      <td><span class="badge ${g.active ? '' : 'inactive'}">${g.active ? 'Publiée' : 'Masquée'}</span></td>
+      <td>
+        <button class="btn-primary" style="padding:6px 12px; font-size:11.5px;" onclick='editGalleryItem(${JSON.stringify(g)})'>Modifier</button>
+        <button class="btn-danger" onclick="deleteGalleryItem('${g.id}')">Supprimer</button>
+      </td>
+    </tr>
+  `).join('');
+}
+
+function editGalleryItem(g){
+  document.getElementById('gl_id').value = g.id;
+  document.getElementById('gl_title').value = g.title || '';
+  document.getElementById('gl_category').value = g.category || '';
+  document.getElementById('galleryFormTitle').textContent = 'Modifier la photo';
+  document.getElementById('gallerySubmitBtn').textContent = 'Enregistrer les modifications';
+  document.getElementById('galleryCancelBtn').style.display = 'inline-block';
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+async function deleteGalleryItem(id){
+  if(!confirm('Supprimer cette photo définitivement ?')) return;
+  await sb.from('gallery_items').delete().eq('id', id);
+  loadGalleryTable();
+}
+
 // ===== PARTNERS =====
 document.getElementById('partnerForm')?.addEventListener('submit', async (e)=>{
   e.preventDefault();
