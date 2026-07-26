@@ -261,7 +261,7 @@ footer{background:var(--navy); border-top:1px solid var(--line); padding:56px 0 
         <option value="es">ES</option>
         <option value="pt">PT</option>
       </select>
-      <button class="nav-cta"><span aria-hidden="true">▶</span><span class="full" data-i18n="nav_cta">Écouter</span></button>
+      <button class="nav-cta" id="navListenBtn"><span aria-hidden="true">▶</span><span class="full" data-i18n="nav_cta">Écouter</span></button>
     </div>
   </div>
 </nav>
@@ -275,7 +275,7 @@ footer{background:var(--navy); border-top:1px solid var(--line); padding:56px 0 
       <p class="lead" data-i18n="hero_lead">Radio Télé Unité diffuse en direct, dans le monde entier — musique, actualités et débats, produits en Haïti pour toute la diaspora.</p>
       <div class="hero-ctas">
         <button class="btn btn-gold"><span aria-hidden="true">▶</span><span data-i18n="cta_listen">Écouter en direct</span></button>
-        <button class="btn btn-ghost"><span aria-hidden="true">📺</span><span data-i18n="cta_watch">Regarder RTU TV</span></button>
+        <a href="tv-direct.html" class="btn btn-ghost"><span aria-hidden="true">📺</span><span data-i18n="cta_watch">Regarder RTU TV</span></a>
       </div>
     </div>
 
@@ -305,6 +305,29 @@ footer{background:var(--navy); border-top:1px solid var(--line); padding:56px 0 
     </div>
   </div>
 </header>
+
+<section class="section-dark" style="padding:0 0 70px;">
+  <div class="wrap">
+    <div class="console tv-console">
+      <div class="console-top">
+        <span class="label">RTU · LECTEUR TV EN DIRECT</span>
+        <span class="tag" id="tvLiveBadge" style="background:rgba(238,91,79,.12); color:#FFCFC9; border-color:rgba(238,91,79,.3);">HORS DIRECT</span>
+      </div>
+      <div class="tv-frame-wrap" id="tvFrameWrap">
+        <div class="tv-placeholder" id="tvPlaceholder">
+          <button class="play-btn" id="tvPlayBtn" aria-label="Regarder" disabled>
+            <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+          </button>
+        </div>
+        <iframe id="tvFrame" width="100%" height="100%" src="" title="RTU TV en direct" frameborder="0" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen style="display:none;"></iframe>
+      </div>
+      <div class="console-tags">
+        <span class="tag">TÉLÉ EN DIRECT</span>
+        <span class="tag">RTU TV</span>
+      </div>
+    </div>
+  </div>
+</section>
 
 <div class="strip">
   <div class="wrap strip-inner">
