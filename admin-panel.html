@@ -97,6 +97,7 @@ td{padding:10px; border-bottom:1px solid #F0EDE4;}
       <button data-panel="panel-playlists" data-roles="admin,directeur_programmation,animateur">📀 Playlists</button>
       <button data-panel="panel-radio-rules" data-roles="admin">⚙️ Réglages Radio</button>
       <button data-panel="panel-newsletter" data-roles="admin">📧 Newsletter</button>
+      <button data-panel="panel-contact-messages" data-roles="admin">✉️ Messages Contact</button>
       <button data-panel="panel-stats" data-roles="admin">📊 Statistiques</button>
     </nav>
     <div class="who">
@@ -520,6 +521,17 @@ td{padding:10px; border-bottom:1px solid #F0EDE4;}
         </table>
       </div>
     </section>
+    <section id="panel-contact-messages" class="panel-hidden">
+      <h2>Messages de Contact</h2>
+      <p class="desc">Messages envoyés via le formulaire de contact du site.</p>
+      <div class="card">
+        <h3>Total : <span id="contactMsgCount">0</span> message(s)</h3>
+        <table>
+          <thead><tr><th>Nom</th><th>Email</th><th>Téléphone</th><th>Message</th><th>Date</th></tr></thead>
+          <tbody id="contactMsgTableBody"><tr><td colspan="5">Chargement...</td></tr></tbody>
+        </table>
+      </div>
+    </section>
     <section id="panel-stats" class="panel-hidden">
       <h2>Statistiques d'écoute</h2>
       <p class="desc">Données à présenter à vos annonceurs pour justifier vos tarifs publicitaires.</p>
@@ -587,7 +599,7 @@ async function checkAccess(){
   const defaultSection = document.getElementById(defaultPanel);
   if(defaultSection) defaultSection.classList.remove('panel-hidden');
 
-  if(profile.role === 'admin'){ loadStaffList(); loadGuestList(); loadPartnersTable(); loadAdsTable(); loadAdInquiries(); loadRadioRulesForm(); loadListeningStats(); loadNewsletterTable(); }
+  if(profile.role === 'admin'){ loadStaffList(); loadGuestList(); loadPartnersTable(); loadAdsTable(); loadAdInquiries(); loadRadioRulesForm(); loadListeningStats(); loadNewsletterTable(); loadContactMessages(); }
   if(profile.role === 'admin' || profile.role === 'directeur_programmation'){ loadStaffOptionsForSchedule(); loadScheduleTable(); loadProgramsTable(); loadNewsTable(); loadEpisodesTable(); loadLiveTVForm(); loadGalleryTable(); }
   if(profile.role === 'animateur'){ loadMySchedules(); }
   loadMediaTable();
@@ -1729,6 +1741,29 @@ async function loadNewsletterTable(){
       <td>${s.email}</td>
       <td>${(s.lang || '—').toUpperCase()}</td>
       <td>${new Date(s.created_at).toLocaleString('fr-FR')}</td>
+    </tr>
+  `).join('');
+}
+
+// ===== CONTACT MESSAGES =====
+async function loadContactMessages(){
+  const tbody = document.getElementById('contactMsgTableBody');
+  const countEl = document.getElementById('contactMsgCount');
+  if(!tbody) return;
+  const { data, error } = await sb.from('contact_messages').select('*').order('created_at', { ascending:false });
+  if(error || !data || !data.length){
+    tbody.innerHTML = '<tr><td colspan="5">Aucun message pour le moment.</td></tr>';
+    if(countEl) countEl.textContent = '0';
+    return;
+  }
+  if(countEl) countEl.textContent = data.length;
+  tbody.innerHTML = data.map(m => `
+    <tr>
+      <td>${m.full_name || '—'}</td>
+      <td>${m.email || '—'}</td>
+      <td>${m.phone || '—'}</td>
+      <td style="max-width:280px;">${m.message || '—'}</td>
+      <td>${new Date(m.created_at).toLocaleString('fr-FR')}</td>
     </tr>
   `).join('');
 }
