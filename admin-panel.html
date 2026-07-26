@@ -96,6 +96,7 @@ td{padding:10px; border-bottom:1px solid #F0EDE4;}
       <button data-panel="panel-media" data-roles="admin,directeur_programmation,animateur">🎵 Médiathèque</button>
       <button data-panel="panel-playlists" data-roles="admin,directeur_programmation,animateur">📀 Playlists</button>
       <button data-panel="panel-radio-rules" data-roles="admin">⚙️ Réglages Radio</button>
+      <button data-panel="panel-newsletter" data-roles="admin">📧 Newsletter</button>
       <button data-panel="panel-stats" data-roles="admin">📊 Statistiques</button>
     </nav>
     <div class="who">
@@ -508,6 +509,17 @@ td{padding:10px; border-bottom:1px solid #F0EDE4;}
         </form>
       </div>
     </section>
+    <section id="panel-newsletter" class="panel-hidden">
+      <h2>Abonnés Newsletter</h2>
+      <p class="desc">Liste des personnes inscrites pour recevoir les actualités RTU par email.</p>
+      <div class="card">
+        <h3>Total : <span id="newsletterCount">0</span> abonné(s)</h3>
+        <table>
+          <thead><tr><th>Email</th><th>Langue</th><th>Date d'inscription</th></tr></thead>
+          <tbody id="newsletterTableBody"><tr><td colspan="3">Chargement...</td></tr></tbody>
+        </table>
+      </div>
+    </section>
     <section id="panel-stats" class="panel-hidden">
       <h2>Statistiques d'écoute</h2>
       <p class="desc">Données à présenter à vos annonceurs pour justifier vos tarifs publicitaires.</p>
@@ -575,7 +587,7 @@ async function checkAccess(){
   const defaultSection = document.getElementById(defaultPanel);
   if(defaultSection) defaultSection.classList.remove('panel-hidden');
 
-  if(profile.role === 'admin'){ loadStaffList(); loadGuestList(); loadPartnersTable(); loadAdsTable(); loadAdInquiries(); loadRadioRulesForm(); loadListeningStats(); }
+  if(profile.role === 'admin'){ loadStaffList(); loadGuestList(); loadPartnersTable(); loadAdsTable(); loadAdInquiries(); loadRadioRulesForm(); loadListeningStats(); loadNewsletterTable(); }
   if(profile.role === 'admin' || profile.role === 'directeur_programmation'){ loadStaffOptionsForSchedule(); loadScheduleTable(); loadProgramsTable(); loadNewsTable(); loadEpisodesTable(); loadLiveTVForm(); loadGalleryTable(); }
   if(profile.role === 'animateur'){ loadMySchedules(); }
   loadMediaTable();
@@ -1700,6 +1712,27 @@ document.getElementById('radioRulesForm')?.addEventListener('submit', async (e)=
     msg.textContent = 'Réglages enregistrés !';
   }
 });
+// ===== NEWSLETTER =====
+async function loadNewsletterTable(){
+  const tbody = document.getElementById('newsletterTableBody');
+  const countEl = document.getElementById('newsletterCount');
+  if(!tbody) return;
+  const { data, error } = await sb.from('newsletter_subscribers').select('*').order('created_at', { ascending:false });
+  if(error || !data || !data.length){
+    tbody.innerHTML = '<tr><td colspan="3">Aucun abonné pour le moment.</td></tr>';
+    if(countEl) countEl.textContent = '0';
+    return;
+  }
+  if(countEl) countEl.textContent = data.length;
+  tbody.innerHTML = data.map(s => `
+    <tr>
+      <td>${s.email}</td>
+      <td>${(s.lang || '—').toUpperCase()}</td>
+      <td>${new Date(s.created_at).toLocaleString('fr-FR')}</td>
+    </tr>
+  `).join('');
+}
+
 // ===== LISTENING STATS =====
 async function loadListeningStats(){
   const el = document.getElementById('statTotalHours');
